@@ -20,6 +20,7 @@ namespace Assets.Scripts.NewEnemyVariations.StateMachine.ConcreteStates
         public override void ExitState()
         {
             base.ExitState();
+
         }
         
         public override void FrameUpdate()

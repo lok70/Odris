@@ -23,13 +23,18 @@ public class ChaseEnemyState : EnemyState
     {
         base.FrameUpdate();
         Debug.Log("œŒ√ŒÕﬂ");
-        if (enemy.distanceFromPlayer <= enemy.shootingDistance && !enemy.obstackleFlag)
+        if (enemy.distanceFromPlayer <= enemy.shootingDistance & !enemy.obstackleFlag & enemy.distanceFromPlayer > enemy.stoppingDistance)
         {
             enemyStateMachine.ChangeState(enemy.AtackState);
         }
         if (enemy.distanceFromPlayer >= enemy.chasingDistance)
         {
+            enemy.animator.SetBool("IsWalking", true);
             enemyStateMachine.ChangeState(enemy.DetectionState);
+        }
+        if (enemy.distanceFromPlayer <= enemy.stoppingDistance)
+        {
+            enemy.moveFromStoppingDistance();  
         }
     }
 

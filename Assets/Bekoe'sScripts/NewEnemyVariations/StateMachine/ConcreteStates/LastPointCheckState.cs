@@ -27,10 +27,12 @@ public class LastPointCheckState : EnemyState
         if (enemy.distanceFromPlayer > enemy.aggroDistanse && Timer(Random.Range(3f, 5)))
         {
             timer = 0;
+            enemy.animator.SetBool("IsWalking", false);
             enemyStateMachine.ChangeState(enemy.IdleState);
         }
         if (enemy.distanceFromPlayer <= enemy.aggroDistanse & !enemy.obstackleFlag)
         {
+            enemy.animator.SetBool("IsWalking", true);
             enemyStateMachine.ChangeState(enemy.DetectionState);
         }
         if(enemy.distanceFromPlayer <= enemy.chasingDistance & !enemy.obstackleFlag)

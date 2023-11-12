@@ -1,10 +1,18 @@
 using Assets.Scripts.NewEnemyVariations.StateMachine.ConcreteStates;
-using System;
+using System.Collections;
+
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, Idamageable, Imoveable
 {
+    //anim..
+    public Animator animator;
+    public  float atackCooldown;
+    [SerializeField] public bool canAtack = false;
+    private float timer;
+
+
     // Idamageable..
     [SerializeField] public float maxHealth { get; set; } = 100f;
     public float currentHealth { get; set; }
@@ -18,14 +26,18 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     public float shootingDistance;
     public float chasingDistance;
     public float aggroDistanse;
+    public float stoppingDistance;
     [HideInInspector] public float distanceFromPlayer = 10000f;
     [HideInInspector] public Vector2 lastTargetPoint = Vector2.zero;
+    private Vector3 dirToPlayer;
+    private Vector3 newPos;
     public bool obstackleFlag;
 
     private void Awake()
     {
-
+        
         agent = this.GetComponent<NavMeshAgent>();
+        animator = this.GetComponent<Animator>();
 
 
         enemyStateMachine = new EnemyStateMachine();
@@ -44,6 +56,9 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         //устонавливаем первичное состояние
         enemyStateMachine.Initialize(IdleState);
 
+        animator.SetBool("IsWalking", false);
+        atackCooldown = Random.Range(0.5f, 2f);
+
         //navMeshPath = new NavMeshPath();
         //pointOrPlayerTarget = target.transform;
     }
@@ -51,8 +66,20 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     public void Update()
     {
         enemyStateMachine.currentState.FrameUpdate();
+
         distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
+
         obstackleFlag = obctacklesChecker();
+
+
+        dirToPlayer = target.transform.position - transform.position;
+        newPos = transform.position + dirToPlayer.normalized * stoppingDistance;
+
+        // Разворот спрайта врага
+        if (!obstackleFlag & distanceFromPlayer < aggroDistanse)
+        {
+            transform.localScale = new Vector3(dirToPlayer.x > 0 ? -3 : 3, 3, 3);
+        }
     }
 
     public void FixedUpdate()
@@ -93,12 +120,18 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     #endregion
 
 
-    #region Movement Funcs
+    #region  on Movement Funcs
 
     public void moveEnemy(Vector2 velocity)
     {
         agent.SetDestination(velocity);
     }
+
+    public void moveFromStoppingDistance()
+    {
+        agent.SetDestination(newPos);
+    }
+
     #endregion
 
 
@@ -124,6 +157,8 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         Gizmos.DrawWireSphere(transform.position, shootingDistance);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, aggroDistanse);
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, stoppingDistance);
     }
     #endregion
 
@@ -135,6 +170,8 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         agent.Raycast((Vector2)target.transform.position, out hit);
         return hit.hit;
     }
+
+   
 
     #endregion
 

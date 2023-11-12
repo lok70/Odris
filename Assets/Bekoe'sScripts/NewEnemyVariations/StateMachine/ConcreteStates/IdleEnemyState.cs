@@ -13,6 +13,7 @@ public class IdleEnemyState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+        
         Debug.Log("Противник абсолютно спокоен");
         enemy.agent.speed = 0;
     }
@@ -27,10 +28,13 @@ public class IdleEnemyState : EnemyState
         base.FrameUpdate();
         if (enemy.distanceFromPlayer <= enemy.aggroDistanse & !enemy.obctacklesChecker())
         {
+            enemy.animator.SetBool("IsWalking", true);
             enemyStateMachine.ChangeState(enemy.DetectionState);
+            
         }
         if (enemy.distanceFromPlayer <= enemy.aggroDistanse & !enemy.obstackleFlag)
         {
+            enemy.animator.SetBool("IsWalking", true);
             enemyStateMachine.ChangeState(enemy.DetectionState);
         }
         if (enemy.distanceFromPlayer <= enemy.chasingDistance & !enemy.obstackleFlag)
