@@ -15,7 +15,25 @@ public class EnemyState : MonoBehaviour
 
     public virtual void EnterState() { }
     public virtual void ExitState() { }
-    public virtual void FrameUpdate() { }
+    public virtual void FrameUpdate()
+    {
+        
+        if (enemy.distanceFromPlayer > enemy.chasingDistance & enemy.distanceFromPlayer <= enemy.aggroDistanse & !enemy.obstackleFlag)
+        {
+            enemyStateMachine.ChangeState(enemy.DetectionState);
+        }
+
+        if (enemy.distanceFromPlayer <= enemy.chasingDistance & enemy.distanceFromPlayer > enemy.shootingDistance & !enemy.obstackleFlag)
+        {
+            enemyStateMachine.ChangeState(enemy.ChaseState);
+        }
+
+        if (enemy.distanceFromPlayer <= enemy.shootingDistance  & !enemy.obstackleFlag )
+        {
+            enemyStateMachine.ChangeState(enemy.AtackState);
+        }
+    }
+
     public virtual void PhysicsUpdate() { }
     public virtual void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType) { }
 }

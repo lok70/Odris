@@ -11,6 +11,7 @@ public class ChaseEnemyState : EnemyState
     {
         base.EnterState();
         enemy.agent.speed = 5;
+        enemy.animator.SetBool("IsWalking", true);
         Debug.Log("Перешел в состояние погони");
     }
 
@@ -23,13 +24,9 @@ public class ChaseEnemyState : EnemyState
     {
         base.FrameUpdate();
         Debug.Log("ПОГОНЯ");
-        if (enemy.distanceFromPlayer <= enemy.shootingDistance & !enemy.obstackleFlag & enemy.distanceFromPlayer > enemy.stoppingDistance)
-        {
-            enemyStateMachine.ChangeState(enemy.AtackState);
-        }
+        
         if (enemy.distanceFromPlayer >= enemy.chasingDistance)
         {
-            enemy.animator.SetBool("IsWalking", true);
             enemyStateMachine.ChangeState(enemy.DetectionState);
         }
         if (enemy.distanceFromPlayer <= enemy.stoppingDistance)

@@ -2,7 +2,8 @@ using UnityEngine;
 
 public interface Idamageable
 {
-    void Damage(float damage);
+    void RestoreHealth(float health);
+    void TakeDamage(float damage);
     void Die();
 
     float maxHealth { get; set; }

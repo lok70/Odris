@@ -27,7 +27,7 @@ public class AtackEnemyState
 
     public override void FrameUpdate()
     {
-        base.FrameUpdate();
+        
 
         timer += Time.deltaTime;
         if (timer >= enemy.atackCooldown)
@@ -43,10 +43,12 @@ public class AtackEnemyState
         }
 
 
-        if ((enemy.distanceFromPlayer > enemy.chasingDistance || enemy.distanceFromPlayer > enemy.aggroDistanse))
+        if ((enemy.distanceFromPlayer > enemy.chasingDistance))
         {
             enemyStateMachine.ChangeState(enemy.DetectionState);
         }
+        
+        base.FrameUpdate();
     }
 
     public override void PhysicsUpdate()

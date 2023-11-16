@@ -1,3 +1,4 @@
+using Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates;
 using Assets.Scripts.NewEnemyVariations.StateMachine.ConcreteStates;
 using System.Collections;
 
@@ -10,8 +11,8 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     public Animator animator;
     public  float atackCooldown;
     [SerializeField] public bool canAtack = false;
-    private float timer;
 
+    
 
     // Idamageable..
     [SerializeField] public float maxHealth { get; set; } = 100f;
@@ -46,6 +47,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         AtackState = new AtackEnemyState(this, enemyStateMachine);
         DetectionState = new DetectionEnemyState(this, enemyStateMachine);
         LastPointCheckState = new LastPointCheckState(this, enemyStateMachine);
+        PatrolState = new PatrolEnemyState(this, enemyStateMachine);
     }
     private void Start()
     {
@@ -101,18 +103,26 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     public LastPointCheckState LastPointCheckState { get; set; }
 
+    public PatrolEnemyState PatrolState { get; set; }
+
     #endregion
 
     #region Health\Die Funcs
-    public void Damage(float damage)
+    public void RestoreHealth(float health)
     {
-        currentHealth -= damage;
+        if (currentHealth + health > maxHealth) { currentHealth = maxHealth; }
+        else { currentHealth += health; }
+    }
 
-        if (currentHealth <= 0)
+    public void TakeDamage(float damage)
+    {
+        if (currentHealth - damage <= 0)
         {
             Die();
         }
+        else { currentHealth -= damage; }
     }
+
     public void Die()
     {
         Destroy(gameObject);
@@ -171,7 +181,16 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         return hit.hit;
     }
 
-   
+    public bool obctacklesChecker(Vector2 point)
+    {
+        NavMeshHit hit;
+        agent.Raycast(point, out hit);
+        return hit.hit;
+    }
+
+    
+
+
 
     #endregion
 

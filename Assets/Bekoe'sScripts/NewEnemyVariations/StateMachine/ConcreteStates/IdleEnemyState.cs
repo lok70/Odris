@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -16,6 +17,7 @@ public class IdleEnemyState : EnemyState
         
         Debug.Log("Противник абсолютно спокоен");
         enemy.agent.speed = 0;
+        enemy.animator.SetBool("IsWalking", false);
     }
 
     public override void ExitState()
@@ -26,21 +28,7 @@ public class IdleEnemyState : EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        if (enemy.distanceFromPlayer <= enemy.aggroDistanse & !enemy.obctacklesChecker())
-        {
-            enemy.animator.SetBool("IsWalking", true);
-            enemyStateMachine.ChangeState(enemy.DetectionState);
-            
-        }
-        if (enemy.distanceFromPlayer <= enemy.aggroDistanse & !enemy.obstackleFlag)
-        {
-            enemy.animator.SetBool("IsWalking", true);
-            enemyStateMachine.ChangeState(enemy.DetectionState);
-        }
-        if (enemy.distanceFromPlayer <= enemy.chasingDistance & !enemy.obstackleFlag)
-        {
-            enemyStateMachine.ChangeState(enemy.AtackState);
-        }
+        
     }
 
     public override void PhysicsUpdate()
@@ -48,5 +36,9 @@ public class IdleEnemyState : EnemyState
         base.PhysicsUpdate();
     }
 
+    private void Timer()
+    {
+        float time = Time.deltaTime;
 
+    }
 }
