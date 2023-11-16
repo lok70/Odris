@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack : Player
+public class Attack : BasePlayerController
 {   
 
     static GameObject NearTarget(Vector3 position, Collider2D[] array)
