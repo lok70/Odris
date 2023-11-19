@@ -9,10 +9,10 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 {
     //anim..
     public Animator animator;
-    public  float atackCooldown;
+    public float atackCooldown;
     [SerializeField] public bool canAtack = false;
 
-    
+
 
     // Idamageable..
     [SerializeField] public float maxHealth { get; set; } = 100f;
@@ -36,10 +36,9 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     private void Awake()
     {
-        
         agent = this.GetComponent<NavMeshAgent>();
         animator = this.GetComponent<Animator>();
-
+        currentHealth = maxHealth;
 
         enemyStateMachine = new EnemyStateMachine();
         IdleState = new IdleEnemyState(this, enemyStateMachine);
@@ -51,7 +50,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     }
     private void Start()
     {
-        currentHealth = maxHealth;
+
         //блокируем разворот агента
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -116,11 +115,14 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     public void TakeDamage(float damage)
     {
+        currentHealth -= damage;
         if (currentHealth - damage <= 0)
         {
             Die();
+            return;
+
         }
-        else { currentHealth -= damage; }
+        else { Debug.Log("-10"); return; }
     }
 
     public void Die()
@@ -188,7 +190,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         return hit.hit;
     }
 
-    
+
 
 
 

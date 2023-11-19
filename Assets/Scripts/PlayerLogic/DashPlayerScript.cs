@@ -7,10 +7,10 @@ public class DashPlayerScript : BasePlayerController
 
     private Vector2 dashDirection;
     private bool dashFlag;
-    
+
     [SerializeField] private float dashDistance = 50f;
 
-    
+
     private void Update()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -19,7 +19,6 @@ public class DashPlayerScript : BasePlayerController
         {
             canDash = false;
             dashFlag = true;
-            
         }
     }
 
@@ -27,6 +26,7 @@ public class DashPlayerScript : BasePlayerController
     {
         if (dashFlag)
         {
+            isDashing = true;
             rb.velocity = Vector2.zero;
             rb.AddForce(-dashDirection * dashDistance, ForceMode2D.Impulse);
             StartCoroutine(dashTimer());
@@ -35,8 +35,8 @@ public class DashPlayerScript : BasePlayerController
     }
     private IEnumerator dashTimer()
     {
-        yield return new WaitForSeconds(0.4f);
-        rb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(1.5f);
         canDash = true;
+        isDashing = false;
     }
 }

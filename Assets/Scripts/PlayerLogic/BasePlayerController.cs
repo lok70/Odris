@@ -9,10 +9,10 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 {
     protected Rigidbody2D rb;
     protected Animator animator;
-
+    [SerializeField] private Transform bonk;
 
     protected float movementSpeed = 5;
-
+    private Attack attack;
 
 
     protected Vector3 movementDir;
@@ -28,14 +28,20 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void Awake()
     {
+        attack = GetComponent<Attack>();
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
     }
-
     private void Update()
     {
-
         if (isDashing || isDodging) { return; }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            Attack.Action(bonk.position, 0.5f, 10, false);
+        }
+
+
         movementDir.x = Input.GetAxis("Horizontal");
         movementDir.y = Input.GetAxis("Vertical");
         movementDir = movementDir.normalized;
@@ -43,9 +49,15 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void FixedUpdate()
     {
-        if (isDashing || isDodging) { return; }
+
 
         rb.velocity = movementDir * movementSpeed;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(bonk.position, 0.5f);
     }
 
     public void RestoreHealth(float health)
@@ -66,5 +78,10 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     public void Die()
     {
         Debug.Log("Царствие Небесное");
+    }
+
+    private IEnumerator Timer(float time)
+    {
+        yield return new WaitForSeconds(time);
     }
 }
