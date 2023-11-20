@@ -15,6 +15,7 @@ public class ProjectilePool : MonoBehaviour
         {
             pool[i] = Instantiate(pref);
             pool[i].transform.SetParent(this.transform);
+
             pool[i].SetActive(false);
         }
     }

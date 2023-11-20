@@ -10,7 +10,8 @@ public class Projectile : MonoBehaviour
     private Vector3 diference;
     private void OnEnable()
     {
-        transform.position = transform.parent.position;
+        transform.position = ShootingPoint.shootingPointCords;
+    
         rb = GetComponent<Rigidbody2D>();
         Vector2 heading = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         float targetDistance = heading.magnitude;
@@ -19,7 +20,7 @@ public class Projectile : MonoBehaviour
         rb.velocity = moveDir * speed;
     }
 
-
+   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -29,4 +30,5 @@ public class Projectile : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+   
 }
