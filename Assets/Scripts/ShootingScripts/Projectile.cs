@@ -24,7 +24,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision != null)
+        if (collision.collider != null)
         {
             Debug.Log("Hit");
             gameObject.SetActive(false);

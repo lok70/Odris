@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class Attack : BasePlayerController
 {
+    private static Vector2 Ppos;
+
+    private void Update()
+    {
+        Ppos = myPos;
+    }
 
     static GameObject NearTarget(Vector3 position, Collider2D[] array)
     {
@@ -33,7 +39,11 @@ public class Attack : BasePlayerController
             GameObject obj = NearTarget(point, colliders);
             if (obj != null)
             {
-                obj.GetComponent<Enemy>().TakeDamage(10);
+                //obj.GetComponent<Enemy>().TakeDamage(10);
+                Vector2 direction = ((Vector2)obj.transform.position - point).normalized;
+                Debug.Log("Ydar");
+ 
+                obj.transform.position += (Vector3)direction * 0.3f;
             }
             return;
         }

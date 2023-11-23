@@ -11,12 +11,14 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     protected Animator animator;
     [SerializeField] private Transform bonk;
 
+
     protected float movementSpeed = 5;
     private Attack attack;
 
 
     protected Vector3 movementDir;
     protected Vector2 mousePos;
+    public  Vector2 myPos;
 
     protected bool isDashing = false;
     protected bool isDodging = false;
@@ -34,10 +36,14 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     }
     private void Update()
     {
+        myPos = transform.position;
+
         if (isDashing || isDodging) { return; }
 
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(0))
         {
+            StartCoroutine(Timer(0.5f));
+            //Debug.Log("Ydar");
             Attack.Action(bonk.position, 0.5f, 10, false);
         }
 
@@ -49,8 +55,6 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void FixedUpdate()
     {
-
-
         rb.velocity = movementDir * movementSpeed;
     }
 
