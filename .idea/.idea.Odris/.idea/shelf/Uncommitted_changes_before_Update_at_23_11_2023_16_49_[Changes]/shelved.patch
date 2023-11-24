@@ -1,0 +1,64 @@
+Index: Assets/Scripts/EnemyFSM/Base/Enemy.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates;\r\nusing Assets.Scripts.NewEnemyVariations.StateMachine.ConcreteStates;\r\nusing System.Collections;\r\n\r\nusing UnityEngine;\r\nusing UnityEngine.AI;\r\n\r\npublic class Enemy : MonoBehaviour, Idamageable, Imoveable\r\n{\r\n    //anim..\r\n    public Animator animator;\r\n    public float atackCooldown;\r\n    [SerializeField] public bool canAtack = false;\r\n\r\n\r\n\r\n    // Idamageable..\r\n    [SerializeField] public float maxHealth { get; set; } = 100f;\r\n    public float currentHealth { get; set; }\r\n    // Imoveable..\r\n    public NavMeshAgent agent { get; set; }\r\n    //���� ������\r\n    public GameObject target;\r\n\r\n    // ���� ��� �������� ���������:\r\n    [SerializeField] private LayerMask NeedLayer;\r\n    public float shootingDistance;\r\n    public float chasingDistance;\r\n    public float aggroDistanse;\r\n    public float stoppingDistance;\r\n    [HideInInspector] public float distanceFromPlayer = 10000f;\r\n    [HideInInspector] public Vector2 lastTargetPoint = Vector2.zero;\r\n    private Vector3 dirToPlayer;\r\n    private Vector3 newPos;\r\n    public bool obstackleFlag;\r\n\r\n    private void Awake()\r\n    {\r\n        agent = this.GetComponent<NavMeshAgent>();\r\n        animator = this.GetComponent<Animator>();\r\n        currentHealth = maxHealth;\r\n\r\n        enemyStateMachine = new EnemyStateMachine();\r\n        IdleState = new IdleEnemyState(this, enemyStateMachine);\r\n        ChaseState = new ChaseEnemyState(this, enemyStateMachine);\r\n        AtackState = new AtackEnemyState(this, enemyStateMachine);\r\n        DetectionState = new DetectionEnemyState(this, enemyStateMachine);\r\n        LastPointCheckState = new LastPointCheckState(this, enemyStateMachine);\r\n        PatrolState = new PatrolEnemyState(this, enemyStateMachine);\r\n    }\r\n    private void Start()\r\n    {\r\n\r\n        //��������� �������� ������\r\n        agent.updateRotation = false;\r\n        agent.updateUpAxis = false;\r\n        //������������� ��������� ���������\r\n        enemyStateMachine.Initialize(IdleState);\r\n\r\n        animator.SetBool(\"IsWalking\", false);\r\n        atackCooldown = Random.Range(0.5f, 2f);\r\n\r\n        //navMeshPath = new NavMeshPath();\r\n        //pointOrPlayerTarget = target.transform;\r\n    }\r\n\r\n    public void Update()\r\n    {\r\n        enemyStateMachine.currentState.FrameUpdate();\r\n\r\n        distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);\r\n\r\n        obstackleFlag = obctacklesChecker();\r\n\r\n\r\n        dirToPlayer = target.transform.position - transform.position;\r\n        newPos = transform.position + dirToPlayer.normalized * stoppingDistance;\r\n\r\n        // �������� ������� �����\r\n        if (!obstackleFlag & distanceFromPlayer < aggroDistanse)\r\n        {\r\n            transform.localScale = new Vector3(dirToPlayer.x > 0 ? -3 : 3, 3, 3);\r\n        }\r\n    }\r\n\r\n    public void FixedUpdate()\r\n    {\r\n        enemyStateMachine.currentState.PhysicsUpdate();\r\n    }\r\n\r\n\r\n    #region SM States\r\n\r\n    public EnemyStateMachine enemyStateMachine { get; set; }\r\n    public IdleEnemyState IdleState { get; set; }\r\n\r\n    public ChaseEnemyState ChaseState { get; set; }\r\n\r\n    public AtackEnemyState AtackState { get; set; }\r\n\r\n    public DetectionEnemyState DetectionState { get; set; }\r\n\r\n    public LastPointCheckState LastPointCheckState { get; set; }\r\n\r\n    public PatrolEnemyState PatrolState { get; set; }\r\n\r\n    #endregion\r\n\r\n    #region Health\\Die Funcs\r\n    public void RestoreHealth(float health)\r\n    {\r\n        if (currentHealth + health > maxHealth) { currentHealth = maxHealth; }\r\n        else { currentHealth += health; }\r\n    }\r\n\r\n    public void TakeDamage(float damage)\r\n    {\r\n        currentHealth -= damage;\r\n        if (currentHealth - damage <= 0)\r\n        {\r\n            Die();\r\n            return;\r\n\r\n        }\r\n        else { Debug.Log(\"-10\"); return; }\r\n    }\r\n\r\n    public void Die()\r\n    {\r\n        Destroy(gameObject);\r\n    }\r\n    #endregion\r\n\r\n\r\n    #region  on Movement Funcs\r\n\r\n    public void moveEnemy(Vector2 velocity)\r\n    {\r\n        agent.SetDestination(velocity);\r\n    }\r\n\r\n    public void moveFromStoppingDistance()\r\n    {\r\n        agent.SetDestination(newPos);\r\n    }\r\n\r\n    #endregion\r\n\r\n\r\n    #region AnimTriggers\r\n    private void AnimationTriggerEvent(AnimationTriggerType triggerType)\r\n    {\r\n        //todo\r\n    }\r\n    public enum AnimationTriggerType\r\n    {\r\n        EnemyDamaged,\r\n        EnemyKilled,\r\n    }\r\n\r\n    #endregion\r\n\r\n    #region VisualDemonstration\r\n\r\n    private void OnDrawGizmos()\r\n    {\r\n        Gizmos.color = Color.green;\r\n        Gizmos.DrawWireSphere(transform.position, chasingDistance);\r\n        Gizmos.DrawWireSphere(transform.position, shootingDistance);\r\n        Gizmos.color = Color.red;\r\n        Gizmos.DrawWireSphere(transform.position, aggroDistanse);\r\n        Gizmos.color = Color.black;\r\n        Gizmos.DrawWireSphere(transform.position, stoppingDistance);\r\n    }\r\n    #endregion\r\n\r\n    #region Technical Funcs\r\n\r\n    public bool obctacklesChecker()\r\n    {\r\n        NavMeshHit hit;\r\n        agent.Raycast((Vector2)target.transform.position, out hit);\r\n        return hit.hit;\r\n    }\r\n\r\n    public bool obctacklesChecker(Vector2 point)\r\n    {\r\n        NavMeshHit hit;\r\n        agent.Raycast(point, out hit);\r\n        return hit.hit;\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n    #endregion\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Assets/Scripts/EnemyFSM/Base/Enemy.cs b/Assets/Scripts/EnemyFSM/Base/Enemy.cs
+--- a/Assets/Scripts/EnemyFSM/Base/Enemy.cs	(revision a2536a382bc0834016e05076714966f432b84eea)
++++ b/Assets/Scripts/EnemyFSM/Base/Enemy.cs	(date 1700746967504)
+@@ -19,10 +19,10 @@
+     public float currentHealth { get; set; }
+     // Imoveable..
+     public NavMeshAgent agent { get; set; }
+-    //���� ������
++    //поле игрока
+     public GameObject target;
+ 
+-    // ���� ��� �������� ���������:
++    // поля для просчета дистанции:
+     [SerializeField] private LayerMask NeedLayer;
+     public float shootingDistance;
+     public float chasingDistance;
+@@ -51,10 +51,10 @@
+     private void Start()
+     {
+ 
+-        //��������� �������� ������
++        //блокируем разворот агента
+         agent.updateRotation = false;
+         agent.updateUpAxis = false;
+-        //������������� ��������� ���������
++        //устонавливаем первичное состояние
+         enemyStateMachine.Initialize(IdleState);
+ 
+         animator.SetBool("IsWalking", false);
+@@ -76,7 +76,7 @@
+         dirToPlayer = target.transform.position - transform.position;
+         newPos = transform.position + dirToPlayer.normalized * stoppingDistance;
+ 
+-        // �������� ������� �����
++        // Разворот спрайта врага
+         if (!obstackleFlag & distanceFromPlayer < aggroDistanse)
+         {
+             transform.localScale = new Vector3(dirToPlayer.x > 0 ? -3 : 3, 3, 3);
+Index: Assets/Scripts/PlayerLogic/BasePlayerController.cs
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>using System.Collections;\r\nusing System.Collections.Generic;\r\nusing Unity.VisualScripting;\r\nusing UnityEditor.Rendering;\r\nusing UnityEngine;\r\n\r\n[RequireComponent(typeof(Rigidbody2D))]\r\npublic class BasePlayerController : MonoBehaviour, Idamageable\r\n{\r\n    protected Rigidbody2D rb;\r\n    protected Animator animator;\r\n    [SerializeField] private Transform bonk;\r\n\r\n    protected float movementSpeed = 5;\r\n    private Attack attack;\r\n\r\n\r\n    protected Vector3 movementDir;\r\n    protected Vector2 mousePos;\r\n\r\n    protected bool isDashing = false;\r\n    protected bool isDodging = false;\r\n    protected bool canDash = true;\r\n    protected bool canDodge = true;\r\n\r\n    public float maxHealth { get; set; } = 100f;\r\n    public float currentHealth { get; set; } = 100f;\r\n\r\n    private void Awake()\r\n    {\r\n        attack = GetComponent<Attack>();\r\n        rb = GetComponent<Rigidbody2D>();\r\n        rb.gravityScale = 0;\r\n    }\r\n    private void Update()\r\n    {\r\n        if (isDashing || isDodging) { return; }\r\n\r\n        if (Input.GetMouseButtonDown(2))\r\n        {\r\n            Attack.Action(bonk.position, 0.5f, 10, false);\r\n        }\r\n\r\n\r\n        movementDir.x = Input.GetAxis(\"Horizontal\");\r\n        movementDir.y = Input.GetAxis(\"Vertical\");\r\n        movementDir = movementDir.normalized;\r\n    }\r\n\r\n    private void FixedUpdate()\r\n    {\r\n\r\n\r\n        rb.velocity = movementDir * movementSpeed;\r\n    }\r\n\r\n    private void OnDrawGizmos()\r\n    {\r\n        Gizmos.color = Color.yellow;\r\n        Gizmos.DrawWireSphere(bonk.position, 0.5f);\r\n    }\r\n\r\n    public void RestoreHealth(float health)\r\n    {\r\n        if (currentHealth + health > maxHealth) { currentHealth = maxHealth; }\r\n        else { currentHealth += health; }\r\n    }\r\n\r\n    public void TakeDamage(float damage)\r\n    {\r\n        if (currentHealth - damage <= 0)\r\n        {\r\n            Die();\r\n        }\r\n        else { currentHealth -= damage; Debug.Log(\"-10\"); }\r\n    }\r\n\r\n    public void Die()\r\n    {\r\n        Debug.Log(\"�������� ��������\");\r\n    }\r\n\r\n    private IEnumerator Timer(float time)\r\n    {\r\n        yield return new WaitForSeconds(time);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Assets/Scripts/PlayerLogic/BasePlayerController.cs b/Assets/Scripts/PlayerLogic/BasePlayerController.cs
+--- a/Assets/Scripts/PlayerLogic/BasePlayerController.cs	(revision a2536a382bc0834016e05076714966f432b84eea)
++++ b/Assets/Scripts/PlayerLogic/BasePlayerController.cs	(date 1700746967451)
+@@ -77,7 +77,7 @@
+ 
+     public void Die()
+     {
+-        Debug.Log("�������� ��������");
++        Debug.Log("Царствие Небесное");
+     }
+ 
+     private IEnumerator Timer(float time)

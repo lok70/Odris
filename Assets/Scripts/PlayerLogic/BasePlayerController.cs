@@ -81,7 +81,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     public void Die()
     {
-        Debug.Log("Царствие Небесное");
+        Debug.Log("Р¦Р°СЂСЃС‚РІРёРµ РќРµР±РµСЃРЅРѕРµ");
     }
 
     private IEnumerator Timer(float time)

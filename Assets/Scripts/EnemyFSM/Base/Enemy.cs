@@ -19,10 +19,10 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     public float currentHealth { get; set; }
     // Imoveable..
     public NavMeshAgent agent { get; set; }
-    //поле игрока
+    //РїРѕР»Рµ РёРіСЂРѕРєР°
     public GameObject target;
 
-    // поля для просчета дистанции:
+    // РїРѕР»СЏ РґР»СЏ РїСЂРѕСЃС‡РµС‚Р° РґРёСЃС‚Р°РЅС†РёРё:
     [SerializeField] private LayerMask NeedLayer;
     public float shootingDistance;
     public float chasingDistance;
@@ -51,10 +51,10 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     private void Start()
     {
 
-        //блокируем разворот агента
+        //Р±Р»РѕРєРёСЂСѓРµРј СЂР°Р·РІРѕСЂРѕС‚ Р°РіРµРЅС‚Р°
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        //устонавливаем первичное состояние
+        //СѓСЃС‚РѕРЅР°РІР»РёРІР°РµРј РїРµСЂРІРёС‡РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ
         enemyStateMachine.Initialize(IdleState);
 
         animator.SetBool("IsWalking", false);
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         dirToPlayer = target.transform.position - transform.position;
         newPos = transform.position + dirToPlayer.normalized * stoppingDistance;
 
-        // Разворот спрайта врага
+        // Р Р°Р·РІРѕСЂРѕС‚ СЃРїСЂР°Р№С‚Р° РІСЂР°РіР°
         if (!obstackleFlag & distanceFromPlayer < aggroDistanse)
         {
             transform.localScale = new Vector3(dirToPlayer.x > 0 ? -3 : 3, 3, 3);
