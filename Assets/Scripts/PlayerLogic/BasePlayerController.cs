@@ -14,11 +14,12 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     protected float movementSpeed = 5;
     private Attack attack;
+    public static bool IsBlocking = false;
 
 
     protected Vector3 movementDir;
     protected Vector2 mousePos;
-    public  Vector2 myPos;
+    public Vector2 myPos;
 
     protected bool isDashing = false;
     protected bool isDodging = false;
@@ -43,10 +44,21 @@ public class BasePlayerController : MonoBehaviour, Idamageable
         if (Input.GetMouseButtonDown(0))
         {
             StartCoroutine(Timer(0.5f));
-            //Debug.Log("Ydar");
             Attack.Action(bonk.position, 0.5f, 10, false);
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            animator.SetTrigger("startBlocking");
+        }
+        if (Input.GetKey(KeyCode.C))
+        {
+            animator.SetBool("IsBlocking", true);
 
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            animator.SetBool("IsBlocking", false);
+        }
 
         movementDir.x = Input.GetAxis("Horizontal");
         movementDir.y = Input.GetAxis("Vertical");

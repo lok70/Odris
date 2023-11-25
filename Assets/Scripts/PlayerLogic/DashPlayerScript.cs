@@ -6,7 +6,8 @@ public class DashPlayerScript : BasePlayerController
 {
 
     private Vector2 dashDirection;
-    private bool dashFlag;
+    private static bool dashFlag;
+
 
     [SerializeField] private float dashDistance = 50f;
 
@@ -17,6 +18,7 @@ public class DashPlayerScript : BasePlayerController
         dashDirection = (mousePos - rb.position).normalized;
         if (Input.GetKey(KeyCode.LeftShift) && canDash)
         {
+
             canDash = false;
             dashFlag = true;
         }

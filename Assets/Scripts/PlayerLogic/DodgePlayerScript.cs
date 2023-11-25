@@ -22,6 +22,7 @@ public class DodgePlayerScript : BasePlayerController
 
         if (canDodge & Input.GetKeyDown(KeyCode.Space))
         {
+            animator.SetTrigger("Dodge");
             canDodge = false;
             dodgingFlag = true;
             StartCoroutine(FlagTimer());
@@ -34,13 +35,15 @@ public class DodgePlayerScript : BasePlayerController
     {
         if (dodgingFlag)
         {
+
             Vector2 targetPos = (Vector2)transform.position + (Vector2)(dodgeDir * dodgeDistance);
             rb.MovePosition(Vector3.MoveTowards(transform.position, targetPos, dodgeStartSpeed * Time.deltaTime));
-
+            animator.SetTrigger("EndDodge");
             dodgeStartSpeed -= dodgeStartSpeed * 12f * Time.deltaTime;
 
             if (dodgeStartSpeed < 5f)
             {
+
                 dodgingFlag = false;
                 dodgeStartSpeed = 50;
                 rb.velocity = Vector2.zero;
