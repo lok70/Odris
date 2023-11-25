@@ -8,7 +8,7 @@ namespace Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates
     {
         private float timer;
         private Vector2 startPosition;
-        private float patrolRadius = 1f;
+        private float patrolRadius = 3f;
         private Vector2 currentPoint;
      
         public PatrolEnemyState(Enemy _enemy, EnemyStateMachine _enemyStateMachine) : base(_enemy, _enemyStateMachine)
@@ -18,7 +18,7 @@ namespace Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates
         public override void EnterState()
         {
             base.EnterState();
-            enemy.animator.SetBool("IsWalking", true);
+            
             startPosition = enemy.transform.position;
             currentPoint = (Vector2)enemy.transform.position +  Random.insideUnitCircle * patrolRadius;
         }

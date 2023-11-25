@@ -22,7 +22,7 @@ public class AnimationController : MonoBehaviour
 
         anim.SetFloat("speed", rb.velocity.magnitude);
 
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
         anim.SetFloat("HorMousePos", mousePos.x);
         anim.SetFloat("VertMousePos", mousePos.y);
 

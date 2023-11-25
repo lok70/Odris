@@ -8,12 +8,11 @@ using UnityEngine;
 public class BasePlayerController : MonoBehaviour, Idamageable
 {
     protected Rigidbody2D rb;
-    protected Animator animator;
+    protected Animator anim;
     [SerializeField] private Transform bonk;
 
 
     protected float movementSpeed = 5;
-    private Attack attack;
     public static bool IsBlocking = false;
 
 
@@ -31,7 +30,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void Awake()
     {
-        attack = GetComponent<Attack>();
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
     }
@@ -46,19 +45,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
             StartCoroutine(Timer(0.5f));
             Attack.Action(bonk.position, 0.5f, 10, false);
         }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            animator.SetTrigger("startBlocking");
-        }
-        if (Input.GetKey(KeyCode.C))
-        {
-            animator.SetBool("IsBlocking", true);
-
-        }
-        if (Input.GetKeyUp(KeyCode.C))
-        {
-            animator.SetBool("IsBlocking", false);
-        }
+       
 
         movementDir.x = Input.GetAxis("Horizontal");
         movementDir.y = Input.GetAxis("Vertical");

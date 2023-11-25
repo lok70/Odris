@@ -32,7 +32,7 @@ namespace Assets.Scripts.NewEnemyVariations.StateMachine.ConcreteStates
             {
                 enemyStateMachine.ChangeState(enemy.ChaseState);
             }
-            if (enemy.distanceFromPlayer > enemy.aggroDistanse)
+            if ((enemy.distanceFromPlayer > enemy.aggroDistanse && enemy.obstackleFlag) || (enemy.distanceFromPlayer > enemy.chasingDistance && !enemy.obstackleFlag))
             {
                 Debug.Log("Противник покинул поле зрения");
                 enemy.lastTargetPoint = enemy.target.transform.position;

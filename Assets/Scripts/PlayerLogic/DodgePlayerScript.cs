@@ -11,7 +11,7 @@ public class DodgePlayerScript : BasePlayerController
 
     private bool dodgingFlag = false;
 
-
+  
     private void Update()
     {
         if (isDashing) { return; }
@@ -22,7 +22,7 @@ public class DodgePlayerScript : BasePlayerController
 
         if (canDodge & Input.GetKeyDown(KeyCode.Space))
         {
-            animator.SetTrigger("Dodge");
+            anim.SetTrigger("Dodge");
             canDodge = false;
             dodgingFlag = true;
             StartCoroutine(FlagTimer());
@@ -38,7 +38,6 @@ public class DodgePlayerScript : BasePlayerController
 
             Vector2 targetPos = (Vector2)transform.position + (Vector2)(dodgeDir * dodgeDistance);
             rb.MovePosition(Vector3.MoveTowards(transform.position, targetPos, dodgeStartSpeed * Time.deltaTime));
-            animator.SetTrigger("EndDodge");
             dodgeStartSpeed -= dodgeStartSpeed * 12f * Time.deltaTime;
 
             if (dodgeStartSpeed < 5f)

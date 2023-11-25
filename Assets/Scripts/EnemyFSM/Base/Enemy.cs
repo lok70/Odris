@@ -57,9 +57,9 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         //устонавливаем первичное состояние
         enemyStateMachine.Initialize(IdleState);
 
-        animator.SetBool("IsWalking", false);
+        
         atackCooldown = Random.Range(0.5f, 2f);
-
+      
         //navMeshPath = new NavMeshPath();
         //pointOrPlayerTarget = target.transform;
     }
@@ -68,19 +68,19 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     {
         enemyStateMachine.currentState.FrameUpdate();
 
+        animator.SetFloat("Horizontal", agent.velocity.normalized.x);
+        animator.SetFloat("Vertical", agent.velocity.normalized.y);
+        animator.SetFloat("speed", agent.velocity.sqrMagnitude);
+        
         distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
 
         obstackleFlag = obctacklesChecker();
 
 
-        dirToPlayer = target.transform.position - transform.position;
-        newPos = transform.position + dirToPlayer.normalized * stoppingDistance;
+        //dirToPlayer = target.transform.position - transform.position;
+        //newPos = transform.position + dirToPlayer.normalized * stoppingDistance;
 
-        // Разворот спрайта врага
-        if (!obstackleFlag & distanceFromPlayer < aggroDistanse)
-        {
-            transform.localScale = new Vector3(dirToPlayer.x > 0 ? -3 : 3, 3, 3);
-        }
+        
     }
 
     public void FixedUpdate()

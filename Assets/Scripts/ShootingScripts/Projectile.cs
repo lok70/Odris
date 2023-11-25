@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour
     private void OnEnable()
     {
         transform.position = ShootingPoint.shootingPointCords;
-    
+
         rb = GetComponent<Rigidbody2D>();
         Vector2 heading = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         float targetDistance = heading.magnitude;
@@ -20,15 +20,19 @@ public class Projectile : MonoBehaviour
         rb.velocity = moveDir * speed;
     }
 
-   
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider != null)
+        if (collision.gameObject.name != "projectile(Clone)")
         {
-            Debug.Log("Hit");
+            if (collision.gameObject.TryGetComponent(typeof(Enemy), out Component component))
+            {
+                collision.gameObject.GetComponent<Enemy>().TakeDamage(10);
+                collision.gameObject.GetComponent<Rigidbody2D>().AddForce(moveDir * 0.25f, ForceMode2D.Force);
+            }
             gameObject.SetActive(false);
         }
     }
-   
+
 }

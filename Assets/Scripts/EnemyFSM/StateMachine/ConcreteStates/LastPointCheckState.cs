@@ -14,7 +14,7 @@ public class LastPointCheckState : EnemyState
         base.EnterState();
         Debug.Log("ѕроверка последнего местонахождени€ противника");
         enemy.agent.speed = 3.5f;
-        enemy.animator.SetBool("IsWalking", true);
+        
     }
 
     public override void ExitState()
@@ -25,7 +25,7 @@ public class LastPointCheckState : EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
-        if (enemy.distanceFromPlayer > enemy.aggroDistanse && Timer(Random.Range(3, 5)))
+        if (Timer(Random.Range(3, 5)))
         {
             timer = 0;
             

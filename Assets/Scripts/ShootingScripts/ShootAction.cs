@@ -16,16 +16,17 @@ public class ShootAction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) )
+        if (Input.GetKeyUp(KeyCode.F) && flag)
         {
             flag = false;
-            pool.Get().SetActive(true);
-            StartCoroutine(Timer(2));
+            StartCoroutine(Shooting(1));
         }
+        
     }
 
-    private IEnumerator Timer(float coolDown)
+    private IEnumerator Shooting(float coolDown)
     {
+        pool.Get().SetActive(true);
         yield return new WaitForSeconds(coolDown);
         flag = true;
     }

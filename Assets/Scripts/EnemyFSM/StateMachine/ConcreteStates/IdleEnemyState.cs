@@ -17,7 +17,7 @@ public class IdleEnemyState : EnemyState
         
         Debug.Log("Противник абсолютно спокоен");
         enemy.agent.speed = 0;
-        enemy.animator.SetBool("IsWalking", false);
+        
     }
 
     public override void ExitState()

@@ -15,7 +15,6 @@ public class ProjectilePool : MonoBehaviour
         {
             pool[i] = Instantiate(pref);
             pool[i].transform.SetParent(this.transform);
-
             pool[i].SetActive(false);
         }
     }
@@ -24,7 +23,7 @@ public class ProjectilePool : MonoBehaviour
 
     public GameObject Get()
     {
-        for (int i = 0; poolSize > 0; i++)
+        for (int i = 0; poolSize > i; i++)
         {
             if (!pool[i].activeInHierarchy)
             {
