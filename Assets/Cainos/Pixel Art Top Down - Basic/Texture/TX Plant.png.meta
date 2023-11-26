@@ -414,12 +414,16 @@ TextureImporter:
         x: 24
         y: 359
         width: 113
-        height: 139
+        height: 138
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -7.5, y: -69}
+        - {x: -4.5, y: -38}
+        - {x: 3.5, y: -39}
+        - {x: 4.5, y: -68}
       tessellationDetail: 0
       bones: []
       spriteID: d24745cb345f15d4e8380714ce1ddaf9
@@ -440,7 +444,11 @@ TextureImporter:
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -1.5, y: -59}
+        - {x: -2.5, y: -23}
+        - {x: 6.5, y: -24}
+        - {x: 5.5, y: -59}
       tessellationDetail: 0
       bones: []
       spriteID: e000a902da7b93543a0c48f5962975b7
@@ -453,15 +461,19 @@ TextureImporter:
       name: TX Tree T2 Lower
       rect:
         serializedVersion: 2
-        x: 159
+        x: 161
         y: 359
-        width: 97
+        width: 95
         height: 136
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-      physicsShape: []
+      physicsShape:
+      - - {x: -5.5, y: -65}
+        - {x: -7.5, y: -38}
+        - {x: 5.5, y: -38}
+        - {x: 4.5, y: -65}
       tessellationDetail: 0
       bones: []
       spriteID: 315dce2be60554b43bdf5597b28ee495
@@ -945,6 +957,8 @@ TextureImporter:
       TX Grass N: 21300170
       TX Grass O: 21300172
       TX Plant_0: -2049482354
+      TX Plant_1: -1493448198
+      TX Plant_2: -1447342236
       TX Tree T1 Lower: 21300122
       TX Tree T1 Upper: 21300124
       TX Tree T2 Lower: 21300126
