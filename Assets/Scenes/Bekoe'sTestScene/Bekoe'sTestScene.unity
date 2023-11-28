@@ -157,10 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
-<<<<<<< HEAD
   myPos: {x: 0, y: 0}
-=======
->>>>>>> kitttooo`sbranch
 --- !u!50 &91842622
 Rigidbody2D:
   serializedVersion: 4
@@ -303,10 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
-<<<<<<< HEAD
   myPos: {x: 0, y: 0}
-=======
->>>>>>> kitttooo`sbranch
   dashDistance: 150
 --- !u!1 &110830082
 GameObject:
@@ -666,13 +660,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy(BringerOD)
       objectReference: {fileID: 0}
-<<<<<<< HEAD
     - target: {fileID: 8646288365771636059, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-=======
->>>>>>> kitttooo`sbranch
     m_RemovedComponents:
     - {fileID: 6680814912695509784, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
     m_RemovedGameObjects: []
@@ -719,10 +710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 1988141414}
-<<<<<<< HEAD
   myPos: {x: 0, y: 0}
-=======
->>>>>>> kitttooo`sbranch
 --- !u!50 &520127336
 Rigidbody2D:
   serializedVersion: 4
@@ -836,13 +824,7 @@ Transform:
   m_LocalScale: {x: 6.976071, y: 6.976071, z: 1.3952142}
   m_ConstrainProportionsScale: 0
   m_Children:
-<<<<<<< HEAD
   - {fileID: 1988141414}
-=======
-  - {fileID: 881894673}
-  - {fileID: 1988141414}
-  - {fileID: 1184950112}
->>>>>>> kitttooo`sbranch
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &520127341
@@ -893,10 +875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 1988141414}
-<<<<<<< HEAD
   myPos: {x: 0, y: 0}
-=======
->>>>>>> kitttooo`sbranch
   dodgeStartSpeed: 50
   dodgeDistance: 5
 --- !u!114 &520127344
@@ -912,10 +891,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 1988141414}
-<<<<<<< HEAD
   myPos: {x: 0, y: 0}
-=======
->>>>>>> kitttooo`sbranch
   dashDistance: 100
 --- !u!114 &520127345
 MonoBehaviour:
@@ -930,10 +906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 1988141414}
-<<<<<<< HEAD
   myPos: {x: 0, y: 0}
-=======
->>>>>>> kitttooo`sbranch
 --- !u!1 &865770342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,97 +1098,6 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945368574}
   m_Enabled: 1
-<<<<<<< HEAD
-=======
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 12fa2150705ab1740b2236532f1184e0, type: 3}
-  m_Color: {r: 0, g: 0.07019104, b: 0.07019104, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!1 &928011076
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 928011078}
-  m_Layer: 0
-  m_Name: Spawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &928011078
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 928011076}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.719877, y: 1.4021535, z: -0.9727199}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &945368574 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8646288365771636059, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
-  m_PrefabInstance: {fileID: 1498791192}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &945368582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945368574}
-  m_Enabled: 1
->>>>>>> kitttooo`sbranch
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f5ab92cfc2b0e24fabb0c38d6f3ba3a, type: 3}
   m_Name: 
@@ -1961,66 +1843,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1184950111
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1184950112}
-  - component: {fileID: 1184950115}
-  - component: {fileID: 1184950114}
-  m_Layer: 0
-  m_Name: Weapon Parent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1184950112
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184950111}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0040000323, y: -0.208, z: 0}
-  m_LocalScale: {x: 0.23985998, y: 0.23985998, z: 0.23986}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 520127339}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1184950114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184950111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a0bc8423caff3d4cb9f989e3c1f1d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pref: {fileID: 7215118335236226387, guid: b237f27ee99026941b38c000cdd7463e, type: 3}
-  poolSize: 10
---- !u!114 &1184950115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1184950111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93dbe4c811df424478d7c1263c2b053f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pool: {fileID: 0}
 --- !u!1 &1255174736
 GameObject:
   m_ObjectHideFlags: 0
@@ -2168,7 +1990,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
 --- !u!1 &1436751435 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8263387588537320596, guid: af63e8f73de3edc4d9d53a7ee31274c4, type: 3}
@@ -2214,8 +2035,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.03}
   m_Size: {x: 0.26, y: 0.33}
   m_Direction: 0
-=======
->>>>>>> kitttooo`sbranch
 --- !u!1001 &1498791192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2226,19 +2045,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5565903013896113291, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
       propertyPath: m_LocalPosition.x
-<<<<<<< HEAD
       value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 5565903013896113291, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
       propertyPath: m_LocalPosition.y
       value: -2
-=======
-      value: 3.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 5565903013896113291, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.14
->>>>>>> kitttooo`sbranch
       objectReference: {fileID: 0}
     - target: {fileID: 5565903013896113291, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2280,13 +2091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy(BringerOD) (1)
       objectReference: {fileID: 0}
-<<<<<<< HEAD
     - target: {fileID: 8646288365771636059, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-=======
->>>>>>> kitttooo`sbranch
     m_RemovedComponents:
     - {fileID: 6680814912695509784, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
     m_RemovedGameObjects: []
@@ -2782,13 +2590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c134937c6b79a6940a3823f02ffcdc7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
   characterCollider: {fileID: 1436751442}
   distanceFromCharacter: 0.87
-=======
-  characterCollider: {fileID: 520127339}
-  distanceFromCharacter: 1
->>>>>>> kitttooo`sbranch
 --- !u!212 &1615804677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3178,7 +2981,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
 --- !u!1 &1895738412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7544940145761084411, guid: 9b6f3864f1796f443970f4321335ddd0, type: 3}
@@ -3388,8 +3190,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2000084153}
   m_SourcePrefab: {fileID: 100100000, guid: 9b6f3864f1796f443970f4321335ddd0, type: 3}
-=======
->>>>>>> kitttooo`sbranch
 --- !u!1 &1988141413
 GameObject:
   m_ObjectHideFlags: 0
@@ -3474,7 +3274,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-<<<<<<< HEAD
 --- !u!1 &2000084146 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7544940145761084411, guid: 9b6f3864f1796f443970f4321335ddd0, type: 3}
@@ -3507,8 +3306,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
-=======
->>>>>>> kitttooo`sbranch
 --- !u!1 &2052735240 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8646288365771636059, guid: 7356aabd96b662f40b98ba11527af20c, type: 3}
@@ -3545,7 +3342,6 @@ MonoBehaviour:
   distanceFromPlayer: 10000
   lastTargetPoint: {x: 0, y: 0}
   obstackleFlag: 0
-<<<<<<< HEAD
 --- !u!1001 &2761530817207973529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3639,8 +3435,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1895738426}
   m_SourcePrefab: {fileID: 100100000, guid: 9b6f3864f1796f443970f4321335ddd0, type: 3}
-=======
->>>>>>> kitttooo`sbranch
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3655,10 +3449,7 @@ SceneRoots:
   - {fileID: 520127339}
   - {fileID: 928011078}
   - {fileID: 1615804675}
-<<<<<<< HEAD
   - {fileID: 1901744445}
   - {fileID: 2761530817207973529}
   - {fileID: 1136161444}
   - {fileID: 1928400875}
-=======
->>>>>>> kitttooo`sbranch

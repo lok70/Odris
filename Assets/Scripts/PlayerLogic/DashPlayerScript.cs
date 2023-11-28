@@ -6,12 +6,8 @@ public class DashPlayerScript : BasePlayerController
 {
 
     private Vector2 dashDirection;
-<<<<<<< HEAD
     private static bool dashFlag;
 
-=======
-    private bool dashFlag;
->>>>>>> kitttooo`sbranch
 
     [SerializeField] private float dashDistance = 50f;
 

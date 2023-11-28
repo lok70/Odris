@@ -51,11 +51,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     private void Start()
     {
 
-<<<<<<< HEAD
         //блокируем разворот агента
-=======
-        //��������� �������� ������
->>>>>>> kitttooo`sbranch
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         //устонавливаем первичное состояние

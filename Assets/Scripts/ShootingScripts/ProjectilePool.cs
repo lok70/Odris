@@ -15,10 +15,6 @@ public class ProjectilePool : MonoBehaviour
         {
             pool[i] = Instantiate(pref);
             pool[i].transform.SetParent(this.transform);
-<<<<<<< HEAD
-=======
-
->>>>>>> kitttooo`sbranch
             pool[i].SetActive(false);
         }
     }
@@ -27,11 +23,7 @@ public class ProjectilePool : MonoBehaviour
 
     public GameObject Get()
     {
-<<<<<<< HEAD
         for (int i = 0; poolSize > i; i++)
-=======
-        for (int i = 0; poolSize > 0; i++)
->>>>>>> kitttooo`sbranch
         {
             if (!pool[i].activeInHierarchy)
             {

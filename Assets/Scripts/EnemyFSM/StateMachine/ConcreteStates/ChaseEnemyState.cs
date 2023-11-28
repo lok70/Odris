@@ -11,11 +11,7 @@ public class ChaseEnemyState : EnemyState
     {
         base.EnterState();
         enemy.agent.speed = 5;
-<<<<<<< HEAD
        
-=======
-        enemy.animator.SetBool("IsWalking", true);
->>>>>>> kitttooo`sbranch
         Debug.Log("Перешел в состояние погони");
     }
 
