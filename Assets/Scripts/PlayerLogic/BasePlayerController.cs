@@ -10,7 +10,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 {
     protected Rigidbody2D rb;
     protected Animator anim;
-    [SerializeField] private Transform bonk;
+    //[SerializeField] private Transform bonk = null;
 
 
     protected float movementSpeed = 5;
@@ -50,7 +50,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
         if (Input.GetMouseButtonDown(0))
         {
             StartCoroutine(Timer(0.5f));
-            Attack.Action(bonk.position, 0.5f, 10, false);
+            //Attack.Action(bonk.position, 0.5f, 10, false);
         }
        
 
@@ -69,8 +69,8 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(bonk.position, 0.5f);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(bonk.position, 0.5f);
     }
 
     public void RestoreHealth(float health)
