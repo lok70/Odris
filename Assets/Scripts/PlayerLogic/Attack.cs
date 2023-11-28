@@ -7,10 +7,7 @@ public class Attack : BasePlayerController
 {
     private static Vector2 Ppos;
 
-    private void Update()
-    {
-        Ppos = myPos;
-    }
+  
 
     static GameObject NearTarget(Vector3 position, Collider2D[] array)
     {
@@ -43,7 +40,7 @@ public class Attack : BasePlayerController
                 Vector2 direction = ((Vector2)obj.transform.position - point).normalized;
                 Debug.Log("Ydar");
  
-                obj.transform.position += (Vector3)direction * 0.3f;
+                
             }
             return;
         }
@@ -51,6 +48,7 @@ public class Attack : BasePlayerController
         {
             if (hit.GetComponent<Enemy>())
             {
+                Debug.Log("Ydar");
                 hit.GetComponent<Enemy>().TakeDamage(10);
             }
         }

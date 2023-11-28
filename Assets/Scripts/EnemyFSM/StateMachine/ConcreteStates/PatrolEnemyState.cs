@@ -8,7 +8,7 @@ namespace Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates
     {
         private float timer;
         private Vector2 startPosition;
-        private float patrolRadius = 3f;
+        private float patrolRadius = 3.5f;
         private Vector2 currentPoint;
      
         public PatrolEnemyState(Enemy _enemy, EnemyStateMachine _enemyStateMachine) : base(_enemy, _enemyStateMachine)
@@ -36,11 +36,13 @@ namespace Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates
             {
                 if ((Vector2)enemy.transform.position == currentPoint)
                 {
-                    if (Timer(Random.Range(2, 7)))
+                    timer += Time.deltaTime;
+                    if (timer > Random.Range(2, 7))
                     {
-                        timer = 0;
+                        
                         currentPoint = startPosition + Random.insideUnitCircle * patrolRadius;
                         Debug.Log("Таймер закончился, выполняется смена точки");
+                        timer = 0;
                     }
 
                 }
@@ -50,31 +52,20 @@ namespace Assets.Bekoe_sScripts.NewEnemyVariations.StateMachine.ConcreteStates
                 currentPoint = startPosition + Random.insideUnitCircle * patrolRadius;
             }
 
-            
 
+            if (enemy.distanceFromPlayer <= enemy.shootingDistance & !enemy.obstackleFlag)
+            {
+                enemyStateMachine.ChangeState(enemy.AtackState);
+            }
 
         }
 
         public override void PhysicsUpdate()
         {
             base.PhysicsUpdate();
-            if (Input.GetMouseButton(2))
-            {
-                Debug.Log(currentPoint);
-                Debug.Log((Vector2)enemy.transform.position);
-            }
         }
 
-        private bool Timer(float duration)
-        {
-            timer += Time.deltaTime;
-            if (timer >= duration)
-            {
-                return true;
-            }
-            return false;
-        }
-
+        
         private bool CheckSpeed()
         {
             return enemy.agent.speed > 0.1;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,16 +10,17 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 {
     protected Rigidbody2D rb;
     protected Animator anim;
-    [SerializeField] private Transform bonk;
+    [SerializeField]private Transform bonk;
+    
 
 
     protected float movementSpeed = 5;
-    public static bool IsBlocking = false;
+    
 
 
     protected Vector3 movementDir;
     protected Vector2 mousePos;
-    public Vector2 myPos;
+    
 
     protected bool isDashing = false;
     protected bool isDodging = false;
@@ -28,24 +30,43 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     public float maxHealth { get; set; } = 100f;
     public float currentHealth { get; set; } = 100f;
 
+    public static Action onTookDamage;
+    public static Action onDied;
+    public static Action onAttacked;
+    public static Action onBlocked;
+    public static Action onEndedBlocking;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
     }
+
+   
     private void Update()
     {
-        myPos = transform.position;
-
+        movementSpeed = 5;
         if (isDashing || isDodging) { return; }
 
         if (Input.GetMouseButtonDown(0))
         {
+            onAttacked.Invoke();
+            //anim.SetTrigger("Attack");
             StartCoroutine(Timer(0.5f));
-            Attack.Action(bonk.position, 0.5f, 10, false);
+            Attack.Action(bonk.position, 0.5f, 10, true);
         }
-       
+
+        if (Input.GetMouseButton(1))
+        {
+            onBlocked?.Invoke();
+            movementSpeed = 2.5f;
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            
+            onEndedBlocking?.Invoke();
+        }
 
         movementDir.x = Input.GetAxis("Horizontal");
         movementDir.y = Input.GetAxis("Vertical");
@@ -57,11 +78,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
         rb.velocity = movementDir * movementSpeed;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(bonk.position, 0.5f);
-    }
+   
 
     public void RestoreHealth(float health)
     {
@@ -73,9 +90,10 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     {
         if (currentHealth - damage <= 0)
         {
+            onDied?.Invoke();
             Die();
         }
-        else { currentHealth -= damage; Debug.Log("-10"); }
+        else { onTookDamage?.Invoke(); currentHealth -= damage; Debug.Log("-10"); }
     }
 
     public void Die()

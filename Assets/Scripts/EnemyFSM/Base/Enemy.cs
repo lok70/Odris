@@ -30,7 +30,6 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     public float stoppingDistance;
     [HideInInspector] public float distanceFromPlayer = 10000f;
     [HideInInspector] public Vector2 lastTargetPoint = Vector2.zero;
-    private Vector3 dirToPlayer;
     private Vector3 newPos;
     public bool obstackleFlag;
 
@@ -40,6 +39,10 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         animator = this.GetComponent<Animator>();
         currentHealth = maxHealth;
 
+
+    }
+    private void Start()
+    {
         enemyStateMachine = new EnemyStateMachine();
         IdleState = new IdleEnemyState(this, enemyStateMachine);
         ChaseState = new ChaseEnemyState(this, enemyStateMachine);
@@ -47,9 +50,6 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         DetectionState = new DetectionEnemyState(this, enemyStateMachine);
         LastPointCheckState = new LastPointCheckState(this, enemyStateMachine);
         PatrolState = new PatrolEnemyState(this, enemyStateMachine);
-    }
-    private void Start()
-    {
 
         //блокируем разворот агента
         agent.updateRotation = false;
@@ -57,9 +57,9 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         //устонавливаем первичное состояние
         enemyStateMachine.Initialize(IdleState);
 
-        
+
         atackCooldown = Random.Range(0.5f, 2f);
-      
+
         //navMeshPath = new NavMeshPath();
         //pointOrPlayerTarget = target.transform;
     }
@@ -71,16 +71,11 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         animator.SetFloat("Horizontal", agent.velocity.normalized.x);
         animator.SetFloat("Vertical", agent.velocity.normalized.y);
         animator.SetFloat("speed", agent.velocity.sqrMagnitude);
-        
+
         distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
 
         obstackleFlag = obctacklesChecker();
 
-
-        //dirToPlayer = target.transform.position - transform.position;
-        //newPos = transform.position + dirToPlayer.normalized * stoppingDistance;
-
-        
     }
 
     public void FixedUpdate()

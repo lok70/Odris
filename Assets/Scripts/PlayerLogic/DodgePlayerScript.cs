@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,6 +12,7 @@ public class DodgePlayerScript : BasePlayerController
 
     private bool dodgingFlag = false;
 
+    public static Action onDodged;
   
     private void Update()
     {
@@ -22,11 +24,11 @@ public class DodgePlayerScript : BasePlayerController
 
         if (canDodge & Input.GetKeyDown(KeyCode.Space))
         {
-            anim.SetTrigger("Dodge");
+            onDodged?.Invoke();
             canDodge = false;
             dodgingFlag = true;
             StartCoroutine(FlagTimer());
-
+            
         }
 
     }

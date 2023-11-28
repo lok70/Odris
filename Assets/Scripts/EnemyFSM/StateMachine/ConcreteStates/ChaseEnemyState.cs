@@ -11,7 +11,6 @@ public class ChaseEnemyState : EnemyState
     {
         base.EnterState();
         enemy.agent.speed = 5;
-       
         Debug.Log("Перешел в состояние погони");
     }
 
@@ -32,6 +31,10 @@ public class ChaseEnemyState : EnemyState
         if (enemy.distanceFromPlayer <= enemy.stoppingDistance)
         {
             enemy.moveFromStoppingDistance();  
+        }
+        if (enemy.distanceFromPlayer <= enemy.shootingDistance & !enemy.obstackleFlag)
+        {
+            enemyStateMachine.ChangeState(enemy.AtackState);
         }
     }
 

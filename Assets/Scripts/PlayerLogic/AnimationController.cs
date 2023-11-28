@@ -4,11 +4,27 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class AnimationController : MonoBehaviour
+public class AnimationController : BasePlayerController
 {
-    private Animator anim;
-    private Vector2 mousePos;
-    private Rigidbody2D rb;
+    
+
+    private void OnEnable()
+    {
+        onAttacked += AttackTrigger;
+        onBlocked += BlockingTrigger;
+        onDied += DeathTrigger;
+        DodgePlayerScript.onDodged += DodgeTrigger;
+        onTookDamage += TakeDamageTrigger;
+    }
+
+    private void OnDisable()
+    {
+        onAttacked -= AttackTrigger;
+        onBlocked -= BlockingTrigger;
+        onDied -= DeathTrigger;
+        onTookDamage -= TakeDamageTrigger;
+        DodgePlayerScript.onDodged -= DodgeTrigger;
+    }
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -26,21 +42,31 @@ public class AnimationController : MonoBehaviour
         anim.SetFloat("HorMousePos", mousePos.x);
         anim.SetFloat("VertMousePos", mousePos.y);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            anim.SetTrigger("Dodge");
-        }
+       
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            anim.SetTrigger("Attack");
-        }
+        
 
-        if (Input.GetMouseButton(1)) 
-        {
-            anim.SetTrigger("Blocking");
-        }
+        
+    }
+    private void DodgeTrigger()
+    {
+        anim.SetTrigger("Dodge");
+    }
+    private void BlockingTrigger()
+    {
+        //trigger
+    }
+    private void TakeDamageTrigger()
+    {
+        //took Damage
     }
 
-
+    private void DeathTrigger()
+    {
+        //death
+    }
+    private void AttackTrigger()
+    {
+        anim.SetTrigger("Attack");
+    }
 }
