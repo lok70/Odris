@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class BasePlayerController : MonoBehaviour, Idamageable
 {
     protected Rigidbody2D rb;
     protected Animator anim;
+
     [SerializeField]private Transform bonk;
     
+
 
 
     protected float movementSpeed = 5;
@@ -30,11 +33,19 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     public float maxHealth { get; set; } = 100f;
     public float currentHealth { get; set; } = 100f;
 
+
     public static Action onTookDamage;
     public static Action onDied;
     public static Action onAttacked;
     public static Action onBlocked;
     public static Action onEndedBlocking;
+
+
+    public VisualEffect vfxRenderer;
+
+    [SerializeField] private float fogOffset = 15f;
+    private Vector3 FogVec;
+
 
     private void Awake()
     {
@@ -54,6 +65,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
             onAttacked.Invoke();
             //anim.SetTrigger("Attack");
             StartCoroutine(Timer(0.5f));
+
             Attack.Action(bonk.position, 0.5f, 10, true);
         }
 
@@ -66,6 +78,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
         {
             
             onEndedBlocking?.Invoke();
+
         }
 
         movementDir.x = Input.GetAxis("Horizontal");
@@ -76,9 +89,12 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     private void FixedUpdate()
     {
         rb.velocity = movementDir * movementSpeed;
+
+        FogVec = new Vector3(rb.position.x, rb.position.y + fogOffset, 0);
+        vfxRenderer.SetVector3("ColliderPos", FogVec);
     }
 
-   
+
 
     public void RestoreHealth(float health)
     {
