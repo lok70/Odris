@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.VFX;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class BasePlayerController : MonoBehaviour, Idamageable
@@ -27,6 +28,12 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     public float maxHealth { get; set; } = 100f;
     public float currentHealth { get; set; } = 100f;
+
+
+    public VisualEffect vfxRenderer;
+
+    [SerializeField] private float fogOffset = 15f;
+    private Vector3 FogVec;
 
     private void Awake()
     {
@@ -55,6 +62,9 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     private void FixedUpdate()
     {
         rb.velocity = movementDir * movementSpeed;
+
+        FogVec = new Vector3(rb.position.x, rb.position.y + fogOffset, 0);
+        vfxRenderer.SetVector3("ColliderPos", FogVec);
     }
 
     private void OnDrawGizmos()
