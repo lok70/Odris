@@ -11,7 +11,11 @@ public class Projectile : MonoBehaviour
     private void OnEnable()
     {
         transform.position = ShootingPoint.shootingPointCords;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> kitttooo`sbranch
         rb = GetComponent<Rigidbody2D>();
         Vector2 heading = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         float targetDistance = heading.magnitude;
@@ -20,6 +24,7 @@ public class Projectile : MonoBehaviour
         rb.velocity = moveDir * speed;
     }
 
+<<<<<<< HEAD
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,4 +40,17 @@ public class Projectile : MonoBehaviour
         }
     }
 
+=======
+   
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision != null)
+        {
+            Debug.Log("Hit");
+            gameObject.SetActive(false);
+        }
+    }
+   
+>>>>>>> kitttooo`sbranch
 }
