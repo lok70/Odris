@@ -22,10 +22,10 @@ public class ScreenFading : MonoBehaviour
         image.enabled = true;
 
         Color color = image.color;
-
+        yield return new WaitForSeconds(0.5f);
         while (color.a < 1f)
         {
-            color.a += fade_speed * Time.deltaTime;
+            color.a += fade_speed * Time.deltaTime * 4;
             image.color = color;
             yield return null;
         }

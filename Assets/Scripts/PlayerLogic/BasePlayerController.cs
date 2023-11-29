@@ -31,7 +31,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     protected bool canDodge = true;
     protected bool Picked = false;
     public float maxHealth { get; set; } = 100f;
-    public float currentHealth { get; set; } = 100f;
+    public float currentHealth { get; set; }
 
 
     public static Action onTookDamage;
@@ -131,7 +131,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     public void Die()
     {
-        Destroy(gameObject, 1f);
+        ///Destroy(gameObject, 1f);
         StartCoroutine( LevelManagement.instance.LoadLevel("MainMenu"));
     }
 

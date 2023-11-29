@@ -71,8 +71,8 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         animator.SetFloat("Horizontal", agent.velocity.normalized.x);
         animator.SetFloat("Vertical", agent.velocity.normalized.y);
         animator.SetFloat("speed", agent.velocity.sqrMagnitude);
-
-        distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
+        if (target != null)
+            distanceFromPlayer = Vector2.Distance(transform.position, target.transform.position);
 
         obstackleFlag = obctacklesChecker();
 
