@@ -41,10 +41,9 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     public static Action onEndedBlocking;
 
 
-  //  public VisualEffect vfxRenderer;
-
-  //  [SerializeField] private float fogOffset = 15f;
-  //  private Vector3 FogVec;
+    public VisualEffect vfxRenderer;
+    [SerializeField] private float fogOffset = 15f;
+    private Vector3 FogVec;
 
 
     private void Awake()
@@ -94,8 +93,8 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     {
         rb.velocity = movementDir * movementSpeed;
 
-       // FogVec = new Vector3(rb.position.x, rb.position.y + fogOffset, 0);
-       // vfxRenderer.SetVector3("ColliderPos", FogVec);
+        FogVec = new Vector3(rb.position.x, rb.position.y + fogOffset, 0);
+        vfxRenderer.SetVector3("ColliderPos", FogVec);
     }
 
 

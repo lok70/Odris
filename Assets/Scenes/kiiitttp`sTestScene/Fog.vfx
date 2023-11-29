@@ -20,7 +20,7 @@ MonoBehaviour:
     x: 744
     y: -190
     width: 621
-    height: 2114
+    height: 2116
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,7 +105,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 4
+      m_SerializableObject: 2
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -119,7 +119,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 15
+      m_SerializableObject: 10
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -362,7 +362,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.7224884033203125,"y":16.95841407775879,"z":-0.018482446670532228},"size":{"x":60.728851318359378,"y":86.70455932617188,"z":3.0607447624206545}}'
+      m_SerializableObject: '{"center":{"x":2.9447059631347658,"y":26.67226791381836,"z":-0.018482446670532228},"size":{"x":92.10916900634766,"y":106.13227081298828,"z":3.0607447624206545}}'
     m_Space: 0
   m_Property:
     name: bounds
@@ -665,7 +665,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614583}
   - {fileID: 8926484042661614585}
   dataType: 0
-  capacity: 30000
+  capacity: 200
   stripCapacity: 16
   particlePerStripCount: 16
   needsComputeBounds: 0
@@ -2254,7 +2254,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 4
+      m_SerializableObject: 2
     m_Space: 2147483647
   m_Property:
     name: o
@@ -2334,7 +2334,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 15
+      m_SerializableObject: 10
     m_Space: 2147483647
   m_Property:
     name: o
@@ -2399,7 +2399,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":0.28797340393066409,"y":17.028011322021486,"z":0.0},"size":{"x":57.412593841552737,"y":84.14570617675781,"z":1.0}}'
+      m_SerializableObject: '{"center":{"x":4.686695098876953,"y":27.658267974853517,"z":0.0},"size":{"x":95.90145111083985,"y":105.40621185302735,"z":1.0}}'
     m_Space: 0
   m_Property:
     name: Box
@@ -4488,7 +4488,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614695}
       inputSlot: {fileID: 8926484042661614685}
-    position: {x: 783, y: 1792}
+    position: {x: 767, y: 1783}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661614695
@@ -4704,7 +4704,7 @@ MonoBehaviour:
     linkedSlots:
     - outputSlot: {fileID: 8926484042661614701}
       inputSlot: {fileID: 8926484042661614689}
-    position: {x: 773, y: 1856}
+    position: {x: 763, y: 1829}
     expandedSlots: []
     expanded: 0
 --- !u!114 &8926484042661614701
