@@ -10,7 +10,7 @@ public class AtackEnemyState
 {
     private float timer;
     private float lastTimer;
-    private float damage = 10;
+    private float damage = 30;
     private Vector2 targetPos;
     private Vector2 direction;
     private bool startDone = false;
@@ -115,7 +115,7 @@ public class AtackEnemyState
 
     private void NoBlockDamage()
     {
-        damage = 10;
+        damage = 20;
     }
 
 }

@@ -38,7 +38,7 @@ public class Attack : BasePlayerController
             {
                 //obj.GetComponent<Enemy>().TakeDamage(10);
                 Vector2 direction = ((Vector2)obj.transform.position - point).normalized;
-                Debug.Log("Ydar");
+                
  
                 
             }
@@ -48,7 +48,7 @@ public class Attack : BasePlayerController
         {
             if (hit.GetComponent<Enemy>())
             {
-                Debug.Log("Ydar");
+                
                 hit.GetComponent<Enemy>().TakeDamage(10);
             }
         }

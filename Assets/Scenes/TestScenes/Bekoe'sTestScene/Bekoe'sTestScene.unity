@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
+  vfxRenderer: {fileID: 0}
+  fogOffset: 15
 --- !u!50 &91842622
 Rigidbody2D:
   serializedVersion: 4
@@ -299,6 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
+  vfxRenderer: {fileID: 0}
+  fogOffset: 15
   dashDistance: 150
 --- !u!1 &110830082
 GameObject:
@@ -708,6 +712,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
+  vfxRenderer: {fileID: 0}
+  fogOffset: 15
 --- !u!50 &520127336
 Rigidbody2D:
   serializedVersion: 4
@@ -872,6 +878,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
+  vfxRenderer: {fileID: 0}
+  fogOffset: 15
   dodgeStartSpeed: 50
   dodgeDistance: 5
 --- !u!114 &520127344
@@ -887,6 +895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
+  vfxRenderer: {fileID: 0}
+  fogOffset: 15
   dashDistance: 100
 --- !u!114 &520127345
 MonoBehaviour:
@@ -901,6 +911,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonk: {fileID: 0}
+  vfxRenderer: {fileID: 0}
+  fogOffset: 15
 --- !u!1 &865770342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,7 +2538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterCollider: {fileID: 6469333108931602239}
-  distanceFromCharacter: 0.87
+  distanceFromCharacter: 1
 --- !u!212 &1615804677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3126,6 +3138,10 @@ PrefabInstance:
       propertyPath: bonk
       value: 
       objectReference: {fileID: 1615804675}
+    - target: {fileID: 6773868519427816257, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
+      propertyPath: pref
+      value: 
+      objectReference: {fileID: 8811489470165422018, guid: 5244a9c81b2717748800bfa3580e4424, type: 3}
     - target: {fileID: 8089751012540388804, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.36
