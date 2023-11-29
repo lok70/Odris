@@ -62,6 +62,8 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void Update()
     {
+        HP_bar.currentHp = currentHealth;
+
         pos = (Vector2)transform.position;
         movementSpeed = 5;
         if (isDashing || isDodging) { return; }
@@ -72,14 +74,8 @@ public class BasePlayerController : MonoBehaviour, Idamageable
             //anim.SetTrigger("Attack");
             StartCoroutine(Timer(0.5f));
 
-            Attack.Action(bonk.position, 0.5f, 10, true);
+            Attack.Action(bonk.position, 0.5f, 20, true);
         }
-
-        //if (Input.GetMouseButtonDown(1))
-        //{
-        //    onBlocked?.Invoke();
-        //    flag = true;
-        //}
 
         if (Input.GetMouseButtonUp(1))
         {
@@ -135,7 +131,8 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     public void Die()
     {
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 1f);
+        StartCoroutine( LevelManagement.instance.LoadLevel("MainMenu"));
     }
 
     private IEnumerator Timer(float time)
