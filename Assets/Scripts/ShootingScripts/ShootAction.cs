@@ -26,6 +26,7 @@ public class ShootAction : MonoBehaviour
 
     private IEnumerator Shooting(float coolDown)
     {
+        yield return new WaitForSeconds(0.5f);
         pool.Get().SetActive(true);
         yield return new WaitForSeconds(coolDown);
         flag = true;

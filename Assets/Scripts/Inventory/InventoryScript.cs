@@ -23,8 +23,9 @@ public class Inventory : MonoBehaviour
     Transform InventoryCanvas;
 
     bool Is_Pointing_On_Slot = false;
-    bool Was_Pointing_On_Slot = false; 
+    bool Was_Pointing_On_Slot = false;
 
+    public static Action onPickedUp;
 
     private void Start()
     {
@@ -56,7 +57,21 @@ public class Inventory : MonoBehaviour
         {
             if (inventorySlots[i].slotItem == null)
             {
-                inventorySlots[i].PutInSlot(item);
+                if (item.Prefab_Name == "Sword")
+                {
+                    inventorySlots[0].PutInSlot(item);
+                }
+                else if (item.Prefab_Name == "Crossbow")
+                {
+                    inventorySlots[1].PutInSlot(item);
+                    onPickedUp?.Invoke();
+                }
+                else
+                {
+                    inventorySlots[i].PutInSlot(item);
+                }
+                
+                
                 return;
             }
         }

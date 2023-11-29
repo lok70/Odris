@@ -11,19 +11,22 @@ public class AnimationController : BasePlayerController
     private void OnEnable()
     {
         onAttacked += AttackTrigger;
-        onBlocked += BlockingTrigger;
+        onBlocked += ExitBlock;
         onDied += DeathTrigger;
         DodgePlayerScript.onDodged += DodgeTrigger;
         onTookDamage += TakeDamageTrigger;
+        onShootFromCB += CBshootTrigger;
+        onEndedBlocking += StopBlockingTrigger;
     }
 
     private void OnDisable()
     {
         onAttacked -= AttackTrigger;
-        onBlocked -= BlockingTrigger;
+        onBlocked -= ExitBlock;
         onDied -= DeathTrigger;
         onTookDamage -= TakeDamageTrigger;
         DodgePlayerScript.onDodged -= DodgeTrigger;
+        onEndedBlocking -= StopBlockingTrigger;
     }
     private void Awake()
     {
@@ -46,20 +49,29 @@ public class AnimationController : BasePlayerController
         anim.SetFloat("HorMousePos", mouseDir.x);
         anim.SetFloat("VertMousePos", mouseDir.y);
 
-
-
-
-
-
     }
+
+    private void ExitBlock()
+    {
+        anim.SetTrigger("StopBlocking");
+    }
+    private void StopBlockingTrigger()
+    {
+        anim.SetTrigger("Blocking");
+    }
+    private void CBshootTrigger()
+    {
+        anim.SetTrigger("R_Attack");
+    }
+
     private void DodgeTrigger()
     {
         anim.SetTrigger("Dodge");
     }
-    private void BlockingTrigger()
-    {
-        //trigger
-    }
+    //private void StartBlockingTrigger()
+    //{
+    //    anim.SetTrigger("startBlocking");
+    //}
     private void TakeDamageTrigger()
     {
         //took Damage
@@ -67,10 +79,11 @@ public class AnimationController : BasePlayerController
 
     private void DeathTrigger()
     {
-        //death
+        anim.SetTrigger("Death");
     }
     private void AttackTrigger()
     {
         anim.SetTrigger("Attack");
     }
+    
 }

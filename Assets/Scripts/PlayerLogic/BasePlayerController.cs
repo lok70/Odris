@@ -23,14 +23,13 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     protected Vector3 movementDir;
     protected Vector2 mousePos;
-
-    public static Vector2 playerPosition = Vector2.zero;
+    
 
     protected bool isDashing = false;
     protected bool isDodging = false;
     protected bool canDash = true;
     protected bool canDodge = true;
-
+    protected bool Picked = false;
     public float maxHealth { get; set; } = 100f;
     public float currentHealth { get; set; } = 100f;
 
@@ -40,13 +39,15 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     public static Action onAttacked;
     public static Action onBlocked;
     public static Action onEndedBlocking;
-
+    public static Action onShootFromCB;
+    
+    public static Vector2 pos;
 
     public VisualEffect vfxRenderer;
     [SerializeField] private float fogOffset = 15f;
     private Vector3 FogVec;
-
-
+    private bool flag = false;
+    
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -61,6 +62,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     private void Update()
     {
+        pos = (Vector2)transform.position;
         movementSpeed = 5;
         if (isDashing || isDodging) { return; }
 
@@ -73,27 +75,42 @@ public class BasePlayerController : MonoBehaviour, Idamageable
             Attack.Action(bonk.position, 0.5f, 10, true);
         }
 
-        if (Input.GetMouseButton(1))
-        {
-            onBlocked?.Invoke();
-            movementSpeed = 2.5f;
-        }
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    onBlocked?.Invoke();
+        //    flag = true;
+        //}
+
         if (Input.GetMouseButtonUp(1))
         {
-            
+            movementSpeed = 5;
+            onBlocked?.Invoke();
+        }
+           
+        if (Input.GetMouseButton(1))
+        {
+         
+            movementSpeed = 2.5f;
             onEndedBlocking?.Invoke();
 
         }
 
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            onShootFromCB?.Invoke();
+        }
+        
+        
         movementDir.x = Input.GetAxis("Horizontal");
         movementDir.y = Input.GetAxis("Vertical");
         movementDir = movementDir.normalized;
     }
 
+    
     private void FixedUpdate()
     {
         rb.velocity = movementDir * movementSpeed;
-        playerPosition = transform.position;
+
         FogVec = new Vector3(rb.position.x, rb.position.y + fogOffset, 0);
         vfxRenderer.SetVector3("ColliderPos", FogVec);
     }
@@ -118,7 +135,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     public void Die()
     {
-        Debug.Log("Царствие Небесное");
+        Destroy(gameObject, 2);
     }
 
     private IEnumerator Timer(float time)
