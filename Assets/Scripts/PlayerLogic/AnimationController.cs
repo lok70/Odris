@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AnimationController : BasePlayerController
 {
-    
+
 
     private void OnEnable()
     {
@@ -38,15 +38,19 @@ public class AnimationController : BasePlayerController
 
         anim.SetFloat("speed", rb.velocity.magnitude);
 
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
-        anim.SetFloat("HorMousePos", mousePos.x);
-        anim.SetFloat("VertMousePos", mousePos.y);
 
-       
 
-        
 
-        
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mouseDir = (mousePos - (Vector2)transform.position).normalized;
+        anim.SetFloat("HorMousePos", mouseDir.x);
+        anim.SetFloat("VertMousePos", mouseDir.y);
+
+
+
+
+
+
     }
     private void DodgeTrigger()
     {
