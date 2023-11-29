@@ -17,6 +17,9 @@ public class Projectile : MonoBehaviour
         float targetDistance = heading.magnitude;
         Vector2 moveDir = heading / targetDistance;
 
+        float rotateZ = Mathf.Atan2(heading.x, heading.y) * -Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotateZ );
+        
         rb.velocity = moveDir * speed;
     }
 
@@ -24,7 +27,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name != "projectile(Clone)")
+        if (collision.gameObject.name != "Arrow(Clone)")
         {
             if (collision.gameObject.TryGetComponent(typeof(Enemy), out Component component))
             {

@@ -15,6 +15,7 @@ public class AtackEnemyState
     private Vector2 direction;
     private bool startDone = false;
     private bool flag;
+    private bool attackFlag = false;
     public AtackEnemyState(Enemy _enemy, EnemyStateMachine _enemyStateMachine) : base(_enemy, _enemyStateMachine)
     {
     }
@@ -22,7 +23,7 @@ public class AtackEnemyState
     public override void EnterState()
     {
         base.EnterState();
-        Debug.Log("вход");
+        
         timer = 0;
         targetPos = enemy.target.transform.position;
         direction = (targetPos - (Vector2)enemy.transform.position).normalized;
@@ -35,6 +36,7 @@ public class AtackEnemyState
         BasePlayerController.onEndedBlocking += NoBlockDamage;
         startDone = true;
         flag = true;
+        attackFlag = false;
     }
 
     public override void ExitState()
@@ -53,19 +55,25 @@ public class AtackEnemyState
 
             timer += Time.deltaTime;
 
-            if (timer >= 1.7f & flag)
+            if (timer >= 0.5f & flag)
             {
                 enemy.animator.ResetTrigger("Idle");
                 enemy.animator.SetTrigger("Attack");
 
                 flag = false;
             }
-            if (timer >= 2)
+            if (timer >= 0.7f)
             {
-                Melee.Attack(targetPos, 1, damage);
-                enemy.animator.SetTrigger("StopAttack");
-                Debug.Log("Выход");
-                if (timer >= 2.2f)
+
+                if (attackFlag == false)
+                {
+                    Melee.Attack(targetPos, 1, damage);
+                    enemy.animator.SetTrigger("StopAttack");
+                    attackFlag = true;
+                }
+                
+                
+                if (timer >= Random.Range(0.9f, 1.3f))
                 {
                     enemyStateMachine.ChangeState(enemy.AtackState);
                 }
