@@ -54,7 +54,11 @@ public class BasePlayerController : MonoBehaviour, Idamageable
         rb.gravityScale = 0;
     }
 
-   
+    private void Start()
+    {
+        currentHealth = maxHealth;
+    }
+
     private void Update()
     {
         movementSpeed = 5;
