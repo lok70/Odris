@@ -8,7 +8,7 @@ using System.Buffers;
 using JetBrains.Annotations;
 using UnityEngine.Rendering;
 
-/*
+
 
 //Скрипт, лежащий непосредственно на "объекте" инвентаря (подобъект слота инвентаря)
 public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
@@ -21,7 +21,7 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public RectTransform parentRectTransform;
     public RectTransform rectTransform;
 
-    public InformationIconHandler informationIconHandler;
+    //public InformationIconHandler informationIconHandler;
 
     public bool Is_In_Dragging = false;
 
@@ -40,9 +40,8 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         icon = GetComponent<Image>();
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
         rectTransform = GetComponent<RectTransform>();
-
         //Получаем ссылку на главный канвас - к нему мы будем пристегиваться в процессе Drag-and-drop
-        draggingParent = transform.parent.parent.parent.parent;
+        draggingParent = transform.parent.parent;
     }
 
 
@@ -70,21 +69,21 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     {
         //Сообщаем всем, что находимся в состоянии переноса вещи
         Is_In_Dragging = true;
-        informationIconHandler.Item_IsDragging = true;
+        //informationIconHandler.Item_IsDragging = true;
 
         //Отцепляемся от слота и прицепляемся к канвасу
         originalParent = transform.parent.parent;
         transform.SetParent(draggingParent);
 
         //Закрываем окошко с инфой
-        informationIconHandler.CloseInformationIcon();
+        //informationIconHandler.CloseInformationIcon();
     }
 
     //Двигаем предмет по канвасу
     public void OnDrag(PointerEventData eventData)
-    {   
+    {
         var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        gameObject.transform.position = new Vector3(mousePosition.x,mousePosition.y,draggingParent.transform.position.z);
+        gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, draggingParent.transform.position.z);
     }
 
     //Заканчиваем движение и смотрим, что делать с предметом
@@ -109,7 +108,7 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         foreach (var item in raycasts)
         {
             //Проверка на то, что мы попали в какой-то слот
-            if (item.transform.gameObject.tag == "InventorySlot" || item.transform.gameObject.tag == "WeaponSlot")
+            if (item.transform.gameObject.tag == "InventorySlot")
             {
                 in_slot = true;
                 inside_inventory = true;
@@ -121,33 +120,52 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
                 in_slot = false;
                 inside_inventory = true;
             }
-        } 
+        }
 
         if (in_slot) //Если попали в слот, то меняем перетаскиваемый объект слота на тот, в который мы попали
         {
             PlaceInSlot();
 
-            informationIconHandler.Item_IsDragging = false;
-            informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
+            //informationIconHandler.Item_IsDragging = false;
+            //informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
         }
         else if (!in_slot && inside_inventory)
         {
             PutBack();
-            informationIconHandler.Item_IsDragging = false;
-            informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
+           // informationIconHandler.Item_IsDragging = false;
+           // informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
         }
-        else 
+        else
         {
             ThrowOut();
-            informationIconHandler.Item_IsDragging = false;
+            //informationIconHandler.Item_IsDragging = false;
         }
         Is_In_Dragging = false;
     }
 
     public void PlaceInSlot()
     {
+        /*
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        //10f - расстояние от камеры до канваса по оси z
+        mousePosition.z = 130f;
+
+        //Костыль
+        mousePosition.y += 10f;
+
+        Ray ray = new Ray(Camera.main.transform.position, mousePosition - Camera.main.transform.position);
+        RaycastHit2D[] mouseHits = Physics2D.GetRayIntersectionAll(ray);
+
+        InventorySlot placeSlot = null;
+
+        foreach (var hit in mouseHits) { if (hit.transform.tag == "InventorySlot") placeSlot = hit.transform.GetChild(0).gameObject.GetComponent<InventorySlot>(); }
+
+        */
+
         int closest_index = 0;
 
+        
         float distance_to_closest_slot = Vector2.Distance(transform.position, originalParent.GetChild(slotIndex).transform.position);
 
         for (int i = 0; i < originalParent.transform.childCount; i++)
@@ -160,7 +178,7 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
                 distance_to_closest_slot = Vector2.Distance(transform.position, originalParent.GetChild(i).position);
             }
         }
-
+        
 
         if (closest_index != slotIndex)
         {
@@ -190,6 +208,8 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     public void ThrowOut()
     {
+        PutBack();
+        return;
         float throw_distance = 3f;
         if (slotItem != null)
         {
@@ -198,12 +218,11 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
             TakeFromSlot();
 
-            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), PlayerMovement.playerPosition + throwDirection*throw_distance, Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), BasePlayerController.playerPosition + throwDirection * throw_distance, Quaternion.identity);
         }
         PutBack();
 
     }
     #endregion
-}
 
-*/
+}

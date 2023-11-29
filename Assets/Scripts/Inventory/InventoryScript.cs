@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-/*
+
 public class Inventory : MonoBehaviour
 {
 
@@ -12,13 +12,11 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private InventorySlot[] inventorySlots = new InventorySlot[6];
 
-    public bool Inventory_Opened = false;
-
     Vector3 mousePosition;
 
     RaycastHit2D[] mouseHits;
 
-    public static InformationIconHandler informationIconHandler;
+    //public static InformationIconHandler informationIconHandler;
 
     GameObject currentPointingSlot = null;
 
@@ -32,15 +30,15 @@ public class Inventory : MonoBehaviour
     {
         instance = this;
 
-        InventoryCanvas = transform.parent.parent;
+        InventoryCanvas = transform.parent;
 
-        informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
+        //informationIconHandler = transform.GetChild(2).GetComponent<InformationIconHandler>();
 
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             {
                 inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
-                inventorySlots[i].informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
+                //inventorySlots[i].informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
                 inventorySlots[i].slotIndex = i;
             }
         }
@@ -48,7 +46,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        HandleInformationIcon();
+        //HandleInformationIcon();
     }
 
     public void PutInEmptySlot(Item item)
@@ -78,7 +76,7 @@ public class Inventory : MonoBehaviour
         Utilities.Swap(ref inventorySlots[a_index].parentRectTransform, ref inventorySlots[b_index].parentRectTransform);
     }
 
-
+    /*
     private void HandleInformationIcon()
     {
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -114,7 +112,7 @@ public class Inventory : MonoBehaviour
         }
 
     }
+    */
 
 }
 
-*/

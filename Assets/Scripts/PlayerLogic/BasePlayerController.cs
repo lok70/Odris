@@ -23,7 +23,8 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
     protected Vector3 movementDir;
     protected Vector2 mousePos;
-    
+
+    public static Vector2 playerPosition = Vector2.zero;
 
     protected bool isDashing = false;
     protected bool isDodging = false;
@@ -88,7 +89,7 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     private void FixedUpdate()
     {
         rb.velocity = movementDir * movementSpeed;
-
+        playerPosition = transform.position;
         FogVec = new Vector3(rb.position.x, rb.position.y + fogOffset, 0);
         vfxRenderer.SetVector3("ColliderPos", FogVec);
     }

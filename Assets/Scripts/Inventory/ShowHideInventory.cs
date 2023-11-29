@@ -2,41 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
+
 public class ShowHideInventory : MonoBehaviour
 {
 
     Canvas inventoryCanvas;
 
+    bool Is_Opened = false;
+
     private void Start()
     {
-        inventoryCanvas = transform.parent.GetComponent<Canvas>();
+        inventoryCanvas = GetComponent<Canvas>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I) && !Inventory.instance.Inventory_Opened)
+
+        if (Input.GetKeyDown(KeyCode.I) && !Is_Opened)
         {
             Open();
         }
-        else if (Input.GetKeyDown(KeyCode.I) && Inventory.instance.Inventory_Opened)
+        else if (Input.GetKeyDown(KeyCode.I) && Is_Opened)
         {
             Close();
         }
+
+
+
     }
 
     private void Open()
     {
         inventoryCanvas.enabled = true;
-        Inventory.instance.Inventory_Opened = true;
+        Is_Opened = true;
 
     }
 
     private void Close()
     {
         inventoryCanvas.enabled = false;
-        Inventory.instance.Inventory_Opened = false;
+        Is_Opened = false;
     }
 }
-
-*/
