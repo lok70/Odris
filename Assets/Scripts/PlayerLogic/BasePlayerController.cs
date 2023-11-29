@@ -42,7 +42,6 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
 
     public VisualEffect vfxRenderer;
-
     [SerializeField] private float fogOffset = 15f;
     private Vector3 FogVec;
 
