@@ -33,13 +33,21 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     private Vector3 newPos;
     public bool obstackleFlag;
 
+    private bool resetFlag = false;
+    private float knockbackSpeed = 50f;
+    private void OnEnable()
+    {
+        Attack.onHit += tookHit;
+    }
+    private void OnDisable()
+    {
+        Attack.onHit -= tookHit;
+    }
     private void Awake()
     {
         agent = this.GetComponent<NavMeshAgent>();
         animator = this.GetComponent<Animator>();
         currentHealth = maxHealth;
-
-
     }
     private void Start()
     {
@@ -76,6 +84,18 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
         obstackleFlag = obctacklesChecker();
 
+        if (resetFlag)
+        {
+            Vector3 knocbackDir =(transform.position - target.transform.position).normalized;
+            transform.position += knocbackDir * knockbackSpeed * Time.deltaTime ;
+
+            //knockbackSpeed -= knockbackSpeed * 12f * Time.deltaTime;
+            //if (knockbackSpeed < 3f) 
+            //{
+            //    return;
+            //}
+            //resetFlag = false;
+        }
     }
 
     public void FixedUpdate()
@@ -143,6 +163,12 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
 
     #region AnimTriggers
+    private void tookHit()
+    {
+        agent.velocity = Vector3.zero;
+        resetFlag = true;
+        StartCoroutine(Reset());
+    }
     private void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
         //todo
@@ -151,6 +177,12 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     {
         EnemyDamaged,
         EnemyKilled,
+    }
+
+    private IEnumerator Reset()
+    {
+        agent.velocity = Vector3.zero;
+        yield return new WaitForSeconds(0.5f);
     }
 
     #endregion

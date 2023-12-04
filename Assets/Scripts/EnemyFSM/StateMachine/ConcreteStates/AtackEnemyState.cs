@@ -33,7 +33,7 @@ public class AtackEnemyState
         enemy.animator.SetTrigger("Idle");
 
         BasePlayerController.onBlocked += DamageWithBlock;
-        BasePlayerController.onEndedBlocking += NoBlockDamage;
+        //BasePlayerController.onEndedBlocking += NoBlockDamage;
         startDone = true;
         flag = true;
         attackFlag = false;
@@ -44,7 +44,7 @@ public class AtackEnemyState
         startDone = false;
         enemy.animator.SetTrigger("StopAttack");
         BasePlayerController.onBlocked -= DamageWithBlock;
-        BasePlayerController.onEndedBlocking -= NoBlockDamage;
+       // BasePlayerController.onEndedBlocking -= NoBlockDamage;
         base.ExitState();
     }
 

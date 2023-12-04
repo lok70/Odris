@@ -11,7 +11,7 @@ public class DodgePlayerScript : BasePlayerController
     [SerializeField] private float dodgeDistance = 5f;
 
     private bool dodgingFlag = false;
-
+    public static bool isDodging = false;
     public static Action onDodged;
   
     private void Update()
@@ -25,10 +25,11 @@ public class DodgePlayerScript : BasePlayerController
         if (canDodge & Input.GetKeyDown(KeyCode.Space))
         {
             onDodged?.Invoke();
+            isDodging = true;
             canDodge = false;
             dodgingFlag = true;
-            StartCoroutine(FlagTimer());
             
+            StartCoroutine(FlagTimer());
         }
 
     }
@@ -37,14 +38,12 @@ public class DodgePlayerScript : BasePlayerController
     {
         if (dodgingFlag)
         {
-
             Vector2 targetPos = (Vector2)transform.position + (Vector2)(dodgeDir * dodgeDistance);
             rb.MovePosition(Vector3.MoveTowards(transform.position, targetPos, dodgeStartSpeed * Time.deltaTime));
             dodgeStartSpeed -= dodgeStartSpeed * 12f * Time.deltaTime;
 
             if (dodgeStartSpeed < 5f)
-            {
-
+            { 
                 dodgingFlag = false;
                 dodgeStartSpeed = 50;
                 rb.velocity = Vector2.zero;
@@ -54,13 +53,17 @@ public class DodgePlayerScript : BasePlayerController
     }
     private IEnumerator FlagTimer()
     {
-        yield return new WaitForSeconds(1); canDodge = true;
+        yield return new WaitForSeconds(0.3f); 
+        isDodging = false;
+        yield return new WaitForSeconds(0.7f);
+        canDodge = true; 
     }
 
-    private void OnDrawGizmos()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, dodgeDistance);
+        if (isDodging && collision != null)
+        {
+            isDodging = false;
+        }
     }
-
 }

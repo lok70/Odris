@@ -1,13 +1,14 @@
 
-using System.Collections;
-using System.Collections.Generic;
+using System;
+
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Attack : BasePlayerController
 {
     private static Vector2 Ppos;
+    public static Action onHit;
 
-  
 
     static GameObject NearTarget(Vector3 position, Collider2D[] array)
     {
@@ -37,21 +38,28 @@ public class Attack : BasePlayerController
             if (obj != null)
             {
                 //obj.GetComponent<Enemy>().TakeDamage(10);
-                Vector2 direction = ((Vector2)obj.transform.position - point).normalized;
-                
- 
-                
-            }
-            return;
-        }
-        foreach (Collider2D hit in colliders)
-        {
-            if (hit.GetComponent<Enemy>())
-            {
-                
-                hit.GetComponent<Enemy>().TakeDamage(10);
-            }
-        }
-    }
+                onHit?.Invoke();
 
+                return;
+            }
+            foreach (Collider2D hit in colliders)
+            {
+                if (hit.GetComponent<Enemy>())
+                {
+                    hit.GetComponent<Enemy>().TakeDamage(10);
+                    onHit?.Invoke();
+                    //hit.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+                    //Vector3 direction = (hit.GetComponent<Transform>().position - (Vector3)playerPos).normalized;
+                    //hit.GetComponent<Transform>().Translate(direction * 1.2F);
+                }
+            }
+        }
+
+        //private static IEnumerator Reset(Collider2D hit)
+        //{
+        //    yield return new WaitForSeconds(0.15f);
+        //    hit.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        //}
+
+    }
 }

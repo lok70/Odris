@@ -4,7 +4,6 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
-
     private Vector2 moveDir;
     private Vector2 mousePos;
     private Vector3 diference;

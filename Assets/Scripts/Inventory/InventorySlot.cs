@@ -218,7 +218,7 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
             TakeFromSlot();
 
-            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), BasePlayerController.pos + throwDirection * throw_distance, Quaternion.identity);
+            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), BasePlayerController.playerPos + throwDirection * throw_distance, Quaternion.identity);
         }
         PutBack();
 

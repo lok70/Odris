@@ -6,27 +6,28 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AnimationController : BasePlayerController
 {
-
-
+    private string currentState;
+    public bool canChange = true;
     private void OnEnable()
     {
-        onAttacked += AttackTrigger;
-        onBlocked += ExitBlock;
+        MeleeAttackLogic.onAttacked += AttackTrigger;
+        onBlocked += BlockingTrigger;
         onDied += DeathTrigger;
         DodgePlayerScript.onDodged += DodgeTrigger;
         onTookDamage += TakeDamageTrigger;
-        onShootFromCB += CBshootTrigger;
-        onEndedBlocking += StopBlockingTrigger;
+        ShootAction.onShootFromCB += CBshootTrigger;
+        onEndedBlocking += EndedBLockingTrigger;
     }
 
     private void OnDisable()
     {
-        onAttacked -= AttackTrigger;
-        onBlocked -= ExitBlock;
+        MeleeAttackLogic.onAttacked -= AttackTrigger;
+        onBlocked -=  BlockingTrigger;
         onDied -= DeathTrigger;
         onTookDamage -= TakeDamageTrigger;
         DodgePlayerScript.onDodged -= DodgeTrigger;
-        onEndedBlocking -= StopBlockingTrigger;
+        onEndedBlocking -= EndedBLockingTrigger;
+        ShootAction.onShootFromCB -= CBshootTrigger;
     }
     private void Awake()
     {
@@ -36,42 +37,68 @@ public class AnimationController : BasePlayerController
 
     private void Update()
     {
+        if (isDashing || DodgePlayerScript.isDodging) { return; }
         anim.SetFloat("Horizontal", Input.GetAxis("Horizontal"));
         anim.SetFloat("Vertical", Input.GetAxis("Vertical"));
 
         anim.SetFloat("speed", rb.velocity.magnitude);
-
-
-
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 mouseDir = (mousePos - (Vector2)transform.position).normalized;
         anim.SetFloat("HorMousePos", mouseDir.x);
         anim.SetFloat("VertMousePos", mouseDir.y);
 
+        if (canChange && !DodgePlayerScript.isDodging && !isDashing)
+        {
+            if (Mathf.Abs(anim.GetFloat("Horizontal")) > 0.1 || Mathf.Abs(anim.GetFloat("Vertical")) > 0.1)
+            {
+                changeAnimState(PlayerAnims.SW_Movement);
+            }
+            else if (Mathf.Abs(anim.GetFloat("Horizontal")) < 0.1 && Mathf.Abs(anim.GetFloat("Vertical")) < 0.1)
+            {
+                changeAnimState(PlayerAnims.Idle);
+            }
+        }
+
+    }
+    public void changeAnimState(string nextState)
+    {
+        if (currentState == nextState) { return; }
+
+        anim.Play(nextState);
+        currentState = nextState;
     }
 
-    private void ExitBlock()
+    private void CanChangeSwitcher()
     {
-        anim.SetTrigger("StopBlocking");
+        canChange = true;
     }
-    private void StopBlockingTrigger()
+    private void AttackTrigger()
     {
-        anim.SetTrigger("Blocking");
+        canChange = false;
+        anim.SetTrigger("Attack");
+    }
+    private void EndedBLockingTrigger()
+    {
+        canChange = true;
+    }
+    private void BlockingTrigger()
+    {
+        canChange = false;
+        changeAnimState(PlayerAnims.Block);
     }
     private void CBshootTrigger()
     {
-        anim.SetTrigger("R_Attack");
+        canChange = false;
+        changeAnimState(PlayerAnims.CrossbowShoot);
+        Invoke("CanChangeSwitcher", anim.GetCurrentAnimatorStateInfo(0).length);
     }
 
     private void DodgeTrigger()
     {
-        anim.SetTrigger("Dodge");
+        changeAnimState(PlayerAnims.Dodge);
     }
-    //private void StartBlockingTrigger()
-    //{
-    //    anim.SetTrigger("startBlocking");
-    //}
+   
     private void TakeDamageTrigger()
     {
         //took Damage
@@ -81,9 +108,5 @@ public class AnimationController : BasePlayerController
     {
         anim.SetTrigger("Death");
     }
-    private void AttackTrigger()
-    {
-        anim.SetTrigger("Attack");
-    }
-    
+
 }
