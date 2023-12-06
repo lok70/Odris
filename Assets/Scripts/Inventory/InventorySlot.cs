@@ -7,6 +7,7 @@ using System.Linq;
 using System.Buffers;
 using JetBrains.Annotations;
 using UnityEngine.Rendering;
+using static UnityEditor.Progress;
 
 
 
@@ -34,6 +35,8 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     //Тот Item, что лежит в этом объекте (если ничего не лежит, то null)
     public Item slotItem = null;
 
+    Vector3 castingDir;
+
     private void Start()
     {
         //Получаем нужные компоненты (на этом объекте, или от родительского)
@@ -42,12 +45,17 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         rectTransform = GetComponent<RectTransform>();
         //Получаем ссылку на главный канвас - к нему мы будем пристегиваться в процессе Drag-and-drop
         draggingParent = transform.parent.parent;
+        castingDir = new Vector3(0,0,200);
     }
 
 
     //Кладем Item в слот
     public void PutInSlot(Item item)
     {
+        if (transform.tag == "WeaponSlot")
+        {
+
+        }
         icon.enabled = true;
         slotItem = item;
         icon.sprite = item.icon;
@@ -93,29 +101,29 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        //10f - расстояние от камеры до нуля координат по оси z
-        mousePosition.z = draggingParent.position.z + 10f;
+        Ray ray = new Ray(mousePosition,castingDir);
 
-        Ray ray = new Ray(Camera.main.transform.position, mousePosition);
-
-        RaycastHit2D[] raycasts = Physics2D.GetRayIntersectionAll(ray);
+        RaycastHit2D[] raycasts = Physics2D.GetRayIntersectionAll(ray,200);
 
         //Флаг на то, что предмет остановился внутри слота
         bool in_slot = false;
         //Флаг, что предмет остановился вне инвентаря
         bool inside_inventory = false;
 
-        foreach (var item in raycasts)
+        int index = this.slotIndex;
+
+        foreach (var cast in raycasts)
         {
             //Проверка на то, что мы попали в какой-то слот
-            if (item.transform.gameObject.tag == "InventorySlot")
+            if ((cast.transform.gameObject.tag == "InventorySlot") || (cast.transform.gameObject.tag == "WeaponSlot"))
             {
                 in_slot = true;
                 inside_inventory = true;
+                index = cast.transform.GetChild(0).gameObject.GetComponent<InventorySlot>().slotIndex;
                 break;
             }
             //Проверка на то, что мы попали не в слот, но все еще в инвентаре
-            else if (item.transform.gameObject.tag == "InventoryBackground")
+            else if (cast.transform.gameObject.tag == "InventoryBackground")
             {
                 in_slot = false;
                 inside_inventory = true;
@@ -124,7 +132,7 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
         if (in_slot) //Если попали в слот, то меняем перетаскиваемый объект слота на тот, в который мы попали
         {
-            PlaceInSlot();
+            PlaceInSlot(index);
 
             //informationIconHandler.Item_IsDragging = false;
             //informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
@@ -143,53 +151,18 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         Is_In_Dragging = false;
     }
 
-    public void PlaceInSlot()
+    public void PlaceInSlot(int index)
     {
-        /*
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        //10f - расстояние от камеры до канваса по оси z
-        mousePosition.z = 130f;
-
-        //Костыль
-        mousePosition.y += 10f;
-
-        Ray ray = new Ray(Camera.main.transform.position, mousePosition - Camera.main.transform.position);
-        RaycastHit2D[] mouseHits = Physics2D.GetRayIntersectionAll(ray);
-
-        InventorySlot placeSlot = null;
-
-        foreach (var hit in mouseHits) { if (hit.transform.tag == "InventorySlot") placeSlot = hit.transform.GetChild(0).gameObject.GetComponent<InventorySlot>(); }
-
-        */
-
-        int closest_index = 0;
-
-        
-        float distance_to_closest_slot = Vector2.Distance(transform.position, originalParent.GetChild(slotIndex).transform.position);
-
-        for (int i = 0; i < originalParent.transform.childCount; i++)
+        if (index != this.slotIndex)
         {
-            float distance_to_current_slot = Vector2.Distance(transform.position, originalParent.GetChild(i).position);
+            GameObject buffer = originalParent.GetChild(index).GetChild(0).gameObject;
 
-            if (distance_to_current_slot < distance_to_closest_slot)
-            {
-                closest_index = i;
-                distance_to_closest_slot = Vector2.Distance(transform.position, originalParent.GetChild(i).position);
-            }
-        }
-        
-
-        if (closest_index != slotIndex)
-        {
-            GameObject buffer = originalParent.GetChild(closest_index).GetChild(0).gameObject;
-
-            transform.SetParent(originalParent.GetChild(closest_index));
+            transform.SetParent(originalParent.GetChild(index));
 
             buffer.transform.SetParent(originalParent.GetChild(slotIndex));
             buffer.transform.position = new Vector3(transform.parent.transform.position.x, transform.parent.transform.position.y, originalParent.parent.transform.position.z);
 
-            Inventory.instance.SwapSlots(closest_index, slotIndex);
+            Inventory.instance.SwapSlots(index, slotIndex);
 
             buffer.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             rectTransform.anchoredPosition = Vector2.zero;
@@ -209,7 +182,6 @@ public class InventorySlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
     public void ThrowOut()
     {
         PutBack();
-        return;
         float throw_distance = 3f;
         if (slotItem != null)
         {

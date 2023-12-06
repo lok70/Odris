@@ -10,7 +10,7 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
-    [SerializeField] private InventorySlot[] inventorySlots = new InventorySlot[6];
+    private InventorySlot[] inventorySlots = new InventorySlot[14];
 
     Vector3 mousePosition;
 
@@ -48,6 +48,7 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         //HandleInformationIcon();
+        
     }
 
     public void PutInEmptySlot(Item item)
