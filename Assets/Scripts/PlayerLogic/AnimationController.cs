@@ -12,9 +12,9 @@ public class AnimationController : BasePlayerController
     {
         MeleeAttackLogic.onAttacked += AttackTrigger;
         onBlocked += BlockingTrigger;
-        onDied += DeathTrigger;
+        HealthSystem.onDied += DeathTrigger;
         DodgePlayerScript.onDodged += DodgeTrigger;
-        onTookDamage += TakeDamageTrigger;
+        HealthSystem.onTookDamage += TakeDamageTrigger;
         ShootAction.onShootFromCB += CBshootTrigger;
         onEndedBlocking += EndedBLockingTrigger;
     }
@@ -23,8 +23,8 @@ public class AnimationController : BasePlayerController
     {
         MeleeAttackLogic.onAttacked -= AttackTrigger;
         onBlocked -=  BlockingTrigger;
-        onDied -= DeathTrigger;
-        onTookDamage -= TakeDamageTrigger;
+        HealthSystem.onDied -= DeathTrigger;
+        HealthSystem.onTookDamage -= TakeDamageTrigger;
         DodgePlayerScript.onDodged -= DodgeTrigger;
         onEndedBlocking -= EndedBLockingTrigger;
         ShootAction.onShootFromCB -= CBshootTrigger;

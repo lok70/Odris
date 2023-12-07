@@ -65,7 +65,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 9022385452766627451}
-    m_Position: {x: 880, y: -380, z: 0}
+    m_Position: {x: 870, y: -380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8644183715949622636}
     m_Position: {x: 590, y: -380, z: 0}
@@ -782,7 +782,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RangeAtack
+  m_Name: CW_Shoot
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

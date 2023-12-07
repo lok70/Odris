@@ -7,12 +7,12 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class BasePlayerController : MonoBehaviour, Idamageable
+public class BasePlayerController : MonoBehaviour/*, Idamageable*/
 {
     protected Rigidbody2D rb;
     protected Animator anim;
     public static Vector2 playerPos;
-   
+
 
     protected float movementSpeed = 5;
 
@@ -23,20 +23,14 @@ public class BasePlayerController : MonoBehaviour, Idamageable
     protected bool canDash = true;
     protected bool canDodge = true;
     protected bool Picked = false;
-    
-    public float maxHealth { get; set; } = 100f;
-    public float currentHealth { get; set; }
 
-    public static Action onTookDamage;
-    public static Action onDied;
+    //public float maxHealth { get; set; }
+    //public float currentHealth { get; set; }
+
+    //public static Action onTookDamage;
+    //public static Action onDied;
     public static Action onBlocked;
     public static Action onEndedBlocking;
-
-
-    
-
-    private bool flag = false;
-
 
 
     private void Awake()
@@ -46,21 +40,23 @@ public class BasePlayerController : MonoBehaviour, Idamageable
         rb.gravityScale = 0;
     }
 
-    private void Start()
-    {
-        currentHealth = maxHealth;
-    }
+    //protected void OnEnable()
+    //{
+    //    maxHealth = 100f;
+    //    currentHealth = maxHealth;
+    //}
+
 
     private void Update()
     {
 
-        HP_bar.currentHp = currentHealth;
+        //HP_bar.currentHp = currentHealth;
 
-        playerPos =  (Vector2)transform.position;
+        playerPos = (Vector2)transform.position;
         movementSpeed = 5;
         if (isDashing || DodgePlayerScript.isDodging) { return; }
 
-        
+
 
         if (Input.GetMouseButtonUp(1))
         {
@@ -89,29 +85,30 @@ public class BasePlayerController : MonoBehaviour, Idamageable
 
 
 
-    public void RestoreHealth(float health)
-    {
-        if (currentHealth + health > maxHealth) { currentHealth = maxHealth; }
-        else { currentHealth += health; }
-    }
+    //public void RestoreHealth(float health)
+    //{
+    //    if (currentHealth + health > maxHealth) { currentHealth = maxHealth; }
+    //    else { currentHealth += health; }
+    //}
 
-    public void TakeDamage(float damage)
-    {
-        if (currentHealth - damage <= 0)
-        {
-            onDied?.Invoke();
-            Die();
-        }
-        else { onTookDamage?.Invoke(); currentHealth -= damage; Debug.Log("-10"); }
-    }
+    //public void TakeDamage(float damage)
+    //{
+    //    if (currentHealth - damage <= 0)
+    //    {
+    //        onDied?.Invoke();
+    //        Die();
+    //    }
+    //    else { onTookDamage?.Invoke(); currentHealth -= damage; Debug.Log("-10"); }
+    //}
 
-    public void Die()
-    {
-        ///Destroy(gameObject, 1f);
-        StartCoroutine( LevelManagement.instance.LoadLevel("MainMenu"));
+    //public void Die()
+    //{
+    //    ///Destroy(gameObject, 1f);
+    //    Debug.Log("Carstvie nebesnoe");
+    //    //StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
 
-    }
+    //}
 
-    
+
 
 }

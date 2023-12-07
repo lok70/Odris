@@ -214,7 +214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ebd972a14e48e47b5dcb4be853e3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonk: {fileID: 0}
 --- !u!114 &6106704283130232210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ba1fd43dd55604dbd7948fb2b5bf33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonk: {fileID: 0}
   dashDistance: 100
 --- !u!114 &8748295163480177582
 MonoBehaviour:
@@ -241,7 +239,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82004784df24114392b9aed00104268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonk: {fileID: 0}
   dodgeStartSpeed: 50
   dodgeDistance: 5
 --- !u!114 &7487370108250239987
@@ -269,7 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cfd00c470efce048a4a42e95890bc5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonk: {fileID: 0}
+  canChange: 1
 --- !u!70 &5077314777861988469
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

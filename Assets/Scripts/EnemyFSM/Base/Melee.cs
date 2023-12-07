@@ -9,9 +9,9 @@ public class Melee : MonoBehaviour
 
         foreach (Collider2D hit in colliders)
         {
-            if (hit.GetComponent<BasePlayerController>())
+            if (hit.GetComponent<HealthSystem>())
             {
-                hit.GetComponent<BasePlayerController>().TakeDamage(damage);
+                hit.GetComponent<HealthSystem>().TakeDamage(damage);
             }
         }
     }

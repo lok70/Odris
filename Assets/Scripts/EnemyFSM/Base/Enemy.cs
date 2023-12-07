@@ -35,14 +35,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     private bool resetFlag = false;
     private float knockbackSpeed = 50f;
-    private void OnEnable()
-    {
-        Attack.onHit += tookHit;
-    }
-    private void OnDisable()
-    {
-        Attack.onHit -= tookHit;
-    }
+    
     private void Awake()
     {
         agent = this.GetComponent<NavMeshAgent>();
@@ -163,12 +156,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
 
     #region AnimTriggers
-    private void tookHit()
-    {
-        agent.velocity = Vector3.zero;
-        resetFlag = true;
-        StartCoroutine(Reset());
-    }
+    
     private void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
         //todo
@@ -179,11 +167,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         EnemyKilled,
     }
 
-    private IEnumerator Reset()
-    {
-        agent.velocity = Vector3.zero;
-        yield return new WaitForSeconds(0.5f);
-    }
+    
 
     #endregion
 

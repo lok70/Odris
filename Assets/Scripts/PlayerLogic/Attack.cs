@@ -37,7 +37,7 @@ public class Attack : BasePlayerController
             GameObject obj = NearTarget(point, colliders);
             if (obj != null)
             {
-                //obj.GetComponent<Enemy>().TakeDamage(10);
+                obj.GetComponent<Enemy>().TakeDamage(10);
                 onHit?.Invoke();
 
                 return;
@@ -48,9 +48,6 @@ public class Attack : BasePlayerController
                 {
                     hit.GetComponent<Enemy>().TakeDamage(10);
                     onHit?.Invoke();
-                    //hit.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
-                    //Vector3 direction = (hit.GetComponent<Transform>().position - (Vector3)playerPos).normalized;
-                    //hit.GetComponent<Transform>().Translate(direction * 1.2F);
                 }
             }
         }
