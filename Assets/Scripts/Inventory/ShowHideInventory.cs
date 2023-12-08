@@ -8,16 +8,23 @@ public class ShowHideInventory : MonoBehaviour
 
     Canvas inventoryCanvas;
 
-    bool Is_Opened = false;
+    bool Is_Opened;
 
     private void Start()
     {
         inventoryCanvas = GetComponent<Canvas>();
+        Is_Opened = false;
     }
 
     void Update()
     {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
+        Ray ray = new Ray(mousePosition, new Vector3(0,0,100));
+        Debug.DrawRay(mousePosition, new Vector3(0, 0, 100));
+
+        RaycastHit2D[] raycasts = Physics2D.GetRayIntersectionAll(ray, 200);
+        foreach (var x in raycasts) print(x.transform.tag);
         if (Input.GetKeyDown(KeyCode.I) && !Is_Opened)
         {
             Open();
