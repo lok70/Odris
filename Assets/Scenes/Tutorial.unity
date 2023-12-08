@@ -492,6 +492,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy 1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4558274730605147104, guid: 6763ce6cfc74c9e4fbb98d5c8ce900a1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5039599403735133326, guid: 6763ce6cfc74c9e4fbb98d5c8ce900a1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.85680175
@@ -8023,7 +8027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterCollider: {fileID: 1437684445}
-  distanceFromCharacter: 1
+  distanceFromCharacter: 1.19
 --- !u!4 &677957925
 Transform:
   m_ObjectHideFlags: 0
@@ -8542,6 +8546,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &936135138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 936135141}
+  - component: {fileID: 936135140}
+  - component: {fileID: 936135139}
+  m_Layer: 1
+  m_Name: Weapon Parent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &936135139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936135138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0bc8423caff3d4cb9f989e3c1f1d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pref: {fileID: 8811489470165422018, guid: 5244a9c81b2717748800bfa3580e4424, type: 3}
+  poolSize: 10
+--- !u!114 &936135140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936135138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93dbe4c811df424478d7c1263c2b053f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool: {fileID: 936135139}
+--- !u!4 &936135141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936135138}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.04918921, y: -21.558378, z: 0}
+  m_LocalScale: {x: 1.67328, y: 1.67328, z: 0.33466}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &978656215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8554,6 +8618,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5196841366756141370, guid: 0c233bba6dcf4fe4c9f249c4558e7939, type: 3}
+      propertyPath: pool
+      value: 
+      objectReference: {fileID: 936135139}
     - target: {fileID: 6895584350872506125, guid: 0c233bba6dcf4fe4c9f249c4558e7939, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.08230591
@@ -8599,7 +8667,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 677957925}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3447279932055346788, guid: 0c233bba6dcf4fe4c9f249c4558e7939, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4156203024263141479, guid: 0c233bba6dcf4fe4c9f249c4558e7939, type: 3}
@@ -9504,13 +9573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121c6924ba50b3e47ac39299622f0883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySlots:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1364731321
 GameObject:
   m_ObjectHideFlags: 0
@@ -55737,3 +55799,4 @@ SceneRoots:
   - {fileID: 7279871}
   - {fileID: 978656215}
   - {fileID: 106654909}
+  - {fileID: 936135141}

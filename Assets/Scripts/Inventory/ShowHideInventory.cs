@@ -24,7 +24,6 @@ public class ShowHideInventory : MonoBehaviour
         Debug.DrawRay(mousePosition, new Vector3(0, 0, 100));
 
         RaycastHit2D[] raycasts = Physics2D.GetRayIntersectionAll(ray, 200);
-        foreach (var x in raycasts) print(x.transform.tag);
         if (Input.GetKeyDown(KeyCode.I) && !Is_Opened)
         {
             Open();

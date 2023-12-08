@@ -5,19 +5,21 @@ using UnityEngine.UI;
 
 public class StaminaSystem : MonoBehaviour
 {
+    [SerializeField] private GameObject imageParent;
+
     protected float maxStamina;
     protected float currentStamina;
     private float timer;
-
-    [SerializeField] private GameObject imageParent;
     private Image bar;
 
+    public float currentSt { get { return currentStamina; }  private set { } }
 
     private void OnEnable()
     {
         maxStamina = 100f;
         currentStamina = maxStamina;
     }
+
     void Start()
     {
         bar = imageParent.transform.GetChild(1).GetComponent<Image>();
@@ -28,13 +30,7 @@ public class StaminaSystem : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= Random.Range(3, 6))
         {
-            Debug.Log("Stamina +" + Time.time);
-            RestoreStamina(20); timer = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Debug.Log("T pressed");
-            UsingStamina(20);
+            RestoreStamina(10); timer = 0;
         }
     }
     public void UsingStamina(float usedStamina)
@@ -53,4 +49,5 @@ public class StaminaSystem : MonoBehaviour
             currentStamina += restoredStamina;
         }
     }
+
 }

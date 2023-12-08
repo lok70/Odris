@@ -7,7 +7,10 @@ using UnityEngine;
 public class AnimationController : BasePlayerController
 {
     private string currentState;
-    public bool canChange = true;
+    private bool canChange = true;
+    private bool isBlocking;
+    private StaminaSystem ss;
+
     private void OnEnable()
     {
         MeleeAttackLogic.onAttacked += AttackTrigger;
@@ -18,7 +21,7 @@ public class AnimationController : BasePlayerController
         ShootAction.onShootFromCB += CBshootTrigger;
         onEndedBlocking += EndedBLockingTrigger;
     }
-
+    
     private void OnDisable()
     {
         MeleeAttackLogic.onAttacked -= AttackTrigger;
@@ -31,6 +34,7 @@ public class AnimationController : BasePlayerController
     }
     private void Awake()
     {
+        ss = GetComponent<StaminaSystem>();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -76,16 +80,19 @@ public class AnimationController : BasePlayerController
     private void AttackTrigger()
     {
         canChange = false;
+        ss.UsingStamina(15);
         anim.SetTrigger("Attack");
     }
     private void EndedBLockingTrigger()
     {
         canChange = true;
+        isBlocking = false;
     }
     private void BlockingTrigger()
     {
         canChange = false;
         changeAnimState(PlayerAnims.Block);
+        isBlocking= true;
     }
     private void CBshootTrigger()
     {
@@ -96,16 +103,19 @@ public class AnimationController : BasePlayerController
 
     private void DodgeTrigger()
     {
+        ss.UsingStamina(20);
         changeAnimState(PlayerAnims.Dodge);
     }
    
     private void TakeDamageTrigger()
     {
-        //took Damage
+        if (isBlocking) { ss.UsingStamina(5); }
+        else { ss.UsingStamina(10);}
     }
 
     private void DeathTrigger()
     {
+        ss.UsingStamina(100);
         anim.SetTrigger("Death");
     }
 
