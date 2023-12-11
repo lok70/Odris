@@ -6,7 +6,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Rigidbody2D rb;
     private Vector2 moveDir;
-    private float timer;
     private void OnEnable()
     {
         transform.position = ShootingPoint.shootingPointCords;
@@ -30,7 +29,7 @@ public class Projectile : MonoBehaviour
         {
             if (collision.gameObject.TryGetComponent(typeof(Enemy), out Component component))
             {
-                collision.gameObject.GetComponent<Enemy>().TakeDamage(10);
+                collision.gameObject.GetComponent<Enemy>().TakeDamage(Random.Range(10, 15));
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(moveDir * 0.25f, ForceMode2D.Force);
             }
             gameObject.SetActive(false);

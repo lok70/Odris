@@ -33,6 +33,19 @@ public class ProjectilePool : MonoBehaviour
         return null;
     }
 
+    public GameObject Get(Transform transform)
+    {
+        for(int i = 0;poolSize > i; i++)
+        {
+            if (!pool[i].activeInHierarchy)
+            {
+                pool[i].transform.position = transform.position;
+                pool[i].SetActive(true);
+                return pool[i];
+            }
+        }
+        return null;
+    }
 
 
 }
