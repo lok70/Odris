@@ -9,7 +9,6 @@ public class AtackEnemyState
     : EnemyState
 {
     private float timer;
-    private float lastTimer;
     private float damage = 30;
     private Vector2 targetPos;
     private Vector2 direction;
@@ -33,7 +32,7 @@ public class AtackEnemyState
         enemy.animator.SetTrigger("Idle");
 
         BasePlayerController.onBlocked += DamageWithBlock;
-        //BasePlayerController.onEndedBlocking += NoBlockDamage;
+        BasePlayerController.onEndedBlocking += NoBlockDamage;
         startDone = true;
         flag = true;
         attackFlag = false;
@@ -44,7 +43,7 @@ public class AtackEnemyState
         startDone = false;
         enemy.animator.SetTrigger("StopAttack");
         BasePlayerController.onBlocked -= DamageWithBlock;
-       // BasePlayerController.onEndedBlocking -= NoBlockDamage;
+        BasePlayerController.onEndedBlocking -= NoBlockDamage;
         base.ExitState();
     }
 
@@ -67,7 +66,7 @@ public class AtackEnemyState
 
                 if (attackFlag == false)
                 {
-                    Melee.Attack(targetPos, 1, damage);
+                    MeleeAttackAction.Attack(targetPos, 1, damage);
                     enemy.animator.SetTrigger("StopAttack");
                     attackFlag = true;
                 }

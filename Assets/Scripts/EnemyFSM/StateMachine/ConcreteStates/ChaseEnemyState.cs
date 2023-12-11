@@ -28,10 +28,7 @@ public class ChaseEnemyState : EnemyState
         {
             enemyStateMachine.ChangeState(enemy.DetectionState);
         }
-        if (enemy.distanceFromPlayer <= enemy.stoppingDistance)
-        {
-            enemy.moveFromStoppingDistance();  
-        }
+        
         if (enemy.distanceFromPlayer <= enemy.shootingDistance & !enemy.obstackleFlag)
         {
             enemyStateMachine.ChangeState(enemy.AtackState);

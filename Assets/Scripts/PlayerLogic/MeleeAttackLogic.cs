@@ -7,18 +7,23 @@ public class MeleeAttackLogic : MonoBehaviour
     private bool canAttack = true;
     public static Action onAttacked;
     [SerializeField] Transform meleeAttackPoint;
-    
-    
+    private StaminaSystem ss;
+
+    private void Awake()
+    {
+        ss = GetComponent<StaminaSystem>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && canAttack)
+        
+        if (Input.GetMouseButtonDown(0) && canAttack && ss.currentSt > 15)
         {
             onAttacked.Invoke();
             canAttack = false;
             StartCoroutine(Timer(0.5f));
-            Attack.Action(meleeAttackPoint.position, 0.5f, 20, true);
+            Attack.Action(meleeAttackPoint.position, 0.5f, 20, false);
             StartCoroutine(Timer(0.2f));
             canAttack = true;
         }

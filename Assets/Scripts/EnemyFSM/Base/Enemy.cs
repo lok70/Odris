@@ -10,12 +10,12 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     //anim..
     public Animator animator;
     public float atackCooldown;
-    [SerializeField] public bool canAtack = false;
-
+    public bool canAtack = false;
+    public ProjectilePool pool;
 
 
     // Idamageable..
-    [SerializeField] public float maxHealth { get; set; } = 100f;
+    public float maxHealth { get; set; } = 100f;
     public float currentHealth { get; set; }
     // Imoveable..
     public NavMeshAgent agent { get; set; }
@@ -35,26 +35,18 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     private bool resetFlag = false;
     private float knockbackSpeed = 50f;
-    private void OnEnable()
-    {
-        Attack.onHit += tookHit;
-    }
-    private void OnDisable()
-    {
-        Attack.onHit -= tookHit;
-    }
-    private void Awake()
+    
+    public virtual void Awake()
     {
         agent = this.GetComponent<NavMeshAgent>();
         animator = this.GetComponent<Animator>();
         currentHealth = maxHealth;
     }
-    private void Start()
+    public virtual void Start()
     {
         enemyStateMachine = new EnemyStateMachine();
         IdleState = new IdleEnemyState(this, enemyStateMachine);
         ChaseState = new ChaseEnemyState(this, enemyStateMachine);
-        AtackState = new AtackEnemyState(this, enemyStateMachine);
         DetectionState = new DetectionEnemyState(this, enemyStateMachine);
         LastPointCheckState = new LastPointCheckState(this, enemyStateMachine);
         PatrolState = new PatrolEnemyState(this, enemyStateMachine);
@@ -72,7 +64,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         //pointOrPlayerTarget = target.transform;
     }
 
-    public void Update()
+    public virtual void Update()
     {
         enemyStateMachine.currentState.FrameUpdate();
 
@@ -88,17 +80,10 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         {
             Vector3 knocbackDir =(transform.position - target.transform.position).normalized;
             transform.position += knocbackDir * knockbackSpeed * Time.deltaTime ;
-
-            //knockbackSpeed -= knockbackSpeed * 12f * Time.deltaTime;
-            //if (knockbackSpeed < 3f) 
-            //{
-            //    return;
-            //}
-            //resetFlag = false;
         }
     }
 
-    public void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         enemyStateMachine.currentState.PhysicsUpdate();
     }
@@ -109,9 +94,9 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     public EnemyStateMachine enemyStateMachine { get; set; }
     public IdleEnemyState IdleState { get; set; }
 
-    public ChaseEnemyState ChaseState { get; set; }
+    public EnemyState ChaseState { get; set; }
 
-    public AtackEnemyState AtackState { get; set; }
+    public EnemyState AtackState { get; set; }
 
     public DetectionEnemyState DetectionState { get; set; }
 
@@ -144,6 +129,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     {
         Destroy(gameObject);
     }
+
     #endregion
 
 
@@ -163,12 +149,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
 
     #region AnimTriggers
-    private void tookHit()
-    {
-        agent.velocity = Vector3.zero;
-        resetFlag = true;
-        StartCoroutine(Reset());
-    }
+    
     private void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
         //todo
@@ -179,28 +160,11 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         EnemyKilled,
     }
 
-    private IEnumerator Reset()
-    {
-        agent.velocity = Vector3.zero;
-        yield return new WaitForSeconds(0.5f);
-    }
+    
 
     #endregion
 
-    #region VisualDemonstration
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, chasingDistance);
-        Gizmos.DrawWireSphere(transform.position, shootingDistance);
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, aggroDistanse);
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, stoppingDistance);
-    }
-    #endregion
-
+  
     #region Technical Funcs
 
     public bool obctacklesChecker()

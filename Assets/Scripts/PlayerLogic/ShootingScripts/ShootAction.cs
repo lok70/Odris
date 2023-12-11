@@ -12,7 +12,6 @@ public class ShootAction : MonoBehaviour
     private void Awake()
     {
         pool = GetComponentInChildren<ProjectilePool>();
-        
     }
 
     private void Update()

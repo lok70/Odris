@@ -28,12 +28,8 @@ public class EnemyState : MonoBehaviour
             enemyStateMachine.ChangeState(enemy.ChaseState);
         }
 
-        //if (enemy.distanceFromPlayer <= enemy.shootingDistance  & !enemy.obstackleFlag )
-        //{
-        //    enemyStateMachine.ChangeState(enemy.AtackState);
-        //}
+      
     }
 
     public virtual void PhysicsUpdate() { }
-    public virtual void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType) { }
 }
