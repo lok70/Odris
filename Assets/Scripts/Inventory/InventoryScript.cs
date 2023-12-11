@@ -41,6 +41,7 @@ public class Inventory : MonoBehaviour
                 inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
                 //inventorySlots[i].informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
                 inventorySlots[i].slotIndex = i;
+                inventorySlots[i].transform.parent.GetComponent<InventorySlotData>().SetIndex(i);  
             }
         }
     }

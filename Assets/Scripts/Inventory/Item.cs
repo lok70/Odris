@@ -13,6 +13,8 @@ public class Item : ScriptableObject
 
     public string Description;
 
+    public bool Stackable;
+
     public string Prefab_Name;
 
 }
