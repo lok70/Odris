@@ -34,7 +34,7 @@ public class RangeMagicAttack : EnemyState
                 }
             }
         }
-        // projeciles[index].gameObject.SetActive(false);
+        projeciles[index].gameObject.SetActive(false);
         enemy.pool.Get(projeciles[index]);
         Debug.Log("Vistrel bam bam");
         startDone = true;
@@ -44,7 +44,7 @@ public class RangeMagicAttack : EnemyState
     public override void ExitState()
     {
         enemy.agent.isStopped = false;
-       // projeciles[index].gameObject.SetActive(true);
+        projeciles[index].gameObject.SetActive(true);
         base.ExitState();
 
     }

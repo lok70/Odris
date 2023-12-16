@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         agent = this.GetComponent<NavMeshAgent>();
         animator = this.GetComponent<Animator>();
         currentHealth = maxHealth;
+        target = GameObject.FindGameObjectWithTag("Player");
     }
     public virtual void Start()
     {
@@ -104,6 +105,12 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     public PatrolEnemyState PatrolState { get; set; }
 
+    //Range Boss States
+
+    public EnemyState RangeRage { get; set; }
+
+    public EnemyState CircleAttack { get; set; }
+    
     #endregion
 
     #region Health\Die Funcs
