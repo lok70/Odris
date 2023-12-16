@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4217601358431772026}
   - component: {fileID: 8653229168581108268}
   m_Layer: 1
-  m_Name: HideRangePidoraz
+  m_Name: HideRangeEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
