@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 
 public class Inventory : MonoBehaviour
@@ -10,7 +11,7 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
-    private InventorySlot[] inventorySlots = new InventorySlot[14];
+    private InventorySlot[] inventorySlots;
 
     Vector3 mousePosition;
 
@@ -30,12 +31,12 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         instance = this;
-
+        inventorySlots = new InventorySlot[transform.childCount];
         InventoryCanvas = transform.parent;
 
         //informationIconHandler = transform.GetChild(2).GetComponent<InformationIconHandler>();
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        for (int i = 0; i < transform.childCount; i++)
         {
             {
                 inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
@@ -52,28 +53,18 @@ public class Inventory : MonoBehaviour
         
     }
 
+    private void UpdateInventory()
+    {
+        for (int i = 0; i < transform.childCount; i++) inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
+    }
     public void PutInEmptySlot(Item item)
     {
-
+        UpdateInventory();
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             if (inventorySlots[i].slotItem == null)
             {
-                if (item.Prefab_Name == "Sword")
-                {
-                    inventorySlots[0].PutInSlot(item);
-                }
-                else if (item.Prefab_Name == "Crossbow")
-                {
-                    inventorySlots[1].PutInSlot(item);
-                    onPickedUp?.Invoke();
-                }
-                else
-                {
-                    inventorySlots[i].PutInSlot(item);
-                }
-                
-                
+                inventorySlots[i].PutInEmptySlot(item);
                 return;
             }
         }
@@ -82,8 +73,28 @@ public class Inventory : MonoBehaviour
 
     public bool HasFreeSlot()
     {
+        UpdateInventory();
         for (int i = 0; i < inventorySlots.Length; i++) if (inventorySlots[i].slotItem == null) return true;
         return false;
+    }
+
+    public int HasItem(Item _item)
+    {
+        UpdateInventory();
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            if (_item == inventorySlots[i].slotItem)
+            {
+                return i;
+            }     
+        }
+        return -1;
+    }
+
+    public void StackItem(Item _item,int index)
+    {
+        UpdateInventory();
+        inventorySlots[index].StackInSlot(_item);
     }
 
     public void SwapSlots(int a_index, int b_index)
@@ -96,14 +107,6 @@ public class Inventory : MonoBehaviour
     /*
     private void HandleInformationIcon()
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        //10f - расстояние от камеры до нуля координат по оси z
-        mousePosition.z = InventoryCanvas.position.z+10f;
-
-        Ray ray = new Ray(Camera.main.transform.position,mousePosition);
-        mouseHits = Physics2D.GetRayIntersectionAll(ray);
-
 
 
         Is_Pointing_On_Slot = false;

@@ -1,23 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections;
 using UnityEngine;
 
 public class AmountHandler : MonoBehaviour
 {
-    TextMeshProUGUI Amount;
+    TMP_Text Amount;
+
+    [SerializeField]private bool Is_Used;
+
+    [SerializeField]private bool Globally_Visible;
 
     int amount = 0;
 
-    void Start()
+    private void Awake()
     {
-        Amount = GetComponent<TextMeshProUGUI>();
+        Amount = GetComponent<TMP_Text>();
+        ShowHideInventory.onVisibilityUpdated += GlobalCanvasVisibility;
+        Amount.enabled = false;
+        Is_Used = false;
+        Amount.text = "0";
     }
 
-    public void ChangeItemAmount(int n)
+    private void Update()
     {
-        amount += n;
-        Amount.text = amount.ToString();
+        Amount.enabled = (Is_Used && Globally_Visible);
+    }
+
+    private void OnEnable()
+    {
+        ShowHideInventory.onVisibilityUpdated += GlobalCanvasVisibility;
+    }
+
+    private void OnDisable()
+    {
+        ShowHideInventory.onVisibilityUpdated -= GlobalCanvasVisibility;
     }
 
     public void SetItemAmount(int n)
@@ -26,8 +45,18 @@ public class AmountHandler : MonoBehaviour
         Amount.text = amount.ToString();
     }
 
-    public void SwitchVisibilityOfAmountText(bool visibility)
+    public void GlobalCanvasVisibility(bool visibility)
     {
-        Amount.enabled = visibility;
+        Globally_Visible = visibility;
+    }
+
+    public void SetVisibility(bool visibility)
+    {
+        Is_Used = visibility;
+    }
+
+    public void UpdateText(int n)
+    {
+        Amount.text = n.ToString();
     }
 }

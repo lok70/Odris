@@ -5,6 +5,7 @@ using UnityEngine;
 public class PickableObject : MonoBehaviour
 {
     [SerializeField] Item item;
+    [SerializeField] public int Amount;
 
     SpriteRenderer image;
 
@@ -18,7 +19,12 @@ public class PickableObject : MonoBehaviour
     {
         if  (collision.CompareTag("Player"))
         {
-            if(Inventory.instance.HasFreeSlot())
+            if((Inventory.instance.HasItem(item) != -1) && item.Stackable)
+            {
+                Inventory.instance.StackItem(item, Inventory.instance.HasItem(item));
+                Destroy(gameObject);
+            }
+            else if(Inventory.instance.HasFreeSlot())
             {
                 Inventory.instance.PutInEmptySlot(item);
                 Destroy(gameObject);

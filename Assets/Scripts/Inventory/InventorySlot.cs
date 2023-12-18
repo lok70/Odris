@@ -29,8 +29,18 @@ public class InventorySlot : MonoBehaviour
 
     public int Item_Amount = 0;
 
-    AmountHandler Amount;
+    public AmountHandler Amount;
 
+
+
+    private void Awake()
+    {
+        //Получаем нужные компоненты (на этом объекте, или от родительского)
+        icon = GetComponent<Image>();
+        rectTransform = GetComponent<RectTransform>();
+        parentRectTransform = transform.parent.GetComponent<RectTransform>();
+        Amount = transform.GetChild(0).gameObject.GetComponent<AmountHandler>();
+    }
 
     private void Start()
     {
@@ -38,44 +48,57 @@ public class InventorySlot : MonoBehaviour
         icon = GetComponent<Image>();
         rectTransform = GetComponent<RectTransform>();
         parentRectTransform = transform.parent.GetComponent<RectTransform>();
-        Amount = transform.parent.GetChild(1).gameObject.GetComponent<AmountHandler>();
+        Amount = transform.GetChild(0).gameObject.GetComponent<AmountHandler>();
     }
 
 
     //Кладем Item в слот
-    public void PutInSlot(Item item)
+    public void PutInEmptySlot(Item item)
     {
-        Item_Amount = 1;
-        Amount.SwitchVisibilityOfAmountText(!item.Stackable);
-        Amount.ChangeItemAmount(Item_Amount);
+        ChangeAmount(1,false);
+        Amount.SetVisibility(item.Stackable);
+
         ResizeItemImage();
         icon.enabled = true;
+ 
         slotItem = item;
         icon.sprite = item.icon;
     }
 
-    public void IncreaseAmount(int amount)
+    public void StackInSlot(Item item)
     {
-        Item_Amount = amount;
-        Amount.SetItemAmount(amount);
+        ChangeAmount(1);
+
+        ResizeItemImage();
+        icon.enabled = true;
+
+        slotItem = item;
+        icon.sprite = item.icon;
     }
 
     public void ResizeItemImage()
     {
-        rectTransform.sizeDelta = Vector3.zero;
+        rectTransform.sizeDelta = Vector3.zero; 
     }
 
     //Убираем Item из слота
     public void TakeFromSlot()
     {
-        Amount.SwitchVisibilityOfAmountText(false);
-        Amount.SetItemAmount(0);
-        Item_Amount = 0;
+        Amount.SetVisibility(false);
+        ChangeAmount(0, false);
+
         icon.enabled = false;
         slotItem = null;
         icon.sprite = null;
     }
 
+    //Первый параметр - количество, второй - добавляем (true) или просто задаем (false)
+    public void ChangeAmount(int amount,bool adding = true)
+    {
+        if (adding) Item_Amount += amount;
+        else Item_Amount = amount;
 
+        Amount.UpdateText(Item_Amount);
+    }
 
 }

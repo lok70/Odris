@@ -11,5 +11,4 @@ public class InventorySlotData : MonoBehaviour
         SlotIndex = index;
     }
 
-
 }

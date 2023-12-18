@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,47 +7,27 @@ using UnityEngine;
 public class ShowHideInventory : MonoBehaviour
 {
 
-    Canvas inventoryCanvas;
+    Behaviour inventoryCanvas;
 
-    bool Is_Opened;
+    public static bool Is_Opened;
+
+    public static Action<bool> onVisibilityUpdated;
 
     private void Start()
     {
-        inventoryCanvas = GetComponent<Canvas>();
+        inventoryCanvas = GetComponent<Behaviour>();
         Is_Opened = false;
     }
 
     void Update()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        Ray ray = new Ray(mousePosition, new Vector3(0,0,100));
-        Debug.DrawRay(mousePosition, new Vector3(0, 0, 100));
-
-        RaycastHit2D[] raycasts = Physics2D.GetRayIntersectionAll(ray, 200);
-        if (Input.GetKeyDown(KeyCode.I) && !Is_Opened)
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            Open();
-        }
-        else if (Input.GetKeyDown(KeyCode.I) && Is_Opened)
-        {
-            Close();
+            Is_Opened = !Is_Opened;
+            onVisibilityUpdated?.Invoke(Is_Opened);
+            inventoryCanvas.enabled = Is_Opened;
         }
 
-
-
     }
 
-    private void Open()
-    {
-        inventoryCanvas.enabled = true;
-        Is_Opened = true;
-
-    }
-
-    private void Close()
-    {
-        inventoryCanvas.enabled = false;
-        Is_Opened = false;
-    }
 }
