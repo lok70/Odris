@@ -8,9 +8,11 @@ public class RangeEnemyWithBulletsAround : Enemy
     [SerializeField] private GameObject magicProjectilePref;
     private Transform[] magicBullets;
     [SerializeField] private int objectsInArray = 6;
-    [SerializeField] private float radius;
+    [SerializeField] public static float radius = 1.8f;
     [SerializeField] private float rotationSpeed;
-   
+    private bool rangeActivated = false;
+    private float timer;
+
 
     public override void Awake()
     {
@@ -20,18 +22,21 @@ public class RangeEnemyWithBulletsAround : Enemy
     public override void Start()
     {
         base.Start();
-        AtackState = new RangeMagicAttack(this, enemyStateMachine, magicBullets);
+        AtackState = new RangeMagicAttack  (this, enemyStateMachine, magicBullets);
+        RangeRage = new RangeRageState(this, enemyStateMachine, magicBullets);
         for (int i = 0; i < objectsInArray; i++)
         {
             GameObject bulletePref = Instantiate(magicProjectilePref);
             bulletePref.transform.SetParent(this.transform);
             magicBullets[i] = bulletePref.transform;
         }
+        timer = 0;
     }
 
     public override void Update()
     {
-       
+        base.Update();
+        Debug.Log(enemyStateMachine.currentState);
 
         float angleStep = 360 / objectsInArray * Mathf.Deg2Rad;
 
@@ -48,6 +53,13 @@ public class RangeEnemyWithBulletsAround : Enemy
 
                 magicBullets[i].position = new Vector2(this.transform.position.x + rotatedPos.x, this.transform.position.y + rotatedPos.y);
             }
+        }
+        timer += Time.deltaTime;
+
+        if (timer >= 30 && !rangeActivated)
+        {
+            enemyStateMachine.ChangeState(RangeRage);
+            rangeActivated = true;
         }
         if (currentHealth <= 0)
         {

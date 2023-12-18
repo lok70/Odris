@@ -1,7 +1,8 @@
 
 using UnityEngine;
 
-public class MeleeAttackAction : MonoBehaviour
+public class EnemyAttackAction
+    : MonoBehaviour
 {
    public static void Attack(Vector2 point, float radius, float damage)
     {

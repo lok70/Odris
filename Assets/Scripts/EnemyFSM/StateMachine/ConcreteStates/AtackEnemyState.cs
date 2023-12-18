@@ -66,7 +66,7 @@ public class AtackEnemyState
 
                 if (attackFlag == false)
                 {
-                    MeleeAttackAction.Attack(targetPos, 1, damage);
+                    EnemyAttackAction.Attack(targetPos, 1, damage);
                     enemy.animator.SetTrigger("StopAttack");
                     attackFlag = true;
                 }
