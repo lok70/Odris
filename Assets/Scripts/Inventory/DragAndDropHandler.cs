@@ -1,126 +1,230 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+
     private Transform draggingParent;
     private Transform originalParent;
 
+    Transform changingSlot;
+
     InventorySlot slot;
 
-    private void Start()
+    GameObject Clone;
+    InventorySlot remainSlot;
+    DragAndDropHandler remainDragAndDropHandler;
+
+    bool Is_Picking = false;
+
+    private void Awake()
     {
-        draggingParent = transform.parent.parent;
+        draggingParent = transform.parent.parent.parent;
         slot = GetComponent<InventorySlot>();
+        originalParent = transform.parent;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        //Сообщаем всем, что находимся в состоянии переноса вещи
-        slot.Is_In_Dragging = true;
-        //informationIconHandler.Item_IsDragging = true;
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            slot.Is_In_Dragging = true;
+            transform.SetParent(draggingParent);
+        }
 
-        //Отцепляемся от слота и прицепляемся к канвасу
-        originalParent = transform.parent.parent;
-        transform.SetParent(draggingParent);
+        else if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (!slot.slotItem.Stackable || (slot.Item_Amount < 2)) return;
+            
+            slot.Is_In_Dragging = true;
+            Is_Picking = true;
 
-        //Закрываем окошко с инфой
-        //informationIconHandler.CloseInformationIcon();
+            GameObject Clone = Instantiate(GameObject.Find("Item"), transform.position, Quaternion.identity, transform.parent);
+            remainSlot = Clone.GetComponent<InventorySlot>();
+            remainDragAndDropHandler = Clone.GetComponent<DragAndDropHandler>();
+            remainSlot.PutInEmptySlot(slot.slotItem);
+            remainSlot.slotIndex = slot.slotIndex;
+            remainSlot.ChangeAmount(slot.Item_Amount-1,false);
+
+            remainDragAndDropHandler = Clone.GetComponent<DragAndDropHandler>();
+            remainDragAndDropHandler.originalParent = originalParent;
+
+            transform.SetParent(draggingParent);
+            //Масштабирование картинки под оригинальный объект
+            Clone.GetComponent<RectTransform>().localScale = slot.rectTransform.localScale;
+
+            remainSlot.Amount.SetVisibility(true);
+            slot.ChangeAmount(1, false);
+            remainDragAndDropHandler.PutBackInEmptySlot();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, draggingParent.transform.position.z);
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, draggingParent.transform.position.z);
+        } 
+        else if(eventData.button == PointerEventData.InputButton.Right && Is_Picking)
+        {
+            var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, draggingParent.transform.position.z);
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (remainSlot.Item_Amount > 1)
+                {
+                    slot.ChangeAmount(1);
+                    remainSlot.ChangeAmount(-1);
+                }
+            }
+        }
     }
 
     //Заканчиваем движение и смотрим, что делать с предметом
     public void OnEndDrag(PointerEventData eventData)
     {
-        //Флаг на то, что предмет остановился внутри слота
-        bool in_slot = Utilities.CheckObjectsFromMousePosition(new string[] { "WeaponSlot", "InventorySlot" });
-
-        GameObject DropSlot = Utilities.GetObjectFromMousePosition(new string[] { "WeaponSlot", "InventorySlot" });
         
+        GameObject DropSlot = Utilities.GetObjectFromMousePosition(new string[] { "WeaponSlot", "InventorySlot" });
         GameObject Background = Utilities.GetObjectsFromMousePosition("InventoryBackground");
+        GameObject Garbage = Utilities.GetObjectsFromMousePosition("GarbageSlot");
 
-        int DropIndex = DropSlot.GetComponent<InventorySlotData>().SlotIndex;
 
-        if (DropSlot != null)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (slot.slotIndex == DropIndex)
+            if (DropSlot != null)
             {
-                PutBack(); 
+                int DropIndex = DropSlot.GetComponent<InventorySlotData>().SlotIndex;
+
+                if (slot.slotIndex == DropIndex)
+                {
+                    PutBackInEmptySlot();
+                }
+                if (slot.slotItem == DropSlot.transform.GetChild(0).GetComponent<InventorySlot>().slotItem && slot.slotItem.Stackable)
+                {
+                    PlaceInSlotWithAdding(DropIndex, DropSlot.transform.GetChild(0).GetComponent<InventorySlot>().Item_Amount);
+                }
+                else PlaceInSlotWithSwap(DropIndex);
             }
-            else
+
+            else if (Garbage != null) PutInGarbage();
+            else if (DropSlot == null && Background != null) PutBackInEmptySlot();
+            else ThrowOut();
+            slot.Is_In_Dragging = false;
+        }
+
+
+        else if (eventData.button == PointerEventData.InputButton.Right && Is_Picking)
+        {
+            if (DropSlot != null)
             {
-                PlaceInSlot(DropIndex);
+                int DropIndex = DropSlot.GetComponent<InventorySlotData>().SlotIndex;
 
-                //informationIconHandler.Item_IsDragging = false;
-                //informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
+                if (slot.slotIndex == DropIndex)
+                {
+                    PlaceInSlotWithAdding(slot.slotIndex, remainSlot.Item_Amount);
+                }
+                else if ((DropSlot.transform.GetChild(0).GetComponent<InventorySlot>().slotItem == slot.slotItem) && (slot.slotItem.Stackable))
+                {
+                    PlaceInSlotWithAdding(DropIndex, DropSlot.transform.GetChild(0).GetComponent<InventorySlot>().Item_Amount);
+                }
+                else if (DropSlot.transform.GetChild(0).GetComponent<InventorySlot>().slotItem == null)
+                {
+                    PlaceInSlotWithReplacement(DropIndex);
+                }
+                else PutBackInEmptySlot();
             }
-            
+
+            else if (Garbage != null) PutInGarbage();
+            else if (DropSlot == null && Background != null)
+            {
+                PlaceInSlotWithAdding(slot.slotIndex, remainSlot.Item_Amount);
+            }
+            else ThrowOut();
+            Is_Picking = false;
         }
-        else if (DropSlot == null && Background != null)
-        {
-            PutBack();
-            // informationIconHandler.Item_IsDragging = false;
-            // informationIconHandler.DisplayInformationIcon(transform.parent.gameObject);
-        }
-        else
-        {
-            ThrowOut();
-            //informationIconHandler.Item_IsDragging = false;
-        }
-        slot.Is_In_Dragging = false;
-    }
-    public void PlaceInSlot(int index)
-    {
-        if (index != slot.slotIndex)
-        {
-            GameObject buffer = originalParent.GetChild(index).GetChild(0).gameObject;
-
-            transform.SetParent(originalParent.GetChild(index));
-            transform.SetSiblingIndex(0);
-            buffer.transform.SetParent(originalParent.GetChild(slot.slotIndex));
-            buffer.transform.SetSiblingIndex(0);
-            buffer.transform.position = new Vector3(transform.parent.transform.position.x, transform.parent.transform.position.y, originalParent.parent.transform.position.z);
-
-
-            Inventory.instance.SwapSlots(index, slot.slotIndex);    
-
-            buffer.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-            slot.rectTransform.anchoredPosition = Vector2.zero;
-            transform.position = new Vector3(this.transform.position.x, this.transform.position.y, originalParent.parent.transform.position.z);
-
-            slot.ResizeItemImage();
-        }
-        else PutBack();
     }
 
-    public void PutBack()
+    public void PlaceInSlotWithSwap(int index)
     {
-        transform.SetParent(originalParent.GetChild(slot.slotIndex));
+        GameObject changingSlot = draggingParent.GetChild(2).GetChild(index).GetChild(0).gameObject;
+        changingSlot.transform.SetParent(originalParent);
+
+        transform.SetParent(draggingParent.GetChild(2).GetChild(index));
+
+        Utilities.Swap(ref changingSlot.GetComponent<DragAndDropHandler>().originalParent, ref originalParent);
+
+        Inventory.instance.SwapSlots(index, slot.slotIndex);
+
+        changingSlot.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        gameObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+
+        slot.ResizeItemImage();
+    }
+
+    public void PlaceInSlotWithReplacement(int index)
+    {
+        Destroy(draggingParent.GetChild(2).GetChild(index).GetChild(0).gameObject);
+        transform.SetParent(draggingParent.GetChild(2).GetChild(index));
+        originalParent = transform.parent;
+        slot.slotIndex = transform.parent.GetComponent<InventorySlotData>().SlotIndex;
+        slot.parentRectTransform = transform.parent.GetComponent<RectTransform>();
+
         slot.rectTransform.anchoredPosition = Vector2.zero;
-        transform.position = new Vector3(this.transform.position.x, this.transform.position.y, originalParent.parent.transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y, draggingParent.transform.position.z);
+
+        slot.ResizeItemImage();
+    }
+
+    public void PlaceInSlotWithAdding(int index,int amount)
+    {
+        if (originalParent.childCount == 0) Instantiate(GameObject.Find("Item"), originalParent.transform.position, Quaternion.identity, originalParent);
+        PlaceInSlotWithReplacement(index);
+        slot.Item_Amount += amount;
+        slot.Amount.UpdateText(slot.Item_Amount);
+    }
+
+    public void PutBackInEmptySlot()
+    {
+        transform.SetParent(originalParent);
+        slot.rectTransform.anchoredPosition = Vector2.zero;
+        transform.position = new Vector3(transform.position.x, transform.position.y, draggingParent.transform.position.z);
+    }
+
+    public void PutBackInBusySlot(int index)
+    {
+        remainSlot.Item_Amount += slot.Item_Amount;
+        remainSlot.Amount.UpdateText(slot.Item_Amount);
+        Destroy(gameObject);
     }
 
     public void ThrowOut()
     {
-        PutBack();
         float throw_distance = 3f;
         if (slot.slotItem != null)
         {
             Vector2 throwDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
+            throwDirection.y += 2;
             Item buffer = slot.slotItem;
 
             slot.TakeFromSlot();
-
-            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), BasePlayerController.playerPos + throwDirection * throw_distance, Quaternion.identity);
+            Vector2 throwPos = Camera.main.transform.position;
+            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), throwPos + throwDirection * throw_distance, Quaternion.identity);
+            if(!Is_Picking) PutBackInEmptySlot();
+            else Destroy(gameObject);
+            Is_Picking = false;
         }
-        PutBack();
-
     }
+
+    public void PutInGarbage()
+    {
+        slot.TakeFromSlot();
+        if(Is_Picking) Destroy(gameObject);
+    }
+
 }
