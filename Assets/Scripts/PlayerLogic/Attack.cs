@@ -28,29 +28,32 @@ public class Attack : BasePlayerController
 
         return (current != null) ? current.gameObject : null;
     }
-    public static void Action(Vector2 point, float radius, float damage, bool allTargets)
+    public static void Action(Vector2 point, float radius, float damage)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(point, radius, 2);
 
-        if (!allTargets)
-        {
-            GameObject obj = NearTarget(point, colliders);
-            if (obj != null)
-            {
-                obj.GetComponent<Enemy>().TakeDamage(10);
-                onHit?.Invoke();
 
-                return;
-            }
-            foreach (Collider2D hit in colliders)
+        GameObject obj = NearTarget(point, colliders);
+        if (obj != null)
+        {
+            obj.TryGetComponent<Enemy>(out Enemy enem);
+            if (enem != null)
             {
-                if (hit.GetComponent<Enemy>())
-                {
-                    hit.GetComponent<Enemy>().TakeDamage(10);
-                    onHit?.Invoke();
-                }
+                enem.TakeDamage(damage);
+            }
+            onHit?.Invoke();
+
+            return;
+        }
+        foreach (Collider2D hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>())
+            {
+                hit.GetComponent<Enemy>().TakeDamage(10);
+                onHit?.Invoke();
             }
         }
+
 
         //private static IEnumerator Reset(Collider2D hit)
         //{

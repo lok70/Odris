@@ -16,6 +16,7 @@ public class RangeMagicAttack : EnemyState
 
     public override void EnterState()
     {
+        Debug.Log("shoot");
         base.EnterState();
         enemy.agent.isStopped = true;
         timer = 0;

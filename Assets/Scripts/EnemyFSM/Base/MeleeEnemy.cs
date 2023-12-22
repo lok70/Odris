@@ -8,12 +8,14 @@ public class MeleeEnemy : Enemy
     public override void Awake()
     {
         base.Awake();
-        meleeAttackState = gameObject.AddComponent<AtackEnemyState>();
-        AtackState = meleeAttackState;
+        
     }
     public  override void Start()
     {
         base.Start();
+        meleeAttackState = new AtackEnemyState(this, enemyStateMachine);
+        AtackState = meleeAttackState;
+        
     }
 
     public override void Update()

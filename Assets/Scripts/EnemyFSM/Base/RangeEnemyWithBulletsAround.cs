@@ -36,7 +36,7 @@ public class RangeEnemyWithBulletsAround : Enemy
     public override void Update()
     {
         base.Update();
-        Debug.Log(enemyStateMachine.currentState);
+        
 
         float angleStep = 360 / objectsInArray * Mathf.Deg2Rad;
 
@@ -56,11 +56,11 @@ public class RangeEnemyWithBulletsAround : Enemy
         }
         timer += Time.deltaTime;
 
-        if (timer >= 30 && !rangeActivated)
-        {
-            enemyStateMachine.ChangeState(RangeRage);
-            rangeActivated = true;
-        }
+        //if (timer >= 30 && !rangeActivated)
+        //{
+        //    enemyStateMachine.ChangeState(RangeRage);
+        //    rangeActivated = true;
+        //}
         if (currentHealth <= 0)
         {
             for (int i = 0; i < magicBullets.Length; i++)
