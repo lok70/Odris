@@ -30,7 +30,15 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         inventorySlots = new InventorySlot[transform.childCount];
         InventoryCanvas = transform.parent;
 
