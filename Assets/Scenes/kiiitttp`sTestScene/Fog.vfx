@@ -19,8 +19,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 744
     y: -190
-    width: 621
-    height: 2116
+    width: 623
+    height: 2125
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -63,7 +63,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1000
+      m_SerializableObject: 300
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -1444,7 +1444,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 1000
+      m_SerializableObject: 300
     m_Space: 2147483647
   m_Property:
     name: o
@@ -2262,7 +2262,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.AABox, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"center":{"x":-3.6665115356445314,"y":22.090980529785158,"z":0.0},"size":{"x":194.63038635253907,"y":68.09575653076172,"z":1.0}}'
+      m_SerializableObject: '{"center":{"x":0.8615455627441406,"y":17.440540313720704,"z":0.0},"size":{"x":62.70478057861328,"y":87.1870346069336,"z":1.0}}'
     m_Space: 0
   m_Property:
     name: Box
