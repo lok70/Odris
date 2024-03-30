@@ -21,12 +21,12 @@ public class PickableObject : MonoBehaviour
         {
             if((Inventory.instance.HasItem(item) != -1) && item.Stackable)
             {
-                Inventory.instance.StackItem(item, Inventory.instance.HasItem(item));
+                Inventory.instance.StackItem(item, Inventory.instance.HasItem(item),Amount);
                 Destroy(gameObject);
             }
             else if(Inventory.instance.HasFreeSlot())
             {
-                Inventory.instance.PutInEmptySlot(item);
+                Inventory.instance.PutInEmptySlot(item,Amount);
                 Destroy(gameObject);
             }
         }
