@@ -30,7 +30,15 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         inventorySlots = new InventorySlot[transform.childCount];
         InventoryCanvas = transform.parent;
 
@@ -57,14 +65,15 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++) inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
     }
-    public void PutInEmptySlot(Item item)
+
+    public void PutInEmptySlot(Item item, int amount)
     {
         UpdateInventory();
         for (int i = 0; i < inventorySlots.Length; i++)
         {
             if (inventorySlots[i].slotItem == null)
             {
-                inventorySlots[i].PutInEmptySlot(item);
+                inventorySlots[i].PutInEmptySlot(item,amount);
                 return;
             }
         }
@@ -91,10 +100,10 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
-    public void StackItem(Item _item,int index)
+    public void StackItem(Item _item,int index,int amount)
     {
         UpdateInventory();
-        inventorySlots[index].StackInSlot(_item);
+        inventorySlots[index].StackInSlot(_item,amount);
     }
 
     public void SwapSlots(int a_index, int b_index)

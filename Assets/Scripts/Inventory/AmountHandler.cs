@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class AmountHandler : MonoBehaviour
 {
-    TMP_Text Amount;
+    TextMeshProUGUI Amount;
 
     [SerializeField]private bool Is_Used;
 
@@ -17,7 +17,7 @@ public class AmountHandler : MonoBehaviour
 
     private void Awake()
     {
-        Amount = GetComponent<TMP_Text>();
+        Amount = GetComponent<TextMeshProUGUI>();
         ShowHideInventory.onVisibilityUpdated += GlobalCanvasVisibility;
         Amount.enabled = false;
         Is_Used = false;

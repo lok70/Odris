@@ -53,9 +53,9 @@ public class InventorySlot : MonoBehaviour
 
 
     //Кладем Item в слот
-    public void PutInEmptySlot(Item item)
+    public void PutInEmptySlot(Item item,int amount)
     {
-        ChangeAmount(1,false);
+        ChangeAmount(amount,false);
         Amount.SetVisibility(item.Stackable);
 
         ResizeItemImage();
@@ -65,9 +65,9 @@ public class InventorySlot : MonoBehaviour
         icon.sprite = item.icon;
     }
 
-    public void StackInSlot(Item item)
+    public void StackInSlot(Item item, int amount)
     {
-        ChangeAmount(1);
+        ChangeAmount(amount);
 
         ResizeItemImage();
         icon.enabled = true;

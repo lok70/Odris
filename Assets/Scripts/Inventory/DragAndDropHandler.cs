@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -39,16 +40,16 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
             if (!slot.slotItem.Stackable || (slot.Item_Amount < 2)) return;
-            
+
             slot.Is_In_Dragging = true;
             Is_Picking = true;
 
             GameObject Clone = Instantiate(GameObject.Find("Item"), transform.position, Quaternion.identity, transform.parent);
             remainSlot = Clone.GetComponent<InventorySlot>();
             remainDragAndDropHandler = Clone.GetComponent<DragAndDropHandler>();
-            remainSlot.PutInEmptySlot(slot.slotItem);
+            remainSlot.PutInEmptySlot(slot.slotItem, slot.Item_Amount);
             remainSlot.slotIndex = slot.slotIndex;
-            remainSlot.ChangeAmount(slot.Item_Amount-1,false);
+            remainSlot.ChangeAmount(slot.Item_Amount - 1, false);
 
             remainDragAndDropHandler = Clone.GetComponent<DragAndDropHandler>();
             remainDragAndDropHandler.originalParent = originalParent;
@@ -69,8 +70,8 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         {
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, draggingParent.transform.position.z);
-        } 
-        else if(eventData.button == PointerEventData.InputButton.Right && Is_Picking)
+        }
+        else if (eventData.button == PointerEventData.InputButton.Right && Is_Picking)
         {
             var mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             gameObject.transform.position = new Vector3(mousePosition.x, mousePosition.y, draggingParent.transform.position.z);
@@ -88,7 +89,7 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
     //Заканчиваем движение и смотрим, что делать с предметом
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+
         GameObject DropSlot = Utilities.GetObjectFromMousePosition(new string[] { "WeaponSlot", "InventorySlot" });
         GameObject Background = Utilities.GetObjectsFromMousePosition("InventoryBackground");
         GameObject Garbage = Utilities.GetObjectsFromMousePosition("GarbageSlot");
@@ -181,7 +182,7 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
         slot.ResizeItemImage();
     }
 
-    public void PlaceInSlotWithAdding(int index,int amount)
+    public void PlaceInSlotWithAdding(int index, int amount)
     {
         if (originalParent.childCount == 0) Instantiate(GameObject.Find("Item"), originalParent.transform.position, Quaternion.identity, originalParent);
         PlaceInSlotWithReplacement(index);
@@ -211,11 +212,12 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
             Vector2 throwDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
             throwDirection.y += 2;
             Item buffer = slot.slotItem;
-
+            int amount = slot.Item_Amount;
             slot.TakeFromSlot();
             Vector2 throwPos = Camera.main.transform.position;
-            Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), throwPos + throwDirection * throw_distance, Quaternion.identity);
-            if(!Is_Picking) PutBackInEmptySlot();
+            GameObject ThrowedItem = Instantiate(Resources.Load<GameObject>(buffer.Prefab_Name), throwPos + throwDirection * throw_distance, Quaternion.identity);
+            ThrowedItem.transform.GetComponent<PickableObject>().Amount = amount;
+            if (!Is_Picking) PutBackInEmptySlot();
             else Destroy(gameObject);
             Is_Picking = false;
         }
@@ -224,7 +226,12 @@ public class DragAndDropHandler : MonoBehaviour, IDragHandler, IBeginDragHandler
     public void PutInGarbage()
     {
         slot.TakeFromSlot();
-        if(Is_Picking) Destroy(gameObject);
+
+        if (Is_Picking)
+        {
+            Destroy(gameObject);
+        }
+        else PutBackInEmptySlot();
     }
 
 }
