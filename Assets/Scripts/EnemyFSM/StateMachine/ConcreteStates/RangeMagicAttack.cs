@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RangeMagicAttack : EnemyState
 {
@@ -8,6 +9,7 @@ public class RangeMagicAttack : EnemyState
     private bool startDone = false;
     private bool madeActive = true;
     private Transform[] projeciles;
+
     private int index = -1;
     public RangeMagicAttack(Enemy _enemy, EnemyStateMachine _enemyStateMachine, Transform[] _projectiles) : base(_enemy, _enemyStateMachine)
     {
@@ -35,8 +37,15 @@ public class RangeMagicAttack : EnemyState
                 }
             }
         }
+        if (projeciles[index].gameObject.activeInHierarchy)
+        {
+            enemy.pool.Get(projeciles[index]);
+        }
+        else {
+            enemyStateMachine.ChangeState(enemy.RangeRage);
+        }
         projeciles[index].gameObject.SetActive(false);
-        enemy.pool.Get(projeciles[index]);
+
         Debug.Log("Vistrel bam bam");
         startDone = true;
         madeActive =  false;
@@ -45,9 +54,8 @@ public class RangeMagicAttack : EnemyState
     public override void ExitState()
     {
         enemy.agent.isStopped = false;
-        projeciles[index].gameObject.SetActive(true);
         base.ExitState();
-
+        startDone = false; 
     }
 
     public override void FrameUpdate()
@@ -56,7 +64,7 @@ public class RangeMagicAttack : EnemyState
         if (startDone)
         {
             timer += Time.deltaTime;
-            if (timer >= 1f)
+            if (timer >= 2f)
             {
                 enemyStateMachine.ChangeState(enemy.AtackState);
             }

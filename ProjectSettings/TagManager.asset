@@ -9,6 +9,7 @@ TagManager:
   - InventorySlot
   - WeaponSlot
   - GarbageSlot
+  - Projectile
   layers:
   - Default
   - TransparentFX

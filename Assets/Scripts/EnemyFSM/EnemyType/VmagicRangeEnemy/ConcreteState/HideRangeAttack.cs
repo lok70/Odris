@@ -36,7 +36,7 @@ public class HideRangeAttack : EnemyState
         {
             if (attackFlag == false)
             {
-                EnemyAttackAction.Attack(targetPos, 1.5f, 10);
+                EnemyAttackAction.Attack(targetPos, 1.5f, 30);
                 visualCircle.SetActive(false);
                 attackFlag = true;
             }

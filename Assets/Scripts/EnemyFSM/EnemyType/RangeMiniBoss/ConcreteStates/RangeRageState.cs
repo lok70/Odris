@@ -9,6 +9,7 @@ public class RangeRageState : EnemyState
     private Transform[] projectiles;
     private Vector2 playerPos;
     private float timer;
+    private bool isAttacking = false;
 
     public RangeRageState(Enemy _enemy, EnemyStateMachine _enemyStateMachine, Transform[] _projectiles) : base(_enemy, _enemyStateMachine)
     {
@@ -17,48 +18,74 @@ public class RangeRageState : EnemyState
 
     public override void EnterState()
     {
-        base.EnterState(); enemy.agent.angularSpeed = 120;
-        enemy.agent.speed = 120;playerPos = enemy.target.transform.position;
+        base.EnterState();
+        enemy.agent.angularSpeed = 120;
+        enemy.agent.speed = 120;
+        playerPos = enemy.target.transform.position;
         enemy.agent.SetDestination(playerPos);
-        
+
+        // Start attacking
+        isAttacking = true;
+
         enemy.agent.stoppingDistance = 0;
-        RangeEnemyWithBulletsAround.radius = 0;
+        RangeEnemyWithBulletsAround.radius = 2;
     }
 
     public override void ExitState()
     {
         base.ExitState();
         enemy.agent.SetDestination(enemy.target.transform.position);
-        
+
         enemy.agent.stoppingDistance = 1.8f;
         timer = 0;
-        //RangeEnemyWithBulletsAround.radius = 1.7f;
+        RangeEnemyWithBulletsAround.radius = 1.7f;
+
+        // Stop attacking
+        isAttacking = false;
+
+        // Reset projectiles
+        foreach (var projectile in projectiles)
+        {
+            projectile.gameObject.SetActive(false);
+           // Set starting position;
+        }
     }
 
     public override void FrameUpdate()
     {
-
         base.FrameUpdate();
-        if ((Vector2)enemy.transform.position == playerPos)
+
+        if (isAttacking)
         {
-            timer += Time.deltaTime;
-            if (timer >= 2)
-            {
-                enemyStateMachine.ChangeState(enemy.RangeRage);
-            }
+            Attack();
+        }
+    }
+
+    private void Attack()
+    {
+        // Move projectiles in circle
+        float angleStep = 360 / projectiles.Length;
+        for (int i = 0; i < projectiles.Length; i++)
+        {
+            float angle = angleStep * i;
+            Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            projectiles[i].position += (Vector3)direction * 20 * Time.deltaTime;
         }
 
+        // Check if time to stop attacking
+        timer += Time.deltaTime;
+        if (timer >= 4)
+        {
+            foreach (var projectile in projectiles)
+            {
+                projectile.gameObject.SetActive(false);
+            }
+            isAttacking = false;
+        }
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.GetComponent<HealthSystem>().TakeDamage(30);
-        }
     }
 }

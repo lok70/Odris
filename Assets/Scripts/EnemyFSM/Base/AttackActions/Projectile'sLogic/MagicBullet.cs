@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,8 @@ public class MagicBullet : MonoBehaviour
         StartCoroutine(SetDeactivatedTimer());
     }
 
+
+
     private void OnDisable()
     {
         AnimationController.onBlocked -= damageWithBlock;
@@ -36,7 +39,7 @@ public class MagicBullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name != "Circle(Clone)")
+        if (collision.gameObject.tag != "Projectile")
         {
             if (collision.gameObject.TryGetComponent(typeof(BasePlayerController), out Component component))
             {

@@ -6,12 +6,14 @@ using UnityEngine;
 public class RangeEnemyWithBulletsAround : Enemy
 {
     [SerializeField] private GameObject magicProjectilePref;
+    [SerializeField] private GameObject visualProjectilePref;
     private Transform[] magicBullets;
     [SerializeField] private int objectsInArray = 6;
     [SerializeField] public static float radius = 1.8f;
     [SerializeField] private float rotationSpeed;
     private bool rangeActivated = false;
     private float timer;
+    public static bool needToStopCircling = false;
 
 
     public override void Awake()
@@ -40,7 +42,7 @@ public class RangeEnemyWithBulletsAround : Enemy
 
         float angleStep = 360 / objectsInArray * Mathf.Deg2Rad;
 
-        if (magicBullets != null)
+        if (magicBullets != null && needToStopCircling)
         {
             for (int i = 0; i < magicBullets.Length; i++)
             {
@@ -65,10 +67,12 @@ public class RangeEnemyWithBulletsAround : Enemy
         {
             for (int i = 0; i < magicBullets.Length; i++)
             {
+                Debug.Log("- pulya");
                 Destroy(magicBullets[i]);
             }
         }
 
+       
         //todo
         //реализовать промежуточное состояние "перезарядки"
         //реализовать состояние второго акта атаки
