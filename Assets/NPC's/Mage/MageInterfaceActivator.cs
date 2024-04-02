@@ -19,9 +19,33 @@ public class MageInterfaceActivator : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.U) && MageTriggerScript.Is_Near_Mage))
         {
-            Is_Opened = !Is_Opened;
-            mageCanvas.enabled = Is_Opened;
-            MageInterfaceHandler.Instance.UpdateAllActualInfo();
+            if (Is_Opened)
+            {
+                Close();
+                BigIconsHandler.Instance.Is_Screen_Busy = false;
+            }
+            else
+            {
+                if (!BigIconsHandler.Instance.Is_Screen_Busy)
+                {
+                    Open();
+                    BigIconsHandler.Instance.Is_Screen_Busy = true;
+                }
+            }
         }
+    }
+
+    void Open()
+    {
+        Is_Opened = !Is_Opened;
+        mageCanvas.enabled = Is_Opened;
+        MageInterfaceHandler.Instance.UpdateAllActualInfo();
+    }
+
+    void Close()
+    {
+        Is_Opened = !Is_Opened;
+        mageCanvas.enabled = Is_Opened;
+        MageInterfaceHandler.Instance.UpdateAllActualInfo();
     }
 }

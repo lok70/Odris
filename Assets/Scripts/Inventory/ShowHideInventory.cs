@@ -23,11 +23,35 @@ public class ShowHideInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Is_Opened = !Is_Opened;
-            onVisibilityUpdated?.Invoke(Is_Opened);
-            inventoryCanvas.enabled = Is_Opened;
+            if (Is_Opened)
+            {
+                Close();
+                BigIconsHandler.Instance.Is_Screen_Busy = false;
+            }
+            else
+            {
+                if (!BigIconsHandler.Instance.Is_Screen_Busy)
+                {
+                    Open();
+                    BigIconsHandler.Instance.Is_Screen_Busy = true;
+                }
+            }
         }
 
+    }
+
+    void Open()
+    {
+        Is_Opened = !Is_Opened;
+        onVisibilityUpdated?.Invoke(Is_Opened);
+        inventoryCanvas.enabled = Is_Opened;
+    }
+
+    void Close()
+    {
+        Is_Opened = !Is_Opened;
+        onVisibilityUpdated?.Invoke(Is_Opened);
+        inventoryCanvas.enabled = Is_Opened;
     }
 
 }

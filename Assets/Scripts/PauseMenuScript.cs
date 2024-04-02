@@ -21,10 +21,16 @@ public class PauseMenuScript : MonoBehaviour
             if(Is_On_Pause)
             {
                 ContinueButtonClick();
+                BigIconsHandler.Instance.Is_Screen_Busy = false;
             }
             else
             {
-                Pause();
+                if (!BigIconsHandler.Instance.Is_Screen_Busy)
+                {
+                    Pause();
+                    BigIconsHandler.Instance.Is_Screen_Busy = true;
+                }
+                
             }
         }
     }
