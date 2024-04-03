@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour, Idamageable
@@ -41,7 +43,10 @@ public class HealthSystem : MonoBehaviour, Idamageable
         //Destroy(gameObject, 1f);
         Debug.Log("Carstvie nebesnoe");
         ///yield return new WaitForSeconds(1f);
-        StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
+        if (SceneManager.GetActiveScene().name == "Tutorial")
+            StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
+        else
+            StartCoroutine(LevelManagement.instance.LoadLevel("Hub"));
 
     }
     public void RestoreHealth(float health)
