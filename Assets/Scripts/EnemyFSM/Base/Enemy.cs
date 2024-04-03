@@ -134,7 +134,8 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     public void Die()
     {
-        Destroy(gameObject);
+        animator.SetTrigger("Death");
+        Destroy(gameObject, 1);
     }
 
     #endregion

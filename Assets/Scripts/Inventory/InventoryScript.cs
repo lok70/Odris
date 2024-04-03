@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
 
     public static Action onPickedUp;
 
-    private void Start()
+    private void Awake()
     {
         if (instance == null)
         {

@@ -20,7 +20,7 @@ public class StaminaSystem : MonoBehaviour
         currentStamina = maxStamina;
     }
 
-    void Start()
+    void Awake()
     {
         bar = imageParent.transform.GetChild(1).GetComponent<Image>();
     }
@@ -28,7 +28,7 @@ public class StaminaSystem : MonoBehaviour
     {
         bar.fillAmount = currentStamina / maxStamina;
         timer += Time.deltaTime;
-        if (timer >= Random.Range(3, 6))
+        if (timer >= Random.Range(1, 3))
         {
             RestoreStamina(10); timer = 0;
         }
