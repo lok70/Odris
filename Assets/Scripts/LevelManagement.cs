@@ -9,9 +9,16 @@ using Unity.VisualScripting;
 public class LevelManagement : MonoBehaviour
 {
     public static LevelManagement instance;
-    private void Start()
+    private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public IEnumerator LoadLevel(string name)
