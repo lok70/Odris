@@ -40,6 +40,7 @@ public class HealthSystem : MonoBehaviour, Idamageable
     {
         //Destroy(gameObject, 1f);
         Debug.Log("Carstvie nebesnoe");
+        ///yield return new WaitForSeconds(1f);
         StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
 
     }
