@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
 
     public static Inventory instance;
 
-    private InventorySlot[] inventorySlots;
+    [SerializeField] private InventorySlot[] inventorySlots;
 
     Vector3 mousePosition;
 
@@ -33,32 +33,33 @@ public class Inventory : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this.gameObject);
+            inventorySlots = new InventorySlot[transform.childCount];
+            InventoryCanvas = transform.parent;
+
+            //informationIconHandler = transform.GetChild(2).GetComponent<InformationIconHandler>();
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                {
+                    inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
+                    //inventorySlots[i].informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
+                    inventorySlots[i].slotIndex = i;
+                    inventorySlots[i].transform.parent.GetComponent<InventorySlotData>().SetIndex(i);
+                }
+            }
         }
         else
         {
             Destroy(gameObject);
         }
-        inventorySlots = new InventorySlot[transform.childCount];
-        InventoryCanvas = transform.parent;
-
-        //informationIconHandler = transform.GetChild(2).GetComponent<InformationIconHandler>();
-
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            {
-                inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
-                //inventorySlots[i].informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
-                inventorySlots[i].slotIndex = i;
-                inventorySlots[i].transform.parent.GetComponent<InventorySlotData>().SetIndex(i);  
-            }
-        }
+        
     }
 
     private void Update()
     {
         //HandleInformationIcon();
-        
+
     }
 
     private void UpdateInventory()
