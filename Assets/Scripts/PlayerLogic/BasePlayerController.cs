@@ -21,7 +21,7 @@ public class BasePlayerController : MonoBehaviour
     protected bool canDash = true;
     protected bool canDodge = true;
     protected bool Picked = false;
-  
+   
     public static Action onBlocked;
     public static Action onEndedBlocking;
 
@@ -56,9 +56,11 @@ public class BasePlayerController : MonoBehaviour
         }
 
 
-
-        movementDir.x = Input.GetAxis("Horizontal");
-        movementDir.y = Input.GetAxis("Vertical");
+        if (!isDashing)
+        {
+            movementDir.x = Input.GetAxis("Horizontal");
+            movementDir.y = Input.GetAxis("Vertical");
+        }
         movementDir = movementDir.normalized;
     }
 

@@ -39,7 +39,7 @@ public class Attack : BasePlayerController
             obj.TryGetComponent<Enemy>(out Enemy enem);
             if (enem != null)
             {
-                enem.TakeDamage(damage);
+                enem.TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
             }
             onHit?.Invoke();
 
@@ -49,7 +49,7 @@ public class Attack : BasePlayerController
         {
             if (hit.GetComponent<Enemy>())
             {
-                hit.GetComponent<Enemy>().TakeDamage(10);
+                hit.GetComponent<Enemy>().TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
                 onHit?.Invoke();
             }
         }

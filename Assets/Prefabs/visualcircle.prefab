@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3846347998284964633}
   - component: {fileID: -5768418383186880269}
   - component: {fileID: -7844361891565507217}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: visualcircle
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -28,7 +28,11 @@ Transform:
   m_GameObject: {fileID: 5774684658881230395}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
+  m_LocalPosition: {x: 2.693463, y: -10.343978, z: 0}
+=======
   m_LocalPosition: {x: 26.209066, y: -6.3809776, z: 0}
+>>>>>>> edc04d4823b0404e3680fa1ebab14f565efa606b
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.10000001}
   m_ConstrainProportionsScale: 1
   m_Children: []
