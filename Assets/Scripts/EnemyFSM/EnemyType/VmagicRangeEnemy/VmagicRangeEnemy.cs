@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class VmagicRangeEnemy : Enemy
 {
+
     [SerializeField] private GameObject visualCircle;
+
+    public float damage;
+
+    //public float cd;
 
     public override void Awake()
     {
@@ -14,8 +19,11 @@ public class VmagicRangeEnemy : Enemy
     public override void Start()
     {
         base.Start();
+        maxHealth = 200;
+        currentHealth = maxHealth;
+       /// if (health != 0) { currentHealth = health; }
         visualCircle.gameObject.SetActive(false);
-        AtackState = new HideRangeAttack(this, enemyStateMachine, visualCircle);
+        AtackState = new HideRangeAttack(this, enemyStateMachine, visualCircle, damage);
     }
     public override void Update()
     {

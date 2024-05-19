@@ -603,7 +603,7 @@ Canvas:
   m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2058763928}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4064,11 +4064,11 @@ PrefabInstance:
       objectReference: {fileID: 777158495}
     - target: {fileID: 8089751012540388804, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.73
+      value: 34.3
       objectReference: {fileID: 0}
     - target: {fileID: 8089751012540388804, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -38.41
+      value: 7.6
       objectReference: {fileID: 0}
     - target: {fileID: 8089751012540388804, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -51666,7 +51666,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2058763928}
   m_PlaneDistance: 3
   m_PixelPerfect: 0
   m_ReceivesEvents: 1

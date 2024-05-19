@@ -8,9 +8,14 @@ public class HideRangeAttack : EnemyState
     private float timer = 0;
     private GameObject visualCircle;
     private bool attackFlag;
-    public HideRangeAttack(Enemy _enemy, EnemyStateMachine _enemyStateMachine, GameObject visualCircle) : base(_enemy, _enemyStateMachine)
+    public float damage;
+
+   /// public float cd;
+    public HideRangeAttack(Enemy _enemy, EnemyStateMachine _enemyStateMachine, GameObject visualCircle, float damage) : base(_enemy, _enemyStateMachine)
     {
         this.visualCircle = visualCircle;
+        this.damage = damage;
+        //this.cd = cd;
     }
 
     public override void EnterState()
@@ -32,15 +37,15 @@ public class HideRangeAttack : EnemyState
     {
         base.FrameUpdate();
         timer += Time.deltaTime;
-        if (timer >= 1)
+        if (timer >= 2)
         {
             if (attackFlag == false)
             {
-                EnemyAttackAction.Attack(targetPos, 1.5f, 30);
+                EnemyAttackAction.Attack(targetPos, 1.5f, damage);
                 visualCircle.SetActive(false);
                 attackFlag = true;
             }
-            if (timer >= 1.5)
+            if (timer >= 3)
             {
                 Debug.Log("Выход");timer = 0;
                 enemyStateMachine.ChangeState(enemy.AtackState); 
