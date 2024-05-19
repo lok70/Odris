@@ -16,13 +16,16 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
 
     // Idamageable..
     public float maxHealth { get; set; } = 100f;
-    public float currentHealth { get; set; }
+    public float currentHealth { get; set; } = 100f;
     // Imoveable..
     public NavMeshAgent agent { get; set; }
     //поле игрока
     public GameObject target;
 
+    
+
     // поля для просчета дистанции:
+
     [SerializeField] private LayerMask NeedLayer;
     public float shootingDistance;
     public float chasingDistance;
@@ -32,6 +35,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     [HideInInspector] public Vector2 lastTargetPoint = Vector2.zero;
     private Vector3 newPos;
     public bool obstackleFlag;
+    public float health;
 
     private bool resetFlag = false;
     private float knockbackSpeed = 50f;
@@ -40,7 +44,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     {
         agent = this.GetComponent<NavMeshAgent>();
         animator = this.GetComponent<Animator>();
-        currentHealth = maxHealth;
+        ///currentHealth = maxHealth;
         target = GameObject.FindGameObjectWithTag("Player");
     }
     public virtual void Start()
@@ -51,7 +55,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         DetectionState = new DetectionEnemyState(this, enemyStateMachine);
         LastPointCheckState = new LastPointCheckState(this, enemyStateMachine);
         PatrolState = new PatrolEnemyState(this, enemyStateMachine);
-
+        if (health != 0) { maxHealth = health; }
         //блокируем разворот агента
         agent.updateRotation = false;
         agent.updateUpAxis = false;

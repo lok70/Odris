@@ -6,7 +6,6 @@ using UnityEngine;
 public class RangeEnemyWithBulletsAround : Enemy
 {
     [SerializeField] private GameObject magicProjectilePref;
-    [SerializeField] private GameObject visualProjectilePref;
     private Transform[] magicBullets;
     [SerializeField] private int objectsInArray = 6;
     [SerializeField] public static float radius = 1.8f;
@@ -30,6 +29,7 @@ public class RangeEnemyWithBulletsAround : Enemy
         {
             GameObject bulletePref = Instantiate(magicProjectilePref);
             bulletePref.transform.SetParent(this.transform);
+            bulletePref.SetActive(true);
             magicBullets[i] = bulletePref.transform;
         }
         timer = 0;
@@ -42,7 +42,7 @@ public class RangeEnemyWithBulletsAround : Enemy
 
         float angleStep = 360 / objectsInArray * Mathf.Deg2Rad;
 
-        if (magicBullets != null && needToStopCircling)
+        if (magicBullets != null)
         {
             for (int i = 0; i < magicBullets.Length; i++)
             {
