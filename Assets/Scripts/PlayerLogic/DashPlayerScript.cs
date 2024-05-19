@@ -40,7 +40,7 @@ public class DashPlayerScript : BasePlayerController
             StartCoroutine(dashTimer());
         }
     }
-
+   
     private IEnumerator dashTimer()
     {
         yield return new WaitForSeconds(1.5f);

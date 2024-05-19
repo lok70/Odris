@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2709502656752277273}
   - component: {fileID: 707907716132608081}
   - component: {fileID: 4902968960361649485}
+  - component: {fileID: 3357286756948413144}
   m_Layer: 0
   m_Name: seasonal sample (winter)_8 (1)
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 50
   m_Sprite: {fileID: -1521453935, guid: 9868ac51ad1f47848a410e6af867497a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -118,8 +119,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.423235}
-  m_Size: {x: 0.95669746, y: 2.0222359}
+  m_Offset: {x: -0.038568497, y: 0.026929855}
+  m_Size: {x: 0.8409939, y: 1.3975182}
   m_Direction: 0
 --- !u!70 &4902968960361649485
 CapsuleCollider2D:
@@ -153,6 +154,22 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.045293692, y: -3.0245342}
-  m_Size: {x: 2.4236393, y: 0.95100796}
+  m_Offset: {x: 0.06457469, y: -0.3054771}
+  m_Size: {x: 2.455226, y: 0.9510802}
   m_Direction: 1
+--- !u!114 &3357286756948413144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3985437304723981600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

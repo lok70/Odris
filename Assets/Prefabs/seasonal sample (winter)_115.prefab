@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1586893559264596987}
   - component: {fileID: 9131434928545051006}
   - component: {fileID: 6701942290049226961}
+  - component: {fileID: -3447272221328217068}
   m_Layer: 0
   m_Name: seasonal sample (winter)_115
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 50
   m_Sprite: {fileID: -2054719670, guid: 9868ac51ad1f47848a410e6af867497a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -120,3 +121,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.016131662, y: -0.57542425}
   m_Size: {x: 0.9567146, y: 0.720089}
   m_Direction: 1
+--- !u!114 &-3447272221328217068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5160345675888936512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff

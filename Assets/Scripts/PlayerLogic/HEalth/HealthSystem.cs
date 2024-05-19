@@ -38,9 +38,10 @@ public class HealthSystem : MonoBehaviour, Idamageable
 
     public void Die()
     {
-        ///Destroy(gameObject, 1f);
+        //Destroy(gameObject, 1f);
         Debug.Log("Carstvie nebesnoe");
-        //StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
+        ///yield return new WaitForSeconds(1f);
+        StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
 
     }
     public void RestoreHealth(float health)
