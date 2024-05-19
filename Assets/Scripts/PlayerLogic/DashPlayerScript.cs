@@ -35,12 +35,12 @@ public class DashPlayerScript : BasePlayerController
             isDashing = true;
             rb.velocity = Vector2.zero;
             //rb.AddForce(-dashDirection * dashDistance, ForceMode2D.Impulse);
-            rb.MovePosition(Vector3.MoveTowards(transform.position, -dashDirection * dashDistance, bounceDistance * Time.deltaTime));
+            rb.MovePosition(Vector3.MoveTowards(transform.position, -dashDirection*dashDistance, bounceDistance* Time.deltaTime));
 
             StartCoroutine(dashTimer());
         }
     }
-
+   
     private IEnumerator dashTimer()
     {
         yield return new WaitForSeconds(1.5f);

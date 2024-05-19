@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3946699437761596495}
   - component: {fileID: 1772053837790121052}
   - component: {fileID: 4174980079969505478}
+  - component: {fileID: 3070172615000531445}
   m_Layer: 1
   m_Name: RangeMiniBoss 1
   m_TagString: Untagged
@@ -210,7 +211,7 @@ MonoBehaviour:
   animator: {fileID: 1772053837790121052}
   atackCooldown: 0
   canAtack: 0
-  pool: {fileID: 0}
+  pool: {fileID: 3070172615000531445}
   target: {fileID: 0}
   NeedLayer:
     serializedVersion: 2
@@ -225,6 +226,20 @@ MonoBehaviour:
   magicProjectilePref: {fileID: 0}
   objectsInArray: 12
   rotationSpeed: 35
+--- !u!114 &3070172615000531445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211129831455259517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a0bc8423caff3d4cb9f989e3c1f1d83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pref: {fileID: 0}
+  poolSize: 27
 --- !u!1 &7355858175121328507
 GameObject:
   m_ObjectHideFlags: 0
