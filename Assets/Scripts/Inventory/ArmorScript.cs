@@ -7,7 +7,7 @@ public class ArmorScript : MonoBehaviour
     Item item;
     InventorySlot currslot;
 
-    [SerializeField] public float DamageReduceMultiplier = 1;
+    [SerializeField]static public float DamageReduceMultiplier = 1;
 
     void Start()
     {

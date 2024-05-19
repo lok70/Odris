@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -29,13 +27,13 @@ public class HealthSystem : MonoBehaviour, Idamageable
     }
     public void TakeDamage(float damage)
     {
-        if (currentHealth - damage <= 0)
+        if (currentHealth - damage / ArmorScript.DamageReduceMultiplier <= 0)
         {
             currentHealth = 0;
             onDied?.Invoke();
             Die();
         }
-        else { onTookDamage?.Invoke(); currentHealth -= damage; }
+        else { onTookDamage?.Invoke(); currentHealth -= damage/ArmorScript.DamageReduceMultiplier; }
     }
 
     public void Die()

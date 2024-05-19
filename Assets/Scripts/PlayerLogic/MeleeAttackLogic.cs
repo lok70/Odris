@@ -23,7 +23,7 @@ public class MeleeAttackLogic : MonoBehaviour
             onAttacked.Invoke();
             canAttack = false;
             StartCoroutine(Timer(0.5f));
-            try { Attack.Action(meleeAttackPoint.position, 0.5f, 20); }
+            try { Attack.Action(meleeAttackPoint.position, 0.5f, 20 * SwordScript.DamageMultiplier); }
             catch { NullReferenceException nullReference; }
            
             

@@ -7,7 +7,7 @@ public class SwordScript : MonoBehaviour
     Item item;
     InventorySlot currslot;
 
-    [SerializeField] public float DamageMultiplier = 1;
+    [SerializeField] static public float DamageMultiplier = 1;
 
     void Start()
     {
