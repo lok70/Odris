@@ -25,8 +25,9 @@ public class Projectile : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name != "Arrow(Clone)")
+        if (collision.gameObject.tag != "Arrow")
         {
+            Debug.Log("Destroy");
             if (collision.gameObject.TryGetComponent(typeof(Enemy), out Component component))
             {
                 collision.gameObject.GetComponent<Enemy>().TakeDamage(Random.Range(10, 15));
