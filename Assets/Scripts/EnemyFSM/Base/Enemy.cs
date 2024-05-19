@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         else { Debug.Log("-10"); return; }
     }
 
-    public void Die()
+    public virtual void Die()
     {
         animator.SetTrigger("Death");
         Destroy(gameObject, 1);

@@ -37,9 +37,14 @@ public class Attack : BasePlayerController
         if (obj != null)
         {
             obj.TryGetComponent<Enemy>(out Enemy enem);
+            obj.TryGetComponent<VmagicRangeEnemy>(out VmagicRangeEnemy venem);
             if (enem != null)
             {
                 enem.TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
+            }
+            else if (venem != null)
+            {
+                venem.TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
             }
             onHit?.Invoke();
 
@@ -52,7 +57,13 @@ public class Attack : BasePlayerController
                 hit.GetComponent<Enemy>().TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
                 onHit?.Invoke();
             }
+            if (hit.GetComponent<VmagicRangeEnemy>())
+            {
+                hit.GetComponent<VmagicRangeEnemy>().TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
+                onHit?.Invoke();
+            }
         }
+
 
 
         //private static IEnumerator Reset(Collider2D hit)

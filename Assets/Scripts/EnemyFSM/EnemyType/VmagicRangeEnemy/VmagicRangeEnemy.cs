@@ -34,6 +34,14 @@ public class VmagicRangeEnemy : Enemy
         base.FixedUpdate();
     }
 
+    public override void Die()
+    {
+        Vector2 throwPos = transform.position;
+        Instantiate(Resources.Load<GameObject>("Odris"), throwPos, Quaternion.identity);
+        animator.SetTrigger("Death");
+        Destroy(gameObject, 1);
+    }
+
     #region VisualDemonstration
 
     private void OnDrawGizmos()
