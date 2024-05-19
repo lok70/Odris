@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEditor.Progress;
 
 
@@ -17,8 +18,6 @@ public class Inventory : MonoBehaviour
 
     RaycastHit2D[] mouseHits;
 
-    //public static InformationIconHandler informationIconHandler;
-
     GameObject currentPointingSlot = null;
 
     Transform InventoryCanvas;
@@ -30,36 +29,27 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        inventorySlots = new InventorySlot[13];
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        InventoryCanvas = transform.parent;
+
+        SceneManager.sceneUnloaded += SaveInventory;
+
+        for (int i = 0; i < transform.childCount; i++)
         {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            inventorySlots = new InventorySlot[transform.childCount];
-            InventoryCanvas = transform.parent;
-
-            //informationIconHandler = transform.GetChild(2).GetComponent<InformationIconHandler>();
-
-            for (int i = 0; i < transform.childCount; i++)
             {
-                {
-                    inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
-                    //inventorySlots[i].informationIconHandler = transform.parent.transform.GetChild(2).GetComponent<InformationIconHandler>();
-                    inventorySlots[i].slotIndex = i;
-                    inventorySlots[i].transform.parent.GetComponent<InventorySlotData>().SetIndex(i);
-                }
+                inventorySlots[i] = transform.GetChild(i).GetChild(0).GetComponent<InventorySlot>();
+                inventorySlots[i].slotIndex = i;
+                inventorySlots[i].transform.parent.GetComponent<InventorySlotData>().SetIndex(i);
             }
         }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
+
     }
 
-    private void Update()
+    private void Start()
     {
-        //HandleInformationIcon();
-
+        LoadInventory();
     }
 
     private void UpdateInventory()
@@ -114,35 +104,46 @@ public class Inventory : MonoBehaviour
         Utilities.Swap(ref inventorySlots[a_index].parentRectTransform, ref inventorySlots[b_index].parentRectTransform);
     }
 
-    /*
-    private void HandleInformationIcon()
+    void SaveInventory(Scene current)
     {
-
-
-        Is_Pointing_On_Slot = false;
-
-        foreach (var hit in mouseHits)
+        for(int i = 0; i < inventorySlots.Length; i++)
         {
-            if (hit.transform.gameObject.CompareTag("WeaponSlot") || hit.transform.gameObject.CompareTag("InventorySlot"))
+            if (inventorySlots[i].slotItem == null) continue;
+            string item_name = inventorySlots[i].slotItem.name != null ? inventorySlots[i].slotItem.name : "";
+            if (item_name != "")
             {
-                currentPointingSlot = hit.transform.gameObject;
-                Is_Pointing_On_Slot = true;
+                PlayerPrefs.SetString("Item_" + i, item_name);
+                PlayerPrefs.SetInt("Item_" + i + "_amount", inventorySlots[i].Item_Amount);
+            }
+            else
+            {
+                PlayerPrefs.SetString("Item_" + i, "");
+                PlayerPrefs.SetInt("Item_" + i + "_amount", 0);
+            }
+            
+        }
+    }
+
+    void LoadInventory()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+           string item_name =  PlayerPrefs.GetString("Item_" + i);
+           if (item_name != "")
+            {
+                inventorySlots[i].PutInEmptySlot(Resources.Load<Item>(item_name), PlayerPrefs.GetInt("Item_" + i + "_amount"));
             }
         }
-
-        if (Is_Pointing_On_Slot && !Was_Pointing_On_Slot)
-        {
-            informationIconHandler.DisplayInformationIcon(currentPointingSlot);
-            Was_Pointing_On_Slot = true;
-        }
-        else if (!Is_Pointing_On_Slot && Was_Pointing_On_Slot)
-        {
-            informationIconHandler.CloseInformationIcon();
-            Was_Pointing_On_Slot = false;
-        }
-
     }
-    */
+
+    private void OnApplicationQuit()
+    {
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            PlayerPrefs.SetString("Item_" + i, "");
+            PlayerPrefs.SetInt("Item_" + i + "_amount", 0);
+        }
+    }
 
 }
 
