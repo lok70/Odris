@@ -44,7 +44,6 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
     {
         agent = this.GetComponent<NavMeshAgent>();
         animator = this.GetComponent<Animator>();
-        ///currentHealth = maxHealth;
         target = GameObject.FindGameObjectWithTag("Player");
     }
     public virtual void Start()
@@ -124,7 +123,7 @@ public class Enemy : MonoBehaviour, Idamageable, Imoveable
         else { currentHealth += health; }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth - damage <= 0)

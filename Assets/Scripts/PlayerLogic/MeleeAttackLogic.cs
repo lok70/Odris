@@ -20,11 +20,15 @@ public class MeleeAttackLogic : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) && canAttack && ss.currentSt > 15)
         {
+            Debug.Log("Атаковааал");
             onAttacked.Invoke();
             canAttack = false;
             StartCoroutine(Timer(0.5f));
-            try { Attack.Action(meleeAttackPoint.position, 0.5f, 20 * SwordScript.DamageMultiplier); }
-            catch { NullReferenceException nullReference; }
+            try { Attack.Action(meleeAttackPoint.position, 1.2f, 20 * SwordScript.DamageMultiplier); }
+            catch 
+            { 
+                NullReferenceException nullReference; 
+            }
            
             
             StartCoroutine(Timer(0.2f));
