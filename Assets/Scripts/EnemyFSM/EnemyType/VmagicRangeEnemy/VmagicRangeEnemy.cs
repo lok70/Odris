@@ -19,7 +19,7 @@ public class VmagicRangeEnemy : Enemy
     public override void Start()
     {
         base.Start();
-        maxHealth = 200;
+        maxHealth = 500;
         currentHealth = maxHealth;
        /// if (health != 0) { currentHealth = health; }
         visualCircle.gameObject.SetActive(false);

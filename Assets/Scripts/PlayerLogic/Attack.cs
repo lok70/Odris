@@ -40,11 +40,11 @@ public class Attack : BasePlayerController
             obj.TryGetComponent<VmagicRangeEnemy>(out VmagicRangeEnemy venem);
             if (enem != null)
             {
-                enem.TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
+                enem.TakeDamage(damage);
             }
             else if (venem != null)
             {
-                venem.TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
+                venem.TakeDamage(damage);
             }
             onHit?.Invoke();
 
@@ -54,12 +54,12 @@ public class Attack : BasePlayerController
         {
             if (hit.GetComponent<Enemy>())
             {
-                hit.GetComponent<Enemy>().TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
+                hit.GetComponent<Enemy>().TakeDamage(damage);
                 onHit?.Invoke();
             }
             if (hit.GetComponent<VmagicRangeEnemy>())
             {
-                hit.GetComponent<VmagicRangeEnemy>().TakeDamage(damage * SkillsSystem.Instance.StrengthLevel);
+                hit.GetComponent<VmagicRangeEnemy>().TakeDamage(damage);
                 onHit?.Invoke();
             }
         }
