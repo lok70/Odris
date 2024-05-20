@@ -6490,6 +6490,10 @@ PrefabInstance:
       propertyPath: vfxRenderer
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6106704283130232210, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
+      propertyPath: bounceDistance
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6773868519427816257, guid: b3e58468ba4a36d4ebe4c554949eb40e, type: 3}
       propertyPath: pref
       value: 
