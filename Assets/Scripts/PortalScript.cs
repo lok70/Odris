@@ -8,7 +8,7 @@ public class PortalScript : MonoBehaviour
 
     private bool in_portal = false;
 
-    [SerializeField] private float teleportDelay = 1f;
+    [SerializeField] private float teleportDelay = 0.5f;
 
     private void OnTriggerExit2D(Collider2D other)
     {
