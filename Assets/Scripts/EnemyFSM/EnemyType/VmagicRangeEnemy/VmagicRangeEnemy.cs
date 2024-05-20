@@ -33,7 +33,18 @@ public class VmagicRangeEnemy : Enemy
     {
         base.FixedUpdate();
     }
+    public void Tdamage(float damage)
+    {
+        Debug.Log("Yron");
+        currentHealth -= damage;
+        if (currentHealth - damage <= 0)
+        {
+            Die();
+            return;
 
+        }
+        else { Debug.Log("-10"); return; }
+    }
     #region VisualDemonstration
 
     private void OnDrawGizmos()
