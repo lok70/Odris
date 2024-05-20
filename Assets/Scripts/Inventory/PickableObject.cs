@@ -19,7 +19,11 @@ public class PickableObject : MonoBehaviour
     {
         if  (collision.CompareTag("Player"))
         {
-            if((Inventory.instance.HasItem(item) != -1) && item.Stackable)
+            if (item.name == "Odris")
+            {
+                StartCoroutine(LevelManagement.instance.LoadLevel("MainMenu"));
+            }
+            else if((Inventory.instance.HasItem(item) != -1) && item.Stackable)
             {
                 Inventory.instance.StackItem(item, Inventory.instance.HasItem(item),Amount);
                 Destroy(gameObject);
