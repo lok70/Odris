@@ -33,16 +33,7 @@ public class VmagicRangeEnemy : Enemy
     {
         base.FixedUpdate();
     }
-    public void Tdamage(float damage)
-    {
-        Debug.Log("Yron");
-        currentHealth -= damage;
-        if (currentHealth - damage <= 0)
-        {
-            Die();
-            return;
 
-<<<<<<< HEAD
     public override void Die()
     {
         Vector2 throwPos = transform.position;
@@ -51,11 +42,6 @@ public class VmagicRangeEnemy : Enemy
         Destroy(gameObject, 1);
     }
 
-=======
-        }
-        else { Debug.Log("-10"); return; }
-    }
->>>>>>> b20ccaee000e778ae51d5678b6f1a9c7cb03f52e
     #region VisualDemonstration
 
     private void OnDrawGizmos()
