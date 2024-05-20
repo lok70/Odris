@@ -18,4 +18,4 @@ MonoBehaviour:
   Description: "\u041C\u0435\u0447 \u043C\u0435\u0447\u0435\u0439"
   Stackable: 0
   Prefab_Name: Sword_Tier2
-  DamageMultiplier: 200
+  DamageMultiplier: 10
